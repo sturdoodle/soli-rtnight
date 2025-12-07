@@ -1,7 +1,4 @@
 function ExportFun(props) {
-    console.log(props, "Export")
-
-
     const downloadJSON = () => {
         const json = JSON.stringify(props.formData, null, 2);  // Prettified JSON
         const blob = new Blob([json], { type: "application/json" });

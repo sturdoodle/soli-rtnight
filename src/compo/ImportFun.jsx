@@ -1,6 +1,5 @@
 function ImportFun(props) {
-  console.log(props,"props")
-const handleImportJson = (event) => {
+  const handleImportJson = (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
@@ -21,7 +20,7 @@ const handleImportJson = (event) => {
 
   return (
     <>
-    <h2 style={{ marginBottom: "20px" }}>Import JSON & Update State</h2>
+      <h2 style={{ marginBottom: "20px" }}>Import JSON & Update State</h2>
 
       <input
         type="file"
