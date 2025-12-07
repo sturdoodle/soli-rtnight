@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import './ProfileForm.css';
+import ImportFun from './compo/ImportFun';
+import ExportFun from './compo/ExportFun';
+
 
 
 const ProfileForm = () => {
@@ -517,6 +520,10 @@ const ProfileForm = () => {
             ))}
             <button className="add-btn" onClick={addCertification}><Plus size={18} /> Add Certification</button>
 
+          </div>
+          <div style={{ padding: "20px", fontFamily: "Arial" }}>
+            <ExportFun formData={formData} setFormData={setFormData} />
+            <ImportFun formData={formData} setFormData={setFormData} />
           </div>
         </div>
 
