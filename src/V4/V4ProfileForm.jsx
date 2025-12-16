@@ -120,7 +120,7 @@ function V4ProfileForm() {
                     <TemplateCollectionList formData={formData}/>
                 </div>
             </div>
-            <Footer/>
+            {/* <Footer/> */}
         </div>
     );
 }
