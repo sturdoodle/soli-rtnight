@@ -11,6 +11,8 @@ import ImportExport from './components/shared/ImportExport.jsx';
 import TemplateCollectionList from './components/TemplateCollectionList.jsx';
 import Footer from '../Footer.jsx';
 import { SAMPLE_JSON_DATA } from './components/utils/constat.js';
+import AdSenseAd from '../AdsenseAdsBlock.jsx';
+import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../MainConstant.js';
 
 function V4ProfileForm() {
     const [formData, setFormData] = useState(SAMPLE_JSON_DATA);
@@ -63,7 +65,12 @@ function V4ProfileForm() {
                             toggle={() => toggleSection('summary')}
                             setOpenSection={setOpenSection}
                         />
-
+                        <AdSenseAd
+                            client={ADSENSE_CLIENT_ID}
+                            slot={ADSENSE_INBETWEEN_SLOT_ID}
+                            format="auto" // Use 'auto' or a specific format like 'rectangle'
+                            style={{ margin: '20px 0', border: '1px solid #ccc' }} // Optional styling for the container
+                        />
                         <EducationSection
                             formData={formData}
                             setFormData={setFormData}

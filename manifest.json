@@ -1,0 +1,25 @@
+{
+  "name": "Resume 🗎",
+  "short_name": "Resume 🗎",
+  "description": "Resume Builder | QPKendra",
+  "start_url": "/",
+  "theme_color": "#FFFFFF",
+  "orientation": "any",
+  "background_color": "#000000",
+  "display": "standalone",
+  "Scope": "./",
+  "splash_pages": null,
+  "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "com.qpkendra.msbtedpharmacy",
+      "url": "https://play.google.com/store/apps/details?id=com.qpkendra.msbtedpharmacy"
+    },
+    {
+      "platform": "play",
+      "id": "com.shyam.msbtemodelanswerpaper",
+      "url": "https://play.google.com/store/apps/details?id=com.shyam.msbtemodelanswerpaper"
+    }
+  ]
+}
