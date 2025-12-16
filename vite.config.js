@@ -11,7 +11,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/soli-rtnight/',
+  base: '/',
   optimizeDeps: {
     exclude: ['jspdf'],
   },
