@@ -15,19 +15,19 @@ function ExportFun(props) {
 
     return (
         <>
-            <div style={{ padding: "20px", fontFamily: "Arial" }}>
-                <h2 style={{ marginBottom: "20px" }}>Export Resume Data</h2>
+            <div>
+                {/* <h2 style={{ marginBottom: "20px" }}>Export Resume Data</h2> */}
 
                 <button
                     onClick={downloadJSON}
                     style={{
-                        padding: "12px 20px",
+                        padding: "10px",
                         backgroundColor: "#4CAF50",
                         color: "white",
                         border: "none",
                         borderRadius: "8px",
                         cursor: "pointer",
-                        fontSize: "16px",
+                        // fontSize: "16px",
                     }}
                 >
                     Download JSON

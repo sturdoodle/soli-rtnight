@@ -2,7 +2,7 @@ name: Build and Deploy soli-rtnight App to GitHub Pages
 
 on:
   push:
-    branches: [ "gtrx" ]
+    branches: [ "gtrx-vt" ]
 
 permissions:
   contents: write
