@@ -1,5 +1,6 @@
 import {ArrowLeft, Printer , Phone, Mail, MapPin, Github, CheckCircle, Award } from 'lucide-react';
 import { getISTFormatDate, processTextFormatting } from '../utils/dataHelper';
+import { BLOCK_ON_PRINT_CSS } from '../../../MainConstant';
 
 
 const SectionHeader = ({ title }) => (
@@ -283,6 +284,7 @@ const PrintableLeaflive = ({ data ,back}) => {
             .print-button {
                 display: none !important;
             }
+                ${BLOCK_ON_PRINT_CSS}
             
             /* ======================================================= */
             /* PAGE BREAK CONTROL */

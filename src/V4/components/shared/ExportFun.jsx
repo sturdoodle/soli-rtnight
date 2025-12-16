@@ -15,20 +15,10 @@ function ExportFun(props) {
 
     return (
         <>
-            <div>
-                {/* <h2 style={{ marginBottom: "20px" }}>Export Resume Data</h2> */}
-
+            <div className="flex flex-col">
                 <button
                     onClick={downloadJSON}
-                    style={{
-                        padding: "10px",
-                        backgroundColor: "#4CAF50",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "8px",
-                        cursor: "pointer",
-                        // fontSize: "16px",
-                    }}
+                    className="custom-file-upload-button"
                 >
                     Download JSON
                 </button>

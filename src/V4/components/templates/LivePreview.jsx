@@ -1,5 +1,6 @@
 import { ArrowLeft, Printer } from 'lucide-react';
 import { processTextFormatting } from '../utils/dataHelper';
+import { BLOCK_ON_PRINT_CSS } from '../../../MainConstant';
 const LivePreview = ({ formData, back }) => {
     // Helper to flatten skills for display (based on the original data structure)
     const getSkillsList = () => {
@@ -71,7 +72,7 @@ const LivePreview = ({ formData, back }) => {
             .print-button, .preview-label {
                 display: none !important;
             }
-            
+            ${BLOCK_ON_PRINT_CSS}
             /* ======================================================= */
             /* PAGE BREAK CONTROL */
             /* ======================================================= */
@@ -180,12 +181,12 @@ const LivePreview = ({ formData, back }) => {
                 )}
 
                 {/* Skills Block */}
-                <div className="resume-section">
+                {formData.skills.length > 0 &&(<div className="resume-section">
                     <h3 className="resume-section-head">Core Skills</h3>
                     <ul className="resume-list">
                         {getSkillsList()}
                     </ul>
-                </div>
+                </div>)}
 
                 {/* PROFESSIONAL EXPERIENCE PREVIEW */}
                 {formData.experience.length > 0 && (

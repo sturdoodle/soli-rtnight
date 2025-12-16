@@ -65,12 +65,14 @@ function V4ProfileForm() {
                             toggle={() => toggleSection('summary')}
                             setOpenSection={setOpenSection}
                         />
-                        <AdSenseAd
-                            client={ADSENSE_CLIENT_ID}
-                            slot={ADSENSE_INBETWEEN_SLOT_ID}
-                            format="auto" // Use 'auto' or a specific format like 'rectangle'
-                            style={{ margin: '20px 0', border: '1px solid #ccc' }} // Optional styling for the container
-                        />
+                        <section className='card-container ads-block'>
+                            <AdSenseAd
+                                client={ADSENSE_CLIENT_ID}
+                                slot={ADSENSE_INBETWEEN_SLOT_ID}
+                                format="auto" // Use 'auto' or a specific format like 'rectangle'
+                                containerClassName="max-w-full min-h-[100px] overflow-hidden"
+                            />
+                        </section>
                         <EducationSection
                             formData={formData}
                             setFormData={setFormData}
@@ -127,7 +129,7 @@ function V4ProfileForm() {
                     <TemplateCollectionList formData={formData}/>
                 </div>
             </div>
-            {/* <Footer/> */}
+            <Footer/>
         </div>
     );
 }

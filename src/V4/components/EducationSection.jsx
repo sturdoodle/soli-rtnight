@@ -61,7 +61,7 @@ const EducationSection = ({
                                         {/* <button className="flex gap-2 text-sm font-semibold mb-2 p-1.5 hover:bg-green-50  text-gray-400 hover:text-green-400 transition-colors" onClick={exitEditMode}><Save size={20}/>Save</button>
                                         <button className="flex gap-2 text-sm font-semibold mb-2 p-1.5 hover:bg-red-50  text-gray-400 hover:text-red-500 transition-colors" onClick={()=>removeEducation(index)}><Trash2 size={20}/> Remove</button> */}
                                         <ItemButton onclick={exitEditMode} type="save" buttonText="Save"/>
-                                        <ItemButton onclick={() => removeEducation(index)} type="Delete" buttonText="Delete"/>
+                                        {/* <ItemButton onclick={() => removeEducation(index)} type="Delete" buttonText="Delete"/> */}
                                     </div>
                                     <InputField
                                         label="Degree/Certification Name"

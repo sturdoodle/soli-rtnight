@@ -1,6 +1,6 @@
 import ExportFun from "./ExportFun"
 import ImportFun from "./ImportFun"
-import { ArrowLeft, Pencil, Download , Upload, FileText} from 'lucide-react';
+import { Download , Upload, FileText} from 'lucide-react';
 
 
 function ImportExport(props) {
@@ -15,7 +15,7 @@ function ImportExport(props) {
       </div>
 
       {/* Card Body with Responsive Grid (Stacks until large screen) */}
-      <div className="pt-4 px-2 sm:px-4 grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="pt-4 p-2 grid grid-cols-1 lg:grid-cols-2 gap-3">
         
         {/* --- 1. Export Section (Left) --- */}
         <div className="border border-gray-200 p-4 rounded-xl shadow-sm bg-gray-50 flex flex-col justify-between">
@@ -29,11 +29,7 @@ function ImportExport(props) {
           </div>
           
           {/* ExportFun usage: Renders button */}
-          <ExportFun formData={props.formData} setFormData={props.setFormData}>
-            <button className="w-full bg-green-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-green-700 transition-colors shadow-md flex items-center justify-center mt-4">
-              <Download size={18} className="mr-2" /> Download JSON
-            </button>
-          </ExportFun>
+          <ExportFun formData={props.formData} setFormData={props.setFormData} />
         </div>
 
         {/* --- 2. Import Section (Right) --- */}
@@ -48,9 +44,7 @@ function ImportExport(props) {
           </div>
           
           {/* ImportFun usage: Renders file chooser input */}
-          <ImportFun formData={props.formData} setFormData={props.setFormData}>
-             
-          </ImportFun>
+          <ImportFun formData={props.formData} setFormData={props.setFormData}/>
         </div>
 
       </div>

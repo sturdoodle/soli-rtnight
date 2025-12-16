@@ -172,15 +172,20 @@ const SkillsSection = ({ skills, setFormData, isOpen, toggle }) => {
                                 <div 
                                     key={skill.id} 
                                     className="group border border-gray-200 bg-white hover:border-blue-300 hover:shadow-sm transition-all rounded-xl p-3 mb-2 flex justify-between items-center cursor-pointer"
-                                    onClick={() => setCategoryEditIndex(index)}
+                                    
                                 >
                                     <h5 className="font-semibold text-gray-900 text-sm">{skill.category || 'Untitled Category'}</h5>
                                     <span className="text-xs text-gray-500">
                                         {skill.items.split(',').filter(item => item.trim() !== '').length} items
                                     </span>
-                                    <button className="p-1 hover:bg-blue-50 rounded-full text-gray-400 hover:text-blue-600 transition-colors">
+                                    <div className='flex gap-2'>
+                                        <button className="p-1 hover:bg-blue-50 rounded-full text-gray-400 hover:text-blue-600 transition-colors" onClick={() => setCategoryEditIndex(index)}>
                                         <Pencil size={16} />
                                     </button>
+                                    <button className="p-1  rounded-full hover:text-red-600  text-gray-400 hover:bg-red-100 transition-colors" onClick={() => removeSkill(index)}>
+                                        <Trash2 size={16} />
+                                    </button>
+                                    </div>
                                 </div>
                             ))}
                             

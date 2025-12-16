@@ -20,23 +20,10 @@ function ImportFun(props) {
 
   return (
     <>
-      {/* <h2 style={{ marginBottom: "20px" }}>Import JSON & Update State</h2> */}
-
-      {/* <input
-        type="file"
-        accept="application/json"
-        onChange={handleImportJson}
-        style={{ marginBottom: "20px", cursor: "pointer" }}
-      /> */}
-      
-  
-  <label htmlFor="jsonFile" className="custom-file-upload-button">
-    Choose JSON File
-  </label>
-  <input type="file" accept="application/json" onChange={handleImportJson} id="jsonFile"  className="hidden-input"/>
-
-
-
+      <label htmlFor="jsonFile" className="custom-file-upload-button">
+        Choose JSON File
+      </label>
+      <input type="file" accept="application/json" onChange={handleImportJson} id="jsonFile" className="hidden-input" />
     </>
   )
 }

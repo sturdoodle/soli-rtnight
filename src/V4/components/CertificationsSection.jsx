@@ -107,7 +107,9 @@ const CertificationEditor = ({ cert, index, handleCertificationChange, removeCer
                 onClick={() => removeCertification(index)}>
                 <Trash2 size={16} /> Remove Certification
             </button> */}
+            <div className='flex justify-end'>
             <ItemButton onclick={() => removeCertification(index)} type="Delete" buttonText="Remove Certification"/>
+            </div>
         </div>
     );
 };

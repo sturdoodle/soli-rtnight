@@ -3,7 +3,7 @@ import { processTextFormatting } from "./V4/components/utils/dataHelper";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white p-4 mt-6">
+    <footer className="bg-gray-800 text-white p-4 mt-6 footer-block">
       <div className="container mx-auto flex flex-col items-center ">
         
         {/* === Webpage Note (New Section) === */}

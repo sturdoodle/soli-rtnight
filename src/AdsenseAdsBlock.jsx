@@ -1,15 +1,6 @@
-import  { useEffect } from 'react';
+import { useEffect } from 'react';
 
-/**
- * Reusable React component for displaying a Google AdSense ad unit.
- *
- * @param {object} props
- * @param {string} props.client - Your AdSense Publisher ID (e.g., 'ca-pub-1234567890123456')
- * @param {string} props.slot - The data-ad-slot ID for the specific ad unit.
- * @param {string} [props.format='auto'] - The ad format (e.g., 'auto', 'fluid', 'rectangle').
- * @param {string} [props.style] - Optional inline CSS style for the ad container.
- */
-const AdSenseAd = ({ client, slot, format = 'auto', style }) => {
+const AdSenseAd = ({ client, slot, format = 'auto', containerClassName = '' }) => {
 
     // 1. Function to insert the main AdSense script
     const insertAdScript = () => {
@@ -36,29 +27,27 @@ const AdSenseAd = ({ client, slot, format = 'auto', style }) => {
                 (window.adsbygoogle = window.adsbygoogle || []).push({});
             }
         } catch (e) {
-            console.error("AdSense Error: ", e);
+            // console.error("AdSense Error: ", e);
         }
 
-    // Cleanup function (optional, but good practice)
-    return () => {
-      // If you need to stop ads from loading or clean up, do it here.
-    };
-  }, [slot, client]); // Re-run if the slot or client ID changes
+        // Cleanup function (optional, but good practice)
+        return () => {
+            // If you need to stop ads from loading or clean up, do it here.
+        };
+    }, [slot, client]); // Re-run if the slot or client ID changes
 
-  return (
-      <section className="card-container">
-          <div className="adsense-ad-container" style={style}>
-              <ins
-                  className="adsbygoogle"
-                  style={{ display: 'block' }} // Important: AdSense requires display: 'block' or similar
-                  data-ad-client={client}
-                  data-ad-slot={slot}
-                  data-ad-format={format}
-                  data-full-width-responsive="true" // Recommended for modern web design
-              ></ins>
-          </div>
-      </section>
-  );
+    return (
+        <div className={`adsense-ad-container ${containerClassName}`}>
+            <ins
+                className="adsbygoogle"
+                style={{ display: 'block', margin: '0 auto' }} // Important: AdSense requires display: 'block' or similar
+                data-ad-client={client}
+                data-ad-slot={slot}
+                data-ad-format={format}
+                data-full-width-responsive="true" // Recommended for modern web design
+            ></ins>
+        </div>
+    );
 };
 
 export default AdSenseAd;

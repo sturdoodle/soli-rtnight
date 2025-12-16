@@ -10,8 +10,6 @@ function Header() {
                 {/* Left side: Arrow and Title */}
                 <div className="flex items-center gap-4">
                     <button className="-ml-2 hover:bg-gray-100 rounded-full transition-colors">
-                        {/* <ArrowLeft className="text-gray-600" />
-                         */}
                         <img 
                     src={logo} 
                     alt="Application Logo" 
@@ -21,14 +19,8 @@ function Header() {
                     </button>
                     <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2 group cursor-pointer">
                         Resume Builder
-                        <Pencil size={16} className="text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </h1>
                 </div>
-
-                {/* Right side: Download Button */}
-                {/* <button className="download-pdf">
-                    <Download size={18} className="inline mr-2" /> Download PDF
-                </button> */}
             </div>
         </header>
     )
