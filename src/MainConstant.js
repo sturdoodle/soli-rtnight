@@ -8,6 +8,13 @@ export const ADSENSE_INBETWEEN_SLOT_ID = '1239783582';
 export const BLOCK_ON_PRINT_CSS = `.ads-block {
                 display: none !important;
             }
+
             .footer-block {
+                display: none !important;
+            }
+            .adsbygoogle-noablate {
+                display: none !important;
+            }
+            .adsbygoogle {
                 display: none !important;
             }`
