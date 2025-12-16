@@ -11,7 +11,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/',
+  base: '/#/',
   optimizeDeps: {
     exclude: ['jspdf'],
   },
