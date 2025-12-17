@@ -16,6 +16,10 @@ const router=createHashRouter([
   element:<V4ProfileForm/>
 },
 {
+  path:"#google_vignette",
+  element:<V4ProfileForm/>
+},
+{
     path: '*', // This wildcard path must be the LAST route defined
     element: <NotFoundPage/>,
   },

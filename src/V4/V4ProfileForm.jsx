@@ -65,14 +65,7 @@ function V4ProfileForm() {
                             toggle={() => toggleSection('summary')}
                             setOpenSection={setOpenSection}
                         />
-                        <section className='card-container ads-block'>
-                            <AdSenseAd
-                                client={ADSENSE_CLIENT_ID}
-                                slot={ADSENSE_INBETWEEN_SLOT_ID}
-                                format="auto" // Use 'auto' or a specific format like 'rectangle'
-                                containerClassName="max-w-full min-h-[100px] overflow-hidden"
-                            />
-                        </section>
+                        
                         <EducationSection
                             formData={formData}
                             setFormData={setFormData}
@@ -92,6 +85,14 @@ function V4ProfileForm() {
                             isOpen={openSection === 'work' || editMode.type === 'experience'}
                             toggle={() => toggleSection('work')}
                         />
+                        <section className='card-container ads-block'>
+                            <AdSenseAd
+                                client={ADSENSE_CLIENT_ID}
+                                slot={ADSENSE_INBETWEEN_SLOT_ID}
+                                format="auto" // Use 'auto' or a specific format like 'rectangle'
+                                containerClassName="max-w-full min-h-[100px] overflow-hidden"
+                            />
+                        </section>
 
                         <SkillsSection
                             skills={formData.skills}
