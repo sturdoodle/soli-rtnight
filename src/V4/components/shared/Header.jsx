@@ -1,4 +1,4 @@
-import { ArrowLeft, Pencil, Download } from 'lucide-react';
+import { ArrowLeft, Pencil, Download, Sparkles } from 'lucide-react';
 import logo from './o-logo.png';
 
 function Header() {
@@ -20,6 +20,17 @@ function Header() {
                     <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2 group cursor-pointer">
                         Resume Builder
                     </h1>
+                </div>
+
+                {/* Right side: Modern toggle */}
+                <div className="flex items-center gap-4">
+                    <a 
+                        href="#/modern" 
+                        className="flex items-center gap-2 bg-sage-50 text-sage-600 px-4 py-2 rounded-full font-semibold border border-sage-100 hover:bg-sage-100 transition-all text-sm shadow-sm"
+                    >
+                        <Sparkles size={16} />
+                        Switch to Modern UI
+                    </a>
                 </div>
             </div>
         </header>

@@ -7,6 +7,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import V4ProfileForm from './V4/V4ProfileForm.jsx';
+import ModernEditor from './Modern/ModernEditor.jsx';
 import NotFoundPage from './NotFound.jsx';
 
 // const router=createBrowserRouter([
@@ -14,6 +15,10 @@ const router=createHashRouter([
 {
   path:"/",
   element:<V4ProfileForm/>
+},
+{
+  path:"/modern",
+  element:<ModernEditor/>
 },
 {
   path:"#google_vignette",

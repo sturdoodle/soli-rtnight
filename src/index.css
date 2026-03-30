@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Force Tailwind to map the 'dark:' modifier precisely to the .dark class instead of OS media queries */
+@custom-variant dark (&:is(.dark *));
+
 .card-container {
     /* Apply the desired Tailwind utilities */
     @apply 
@@ -290,4 +293,294 @@ min-height: 120px;  /* or any px/rem value */
   overflow: hidden;
   position: absolute;
   z-index: -1;
+}
+
+/* --- Modern Glassmorphism 2.0 & Calm UI Design System --- */
+
+@theme {
+  /* Sage (Calm) Palette - Converted from oklch to hsl for PDF compatibility */
+  --color-sage-50: hsl(160, 15%, 97%);
+  --color-sage-100: hsl(160, 20%, 94%);
+  --color-sage-200: hsl(160, 25%, 88%);
+  --color-sage-300: hsl(160, 30%, 78%);
+  --color-sage-400: hsl(160, 35%, 65%);
+  --color-sage-500: hsl(160, 38%, 55%);
+  --color-sage-600: hsl(160, 40%, 45%);
+  --color-sage-700: hsl(160, 42%, 35%);
+  --color-sage-800: hsl(160, 45%, 15%);
+  --color-sage-900: hsl(160, 50%, 15%);
+
+  /* Sand Palette - Converted from oklch to hsl for PDF compatibility */
+  --color-sand-50: hsl(80, 20%, 98%);
+  --color-sand-100: hsl(80, 25%, 96%);
+  --color-sand-200: hsl(80, 30%, 92%);
+  --color-sand-500: hsl(80, 35%, 65%);
+
+  /* Glass Effects */
+  --color-glass-bg: rgba(255, 255, 255, 0.7);
+  --color-glass-border: rgba(255, 255, 255, 0.4);
+  --color-glass-highlight: rgba(255, 255, 255, 0.9);
+  --color-glass-shadow: rgba(0, 0, 0, 0.08);
+
+  /* Semantic Tokens */
+  --color-editor-bg: var(--color-sage-50);
+  --color-card-bg: rgba(255, 255, 255, 0.7);
+  --color-card-border: rgba(255, 255, 255, 0.4);
+  --color-text-primary: var(--color-sage-900);
+  --color-text-secondary: var(--color-sage-600);
+  --color-text-muted: var(--color-sage-400);
+  --color-input-bg: rgba(255, 255, 255, 0.9);
+  --color-input-border: var(--color-sage-200);
+
+  /* Typography */
+  --font-serif: "Lora", "Frank Ruhl Libre", "Georgia", serif;
+  --font-sans: "Inter", "system-ui", sans-serif;
+}
+
+.dark {
+  --color-editor-bg: #0a0f0d;
+  --color-card-bg: rgba(10, 15, 13, 0.4);
+  --color-card-border: rgba(255, 255, 255, 0.05);
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #475569;
+  --color-input-bg: rgba(15, 23, 20, 0.6);
+  --color-input-border: rgba(255, 255, 255, 0.1);
+  
+  /* Sage Dark Overrides */
+  --color-sage-50: #0a0f0d;
+  --color-sage-100: #111815;
+  --color-sage-900: #f8fafc;
+}
+
+.modern-bg-gradient {
+  background: linear-gradient(135deg, var(--color-editor-bg) 0%, hsl(160, 20%, 85%) 100%);
+  background-attachment: fixed;
+}
+
+.dark .modern-bg-gradient {
+  background: linear-gradient(135deg, var(--color-editor-bg) 0%, #16241f 100%);
+}
+
+.glass-panel {
+  background: var(--color-card-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--color-card-border);
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+}
+
+.glass-input {
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  border-radius: 16px;
+  padding: 16px 20px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--color-text-primary);
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+}
+
+.glass-input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.8;
+}
+
+.glass-input:focus {
+  background: var(--color-input-bg);
+  border-color: var(--color-sage-500);
+  box-shadow: 0 0 0 4px hsla(160, 40%, 45%, 0.1), inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+  outline: none;
+}
+
+.modern-heading {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.glass-button {
+  background: var(--color-sage-600);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.glass-button:hover {
+  background: var(--color-sage-700);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.glass-button:active {
+  transform: translateY(0);
+}
+
+/* Scrollbar styling for modern feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-sage-200);
+  border-radius: 10px;
+}
+
+.dark ::-webkit-scrollbar-thumb, 
+.dark::-webkit-scrollbar-thumb {
+  background: var(--color-sage-800);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-sage-300);
+}
+
+/* --- Print Optimization for Modern Resume 2.0 --- */
+@media print {
+  @page {
+    margin: 0;
+    size: A4;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  .printable-area {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm;
+    height: 297mm;
+  }
+
+  /* Suppress faux paper heights in print mode to prevent blank phantom pages */
+  .min-h-\[1122px\] {
+    min-height: 0 !important;
+  }
+  
+  body, html {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    visibility: visible !important;
+  }
+
+  /* 2. Hide all interactive UI elements */
+  body * {
+    visibility: hidden;
+  }
+
+  /* 3. Define the printable area and make it visible */
+  .printable-area, 
+  .printable-area * {
+    visibility: visible !important;
+    opacity: 1 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-color: rgba(0, 0, 0, 0.1) !important; /* Force light borders if any */
+  }
+
+  .printable-area {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important; /* Remove max-width for print */
+    margin: 0 !important;
+    padding: 0 !important; /* Managed by @page margin */
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    color: #000 !important;
+    height: auto !important;
+    min-height: auto !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  /* Catch-all to fix padding and shadow issues for all 22 layouts */
+  .printable-area main {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    position: relative !important;
+  }
+
+  /* 4. Completely hide interactive UI elements */
+  nav, aside, button, 
+  [role="button"],
+  .print-hidden, 
+  .glass-panel::before,
+  .glass-panel::after {
+    display: none !important;
+  }
+
+  /* 5. Strip Glassmorphism and decorative UI effects without hiding the element */
+  .shadow-2xl, .shadow-xl, .shadow-lg, .shadow-md, .shadow-sm, .shadow,
+  .backdrop-blur-md, .backdrop-blur-sm, .backdrop-blur-lg, .backdrop-blur-xl,
+  .glass-panel,
+  .bg-white\/10, .bg-white\/20, .bg-white\/30, .bg-white\/40, .bg-white\/50,
+  .bg-black\/10, .bg-black\/20, .bg-black\/30, .bg-black\/40, .bg-black\/50 {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: transparent !important;
+  }
+
+  /* 6. Typography adjustments for print */
+  b, strong, .font-bold {
+    font-weight: 600 !important;
+  }
+
+  /* 5. Force text and icon opacities to 100% */
+  .opacity-30, .opacity-40, .opacity-50, .opacity-60, .opacity-70, .opacity-80, .opacity-90 {
+    opacity: 1 !important;
+  }
+
+  /* 6. Page Break Controls */
+  .printable-area p, 
+  .printable-area li, 
+  .printable-area tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .printable-area h1, 
+  .printable-area h2, 
+  .printable-area h3, 
+  .printable-area h4, 
+  .printable-area h5, 
+  .printable-area h6 {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  .printable-area section, 
+  .printable-area ul {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+
+  /* 7. Preservation of Colors and Graphics */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
 }

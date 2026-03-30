@@ -1,0 +1,83 @@
+import React from 'react';
+import { Mail, Phone, MapPin, Github, Code, FileText, Briefcase, GraduationCap, Award, FolderCode } from 'lucide-react';
+import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
+
+export const TechEngineer = ({ data, themeColor, atsMode }) => (
+  <main className={`bg-white px-12 py-16 min-h-[1122px] w-full ${atsMode ? 'text-black print:p-0' : 'text-slate-800 font-sans print:p-0 print:shadow-none'}`}>
+    <header className={`flex flex-col md:flex-row justify-between items-start border-b-2 pb-10 mb-10 ${atsMode ? 'border-black' : ''}`} style={atsMode ? {} : { borderColor: themeColor }}>
+      <div className="flex-1">
+        <h1 className="text-4xl font-extrabold tracking-tight mb-2" style={atsMode ? { color: 'black' } : { color: themeColor }}>{data.fullName}</h1>
+        <p className="text-xl font-mono opacity-80 mb-6">{data.jobTitle}</p>
+        
+        <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          <ContactItem icon={Mail} text={data.email} atsMode={atsMode} />
+          <ContactItem icon={Phone} text={data.phone} atsMode={atsMode} />
+          <ContactItem icon={MapPin} text={data.location} atsMode={atsMode} />
+          <ContactItem icon={Github} text={data.github} atsMode={atsMode} />
+        </div>
+      </div>
+    </header>
+
+    <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-12 gap-10'}`}>
+      <div className={`${atsMode ? 'space-y-10' : 'col-span-12 space-y-10'}`}>
+        <section>
+          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Profile</SectionTitle>
+          <p className="text-[15px] leading-relaxed opacity-90">
+            <FormattedText text={data.summary} />
+          </p>
+        </section>
+
+        <section>
+          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Technical Skills</SectionTitle>
+          <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'} gap-6`}>
+            {data.skills?.map(skill => (
+              <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Work Experience</SectionTitle>
+          <div className="space-y-8">
+            {data.experience?.map(exp => (
+              <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
+            ))}
+          </div>
+        </section>
+
+        {data.projects && data.projects.length > 0 && (
+          <section>
+            <SectionTitle atsMode={atsMode} themeColor={themeColor}>Selected Projects</SectionTitle>
+            <div className="space-y-8">
+              {data.projects.map(proj => (
+                <ProjectItem key={proj.id} proj={proj} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-2'} gap-10`}>
+          <section>
+            <SectionTitle atsMode={atsMode} themeColor={themeColor}>Education</SectionTitle>
+            <div className="space-y-6">
+              {data.education?.map(edu => (
+                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+
+          {data.certifications && data.certifications.length > 0 && (
+            <section>
+              <SectionTitle atsMode={atsMode} themeColor={themeColor}>Certifications</SectionTitle>
+              <div className="space-y-4">
+                {data.certifications.map(cert => (
+                  <CertificationItem key={cert.id} cert={cert} themeColor={themeColor} atsMode={atsMode} />
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+      </div>
+    </div>
+  </main>
+);
