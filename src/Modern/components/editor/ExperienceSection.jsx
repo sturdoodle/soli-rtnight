@@ -58,15 +58,21 @@ const ExperienceSection = () => {
 
   return (
     <GlassCard title="Work Experience" icon={Briefcase} isCollapsible={true}>
-      <div className="space-y-8">
+      <div className="space-y-6 sm:space-y-8">
         {(resumeData.experience || []).map((exp) => (
-          <div key={exp.id} className="relative p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
-            <PillButton 
-              variant="danger" 
-              className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity"
-              onClick={() => handleRemoveExp(exp.id)}
-              icon={Trash2}
-            />
+          <div key={exp.id} className="p-4 sm:p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2 text-slate-400">
+                <Briefcase size={14} />
+                <span className="text-[10px] font-black uppercase tracking-widest leading-none">Experience Unit</span>
+              </div>
+              <PillButton 
+                variant="danger" 
+                className="z-20 scaled-icon"
+                onClick={() => handleRemoveExp(exp.id)}
+                icon={Trash2}
+              />
+            </div>
             
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-6">
               <MinimalistInput 
@@ -86,7 +92,7 @@ const ExperienceSection = () => {
               />
             </div>
 
-            <div className="pl-6 border-l-2 border-sage-200/50 space-y-6">
+            <div className="pl-2 sm:pl-6 border-l-2 border-sage-200/50 space-y-4 sm:space-y-6">
               {exp.clients.map(client => (
                 <div key={client.id} className="space-y-4">
                   <div className="flex items-center gap-2 text-sage-600 mb-2">
@@ -115,7 +121,7 @@ const ExperienceSection = () => {
           variant="glass" 
           icon={Plus} 
           onClick={handleAddExp} 
-          className="w-full py-6 border-dashed border-2 border-sage-200/50 dark:border-sage-800/50 hover:border-sage-400"
+          className="w-full py-6 mt-10 border-dashed border-2 border-sage-200/50 dark:border-sage-800/50 hover:border-sage-400"
         >
           Add New Experience
         </PillButton>

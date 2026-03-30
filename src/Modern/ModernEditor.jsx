@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Share2, Sparkles, WandSparkles, ArrowLeft, FileDown, FileUp, Printer, Edit3, Eye } from 'lucide-react';
+import { Share2, Sparkles, WandSparkles, ArrowLeft, FileDown, FileUp, Printer, Edit3, Eye, Zap } from 'lucide-react';
 import PersonalDetails from './components/editor/PersonalDetails';
 import SummarySection from './components/editor/SummarySection';
 import ExperienceSection from './components/editor/ExperienceSection';
@@ -17,13 +17,17 @@ import ThemeToggle from './components/ui/ThemeToggle';
 import logo from '../V4/components/shared/o-logo.png';
 
 const ModernEditorContent = () => {
-  const { resumeData, setResumeData, updateTemplate, updateThemeColor, toggleAts } = useResume();
+  const { resumeData, setResumeData, updateTemplate, updateThemeColor, toggleAts, setEditorStyle } = useResume();
   const themeMode = resumeData.themeMode;
   const atsMode = resumeData.atsMode;
   const previewRef = useRef();
   const fileInputRef = useRef();
   const goInstead = useNavigate();
   const [mobileTab, setMobileTab] = useState('editor'); // 'editor' | 'preview'
+
+  useEffect(() => {
+    setEditorStyle('modern');
+  }, []);
 
 
   const handleDownload = (type = 'print') => {
@@ -109,9 +113,16 @@ const ModernEditorContent = () => {
           <div>
             <ThemeToggle />
           </div>
-          <div className="h-4 w-px bg-sage-200 dark:bg-sage-800 mx-1 hidden sm:block" />
-          
           <div className="flex items-center gap-2">
+            <PillButton 
+              variant="glass"
+              icon={Zap} 
+              onClick={() => goInstead('/v5')}
+              className="text-sky-500 hover:bg-sky-50 transition-all font-bold"
+            >
+              V5 Liquid
+            </PillButton>
+            <div className="h-4 w-px bg-sage-200 dark:bg-sage-800 hidden sm:block mx-1" />
             <PillButton 
               variant="glass"
               icon={FileDown} 

@@ -12,9 +12,13 @@ const ModernLivePreview = () => {
   const themeColor = resumeData.themeColor || '#4f46e5';
   const atsMode = resumeData.atsMode || false;
 
+  const fontFamily = resumeData.fontFamily || 'Default';
+  const fontKey = fontFamily === 'Default' ? '' : fontFamily.toLowerCase().split(' ')[0];
+  const fontClass = fontKey ? `v5-font-${fontKey}` : '';
+
   return (
     <div 
-      className="bg-white print:shadow-none shadow-2xl min-h-[1122px] w-full max-w-[800px] print:max-w-none mx-auto overflow-hidden printable-area"
+      className={`bg-white print:shadow-none shadow-2xl w-full max-w-[800px] print:max-w-none mx-auto relative transition-all duration-700 printable-area ${fontClass} rounded-[2.5rem] overflow-hidden print:rounded-none`}
       data-pdf-content="resume"
     >
       <TemplateComponent data={resumeData} themeColor={themeColor} atsMode={atsMode} />

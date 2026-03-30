@@ -21,11 +21,19 @@ const getInitialState = () => {
       themeColor: '#4f46e5',
       themeMode: 'light',
       atsMode: false,
-      storageType: type
+      storageType: type,
+      editorStyle: 'modern',
+      fontFamily: 'Default',
+      predictiveScoreEnabled: false
     };
     
     const parsedData = JSON.parse(savedData);
-    return { ...parsedData, storageType: type };
+    return { 
+      ...parsedData, 
+      storageType: type, 
+      editorStyle: parsedData.editorStyle || 'modern',
+      predictiveScoreEnabled: parsedData.predictiveScoreEnabled ?? false 
+    };
   } catch (error) {
     console.error("Error loading saved resume data:", error);
     return {
@@ -34,7 +42,8 @@ const getInitialState = () => {
       themeColor: '#4f46e5',
       themeMode: 'light',
       atsMode: false,
-      storageType: 'persistent'
+      storageType: 'persistent',
+      predictiveScoreEnabled: false
     };
   }
 };
@@ -68,6 +77,9 @@ function resumeReducer(state, action) {
     case 'UPDATE_STORAGE_TYPE':
       newState = { ...state, storageType: action.payload };
       break;
+    case 'SET_EDITOR_STYLE':
+      newState = { ...state, editorStyle: action.payload };
+      break;
     case 'RESET_RESUME':
       newState = {
         ...SAMPLE_JSON_DATA,
@@ -75,7 +87,8 @@ function resumeReducer(state, action) {
         themeColor: '#4f46e5',
         themeMode: 'light',
         atsMode: false,
-        storageType: state.storageType 
+        storageType: state.storageType,
+        predictiveScoreEnabled: false
       };
       break;
     default:
@@ -128,6 +141,7 @@ export function ResumeProvider({ children }) {
       updateThemeColor: (color) => dispatch({ type: 'UPDATE_THEME_COLOR', color }),
       toggleTheme: () => dispatch({ type: 'TOGGLE_THEME' }),
       updateStorageType,
+      setEditorStyle: (style) => dispatch({ type: 'SET_EDITOR_STYLE', payload: style }),
       resetResume
     }}>
       {children}

@@ -32,15 +32,21 @@ const CertificationsSection = () => {
     <GlassCard title="Certifications" icon={Award} isCollapsible={true}>
       <div className="space-y-6">
         {(resumeData.certifications || []).map((cert) => (
-          <div key={cert.id} className="relative p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
-            <PillButton 
-              variant="danger" 
-              className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity"
-              onClick={() => handleRemoveCert(cert.id)}
-              icon={Trash2}
-            />
+          <div key={cert.id} className="p-4 sm:p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2 text-slate-400">
+                <Award size={14} />
+                <span className="text-[10px] font-black uppercase tracking-widest leading-none">Certification Unit</span>
+              </div>
+              <PillButton 
+                variant="danger" 
+                className="z-20 scaled-icon"
+                onClick={() => handleRemoveCert(cert.id)}
+                icon={Trash2}
+              />
+            </div>
             
-            <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-6">
               <div className="xl:col-span-7">
                 <MinimalistInput 
                   label="Certificate Name" 
@@ -83,7 +89,7 @@ const CertificationsSection = () => {
           variant="glass" 
           icon={Plus} 
           onClick={handleAddCert} 
-          className="w-full py-6 border-dashed border-2 border-sage-200/50 dark:border-sage-800/50 hover:border-sage-400"
+          className="w-full py-6 mt-10 border-dashed border-2 border-sage-200/50 dark:border-sage-800/50 hover:border-sage-400"
         >
           Add New Certification
         </PillButton>

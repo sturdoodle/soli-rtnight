@@ -37,14 +37,20 @@ const SkillsSection = () => {
     <GlassCard title="Skills" icon={Award} isCollapsible={true}>
       <div className="space-y-6">
         {(resumeData.skills || []).map((skill) => (
-          <div key={skill.id} className="relative p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
-            <PillButton
-              variant="danger"
-              className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity"
-              onClick={() => handleRemoveSkill(skill.id)}
-              icon={Trash2}
-            />
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
+          <div key={skill.id} className="p-4 sm:p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2 text-slate-400">
+                <Award size={14} />
+                <span className="text-[10px] font-black uppercase tracking-widest leading-none">Skill Category</span>
+              </div>
+              <PillButton
+                variant="danger"
+                className="z-20 scaled-icon"
+                onClick={() => handleRemoveSkill(skill.id)}
+                icon={Trash2}
+              />
+            </div>
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
               <div className="xl:col-span-1">
                 <MinimalistInput
                   label="Category"
@@ -65,7 +71,7 @@ const SkillsSection = () => {
           </div>
         ))}
 
-        <div className="p-8 rounded-3xl bg-sage-50/10 dark:bg-sage-900/10 border-2 border-dashed border-sage-200/50 dark:border-sage-800/50">
+        <div className="p-8 mt-10 rounded-3xl bg-sage-50/10 dark:bg-sage-900/10 border-2 border-dashed border-sage-200/50 dark:border-sage-800/50">
           <div className="flex items-center gap-2 mb-6 text-sage-400">
             <Plus size={16} />
             <h4 className="text-xs font-bold uppercase tracking-widest">Add New Category</h4>

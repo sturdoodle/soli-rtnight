@@ -1,266 +1,338 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Lora:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap');
 
 /* Force Tailwind to map the 'dark:' modifier precisely to the .dark class instead of OS media queries */
 @custom-variant dark (&:is(.dark *));
 
 .card-container {
-    /* Apply the desired Tailwind utilities */
-    @apply 
-        bg-white 
-        rounded-2xl 
-        shadow-sm 
-        border 
-        border-gray-300 
-        p-3 
-        mb-2;
+  /* Apply the desired Tailwind utilities */
+  @apply bg-white rounded-2xl shadow-sm border border-gray-300 p-3 mb-2;
 }
 
-.card-section-header{
-    @apply  
-    flex 
-    items-center 
-    justify-between 
-    p-2 
-    cursor-pointer 
-    border-gray-200 
-    hover:bg-blue-100 
-    transition-colors 
-    rounded-lg
+.card-section-header {
+  @apply flex items-center justify-between p-2 cursor-pointer border-gray-200 hover:bg-blue-100 transition-colors rounded-lg
 }
 
-.download-pdf{
-    @apply
-    hidden 
-    sm:block 
-    bg-blue-600 
-    text-white 
-    px-6 
-    py-2 
-    rounded-full 
-    font-medium 
-    hover:bg-blue-700 
-    transition-colors 
-    shadow-sm
+.download-pdf {
+  @apply hidden sm:block bg-blue-600 text-white px-6 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors shadow-sm
 }
+
 .split-container {
-    display: flex;
-    flex-direction: row;
-    /* Desktop: Side-by-Side */
-    min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  /* Desktop: Side-by-Side */
+  min-height: 100vh;
 }
 
 .pane {
-    flex: 1;
-    /* Both sides take 50% width */
-    padding: 40px;
-    display: flex;
-    /* justify-content: center; */
-    /* align-items: center; */
+  flex: 1;
+  /* Both sides take 50% width */
+  padding: 40px;
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
 }
 
 .left-pane {
-    border-right: none;
-    border-bottom: 1px solid #ddd;
-    padding: 20px;
+  border-right: none;
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
 }
 
 .right-pane {
-    padding: 20px;
-    background-color: #fff;
+  padding: 20px;
+  background-color: #fff;
 }
 
 .form-card {
-    width: 100%;
-    max-width: 450px;
+  width: 100%;
+  max-width: 450px;
 }
 
 .form-card h2 {
-    margin-bottom: 20px;
-    color: #333;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .form-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 label {
-    display: block;
-    font-weight: 600;
-    font-size: 13px;
-    margin-bottom: 5px;
-    color: #555;
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: #555;
 }
-textarea{
-    display: block;
-    width: 100%;
-    border-radius: 4px;
-     border: 1px solid #ccc;
-     box-sizing: border-box;
+
+textarea {
+  display: block;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 15px;
-    box-sizing: border-box;
-    /* Fixes padding issues */
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+  box-sizing: border-box;
+  /* Fixes padding issues */
 }
 
 input:focus {
-    border-color: #333;
-    outline: none;
+  border-color: #333;
+  outline: none;
 }
 
 .row {
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 }
 
 .row .form-group {
-    flex: 1;
+  flex: 1;
 }
 
 .preview-box {
-    width: 100%;
-    max-width: 600px;
-    padding: 30px;
-    border: 2px dashed #eee;
-    /* Visual cue that it's a preview */
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  border: 2px dashed #eee;
+  /* Visual cue that it's a preview */
 }
-.textarea_css{
-min-height: 120px;  /* or any px/rem value */
+
+.textarea_css {
+  min-height: 120px;
+  /* or any px/rem value */
   resize: vertical;
 }
 
 .preview-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    color: #bbb;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #bbb;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
 }
 
 /* Resume Text Styles */
 .resume-name {
-    font-size: 32px;
-    font-weight: 800;
-    margin: 0 0 5px 0;
-    color: #000;
-    line-height: 1.2;
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 5px 0;
+  color: #000;
+  line-height: 1.2;
 }
 
 .resume-title {
-    font-size: 16px;
-    color: #333;
-    margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #333;
+  margin: 0 0 8px 0;
 }
 
 .resume-contact {
-    font-size: 14px;
-    color: #000;
-    margin: 0;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
 }
 
- .section-title {
-          font-size: 18px; font-weight: bold; color: #2c3e50;
-          margin-top: 30px; margin-bottom: 15px; padding-bottom: 5px;
-          border-bottom: 2px solid #ddd;
-        }
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #ddd;
+}
 
 /* Skill Row Styling */
 .skills-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 Columns on Desktop */
-            gap: 15px;
-        }
-        .skill-row {
-          background: white; border: 1px solid #e0e0e0; padding: 15px;
-          border-radius: 6px; margin-bottom: 10px; position: relative;
-        }
-        .remove-btn {
-          background: #ffeded; color: #d32f2f; border: none;
-          padding: 5px 10px; font-size: 12px; cursor: pointer;
-          border-radius: 4px; position: absolute; top: 10px; right: 10px;
-        }
-        .add-btn {
-          width: 100%; background-color: #2c3e50; color: white;
-          padding: 10px; border: none; border-radius: 4px;
-          cursor: pointer; font-weight: bold; margin-top: 10px;
-        }
-        .add-btn:hover { background-color: #1a252f; }
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* 2 Columns on Desktop */
+  gap: 15px;
+}
+
+.skill-row {
+  background: white;
+  border: 1px solid #e0e0e0;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.remove-btn {
+  background: #ffeded;
+  color: #d32f2f;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.add-btn {
+  width: 100%;
+  background-color: #2c3e50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.add-btn:hover {
+  background-color: #1a252f;
+}
 
 
 /* Experience Styles */
-        .exp-company-head { font-size: 16px; font-weight: 700; margin: 15px 0 5px 0; }
-        .exp-role-duration { 
-          display: flex; justify-content: space-between; align-items: center; 
-          font-size: 14px; margin-bottom: 10px; 
-        }
-        .exp-role { font-weight: 600; color: #333; }
-        .exp-duration { font-style: italic; color: #555; }
-        .exp-client-name { 
-          font-weight: 600; color: #2c3e50; 
-          font-size: 14px; margin: 8px 0; /* Align with screenshot style */
-        }
-        .exp-bullet-list { list-style-type: disc; margin: 0 0 15px 0; padding-left: 20px; }
-        .exp-bullet-list li { font-size: 14px; line-height: 1.5; margin-bottom: 4px; }
+.exp-company-head {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 15px 0 5px 0;
+}
+
+.exp-role-duration {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.exp-role {
+  font-weight: 600;
+  color: #333;
+}
+
+.exp-duration {
+  font-style: italic;
+  color: #555;
+}
+
+.exp-client-name {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 14px;
+  margin: 8px 0;
+  /* Align with screenshot style */
+}
+
+.exp-bullet-list {
+  list-style-type: disc;
+  margin: 0 0 15px 0;
+  padding-left: 20px;
+}
+
+.exp-bullet-list li {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
 
 
 /* Ensure the main section header style is present */
 .resume-section-head {
-  font-size: 18px; 
-  font-weight: 700; 
-  color: #000; 
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
   margin-top: 25px;
-  margin-bottom: 10px; 
-  border-bottom: 1px solid #ccc; 
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
   padding-bottom: 3px;
 }
 
 /* Base list style for the Education entries */
-.resume-list { 
-  margin: 0; 
-  padding-left: 20px; /* Provides indentation for bullets */
+.resume-list {
+  margin: 0;
+  padding-left: 20px;
+  /* Provides indentation for bullets */
 }
 
 /* Individual list item style */
-.resume-list li { 
-  font-size: 14px; 
-  line-height: 1.6; 
-  margin-bottom: 4px; 
-  color: #000; 
+.resume-list li {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 4px;
+  color: #000;
 }
+
 /* Project Grid Preview */
-        .projects-grid { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px; margin-bottom: 20px; }
-        .project-card { flex: 1 1 calc(33% - 10px); border: 1px solid #ccc; border-radius: 6px; padding: 12px; background-color: #f9f9f9; min-width: 200px; box-sizing: border-box; }
-        .project-card h4 { margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
-        .project-card .tech-badges span { display: inline-block; font-size: 11px; background-color: #e0e0e0; border-radius: 4px; padding: 2px 5px; margin-right: 4px; margin-bottom: 4px; }
-        .project-card .icon { font-weight: bold; margin-right: 4px; font-size: 16px; }
+.projects-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
 
-        
+.project-card {
+  flex: 1 1 calc(33% - 10px);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-sizing: border-box;
+}
+
+.project-card h4 {
+  margin: 0 0 6px 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.project-card .tech-badges span {
+  display: inline-block;
+  font-size: 11px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  padding: 2px 5px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.project-card .icon {
+  font-weight: bold;
+  margin-right: 4px;
+  font-size: 16px;
+}
+
+
 @media (max-width: 768px) {
-    .split-container {
-        flex-direction: column;
-        /* Stack vertically on mobile */
-    }
+  .split-container {
+    flex-direction: column;
+    /* Stack vertically on mobile */
+  }
 
-    .left-pane {
-        border-right: none;
-        border-bottom: 1px solid #ddd;
-        padding: 20px;
-    }
+  .left-pane {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    padding: 20px;
+  }
 
-    .right-pane {
-        padding: 20px;
-        background-color: #fff;
-    }
+  .right-pane {
+    padding: 20px;
+    background-color: #fff;
+  }
 
-    .preview-box {
-        border: none;
-        padding: 0;
-    }
+  .preview-box {
+    border: none;
+    padding: 0;
+  }
 }
 
 .custom-file-upload-button {
@@ -270,7 +342,8 @@ min-height: 120px;  /* or any px/rem value */
   font-size: 1em;
   font-weight: 600;
   color: #ffffff;
-  background-color: #007bff; /* Vibrant primary color */
+  background-color: #007bff;
+  /* Vibrant primary color */
   border: none;
   border-radius: 8px;
   box-shadow: 0 3px 6px rgba(0, 123, 255, 0.3);
@@ -278,13 +351,16 @@ min-height: 120px;  /* or any px/rem value */
 }
 
 .custom-file-upload-button:hover {
-  background-color: #0056b3; /* Darken on hover */
+  background-color: #0056b3;
+  /* Darken on hover */
   box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
 }
 
 .custom-file-upload-button:active {
-  transform: scale(0.98); /* Subtle press effect */
+  transform: scale(0.98);
+  /* Subtle press effect */
 }
+
 /* Hiding the Default Input */
 .hidden-input {
   width: 0.1px;
@@ -346,7 +422,7 @@ min-height: 120px;  /* or any px/rem value */
   --color-text-muted: #475569;
   --color-input-bg: rgba(15, 23, 20, 0.6);
   --color-input-border: rgba(255, 255, 255, 0.1);
-  
+
   /* Sage Dark Overrides */
   --color-sage-50: #0a0f0d;
   --color-sage-100: #111815;
@@ -367,10 +443,156 @@ min-height: 120px;  /* or any px/rem value */
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--color-card-border);
-  box-shadow: 
+  box-shadow:
     0 8px 32px 0 rgba(0, 0, 0, 0.08),
     inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  /* --- V5 Resume Builder | QPkendra Design System (Dynamic) --- */
+  --v5-bg: #f8fafc;
+  --v5-canvas: #f1f5f9;
+  --v5-card: hsl(210, 20%, 99% / 0.85);
+  /* Cooler, frosted-white for contrast */
+  --v5-border: rgba(0, 0, 0, 0.28);
+  /* Stronger structural edge for Light Mode */
+  --v5-accent: #0ea5e9;
+  --v5-text: #475569;
+  --v5-heading: #0f172a;
+  --v5-glass-bg: rgba(255, 255, 255, 0.85);
+  --v5-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+
   border-radius: 24px;
+}
+
+.dark {
+  --v5-bg: #050a0f;
+  --v5-canvas: #0a1118;
+  --v5-card: #0d151c;
+  --v5-border: rgba(14, 165, 233, 0.2);
+  /* Refracted sky-blue edge */
+  --v5-text: #f8fafc;
+  /* Higher contrast for dark text */
+  --v5-heading: #f8fafc;
+  --v5-glass-bg: rgba(13, 21, 28, 0.6);
+  --v5-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.v5-glass {
+  background: var(--v5-glass-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--v5-border);
+  box-shadow: var(--v5-shadow);
+}
+
+.liquid-input {
+  background: var(--v5-card);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid var(--v5-border);
+  border-radius: 1rem;
+  padding: 0.85rem 1.15rem;
+  color: var(--v5-heading);
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    0 2px 4px 0 rgba(0, 0, 0, 0.02);
+}
+
+.dark .liquid-input {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+    0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.liquid-input:focus {
+  border-color: var(--v5-accent);
+  background: var(--v5-card);
+  box-shadow: 0 0 25px -5px rgba(14, 165, 233, 0.2);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Dynamic Typography Injection: Universal Architecture Overrides */
+.v5-font-inter,
+.v5-font-inter * {
+  font-family: 'Inter', sans-serif !important;
+}
+
+.v5-font-lora,
+.v5-font-lora * {
+  font-family: 'Lora', serif !important;
+}
+
+.v5-font-roboto,
+.v5-font-roboto * {
+  font-family: 'Roboto Mono', monospace !important;
+}
+
+.v5-font-outfit,
+.v5-font-outfit * {
+  font-family: 'Outfit', sans-serif !important;
+}
+
+/* Guidance & Onboarding Modal System */
+.v5-modal-overlay {
+  background: rgba(10, 15, 20, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: modal-fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.v5-modal {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.3);
+  animation: modal-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.dark .v5-modal {
+  background: rgba(13, 21, 28, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 50px 120px -30px rgba(0, 0, 0, 0.7);
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Precision Density: Compact Vertical Rhythm */
+.v5-compact-space {
+  margin-bottom: 0.75rem !important;
 }
 
 .glass-input {
@@ -426,18 +648,21 @@ min-height: 120px;  /* or any px/rem value */
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--color-sage-200);
   border-radius: 10px;
 }
 
-.dark ::-webkit-scrollbar-thumb, 
+.dark ::-webkit-scrollbar-thumb,
 .dark::-webkit-scrollbar-thumb {
   background: var(--color-sage-800);
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-sage-300);
 }
@@ -445,26 +670,29 @@ min-height: 120px;  /* or any px/rem value */
 /* --- Print Optimization for Modern Resume 2.0 --- */
 @media print {
   @page {
-    margin: 0;
-    size: A4;
+    margin: 15mm;
+    size: auto;
   }
+
   body {
     margin: 0;
     padding: 0;
   }
+
   .printable-area {
-    margin: 0 !important;
+    margin: 0 auto !important;
     padding: 0 !important;
-    width: 210mm;
-    height: 297mm;
+    width: 100% !important;
+    max-width: none !important;
   }
 
   /* Suppress faux paper heights in print mode to prevent blank phantom pages */
   .min-h-\[1122px\] {
     min-height: 0 !important;
   }
-  
-  body, html {
+
+  body,
+  html {
     background: white !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -479,7 +707,7 @@ min-height: 120px;  /* or any px/rem value */
   }
 
   /* 3. Define the printable area and make it visible */
-  .printable-area, 
+  .printable-area,
   .printable-area * {
     visibility: visible !important;
     opacity: 1 !important;
@@ -487,24 +715,43 @@ min-height: 120px;  /* or any px/rem value */
     text-shadow: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    border-color: rgba(0, 0, 0, 0.1) !important; /* Force light borders if any */
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    /* Force light borders if any */
   }
 
   .printable-area {
     position: relative !important;
     display: block !important;
     width: 100% !important;
-    max-width: none !important; /* Remove max-width for print */
+    max-width: none !important;
+    /* Remove max-width for print */
     margin: 0 !important;
-    padding: 0 !important; /* Managed by @page margin */
+    padding: 0 !important;
+    /* Managed by @page margin */
     box-shadow: none !important;
     border: none !important;
     background: white !important;
     color: #000 !important;
     height: auto !important;
     min-height: auto !important;
+    max-height: none !important;
     display: block !important;
     overflow: visible !important;
+    position: static !important;
+  }
+
+  /* Force all parents of printable area to allow height to grow across multiple pages */
+  html,
+  body,
+  #root,
+  .App,
+  [class*="h-screen"],
+  .v5-editor-root {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+    position: relative !important;
   }
 
   /* Catch-all to fix padding and shadow issues for all 22 layouts */
@@ -520,20 +767,38 @@ min-height: 120px;  /* or any px/rem value */
   }
 
   /* 4. Completely hide interactive UI elements */
-  nav, aside, button, 
+  nav,
+  aside,
+  button,
   [role="button"],
-  .print-hidden, 
+  .print-hidden,
   .glass-panel::before,
   .glass-panel::after {
     display: none !important;
   }
 
   /* 5. Strip Glassmorphism and decorative UI effects without hiding the element */
-  .shadow-2xl, .shadow-xl, .shadow-lg, .shadow-md, .shadow-sm, .shadow,
-  .backdrop-blur-md, .backdrop-blur-sm, .backdrop-blur-lg, .backdrop-blur-xl,
+  .shadow-2xl,
+  .shadow-xl,
+  .shadow-lg,
+  .shadow-md,
+  .shadow-sm,
+  .shadow,
+  .backdrop-blur-md,
+  .backdrop-blur-sm,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
   .glass-panel,
-  .bg-white\/10, .bg-white\/20, .bg-white\/30, .bg-white\/40, .bg-white\/50,
-  .bg-black\/10, .bg-black\/20, .bg-black\/30, .bg-black\/40, .bg-black\/50 {
+  .bg-white\/10,
+  .bg-white\/20,
+  .bg-white\/30,
+  .bg-white\/40,
+  .bg-white\/50,
+  .bg-black\/10,
+  .bg-black\/20,
+  .bg-black\/30,
+  .bg-black\/40,
+  .bg-black\/50 {
     box-shadow: none !important;
     text-shadow: none !important;
     backdrop-filter: none !important;
@@ -542,28 +807,36 @@ min-height: 120px;  /* or any px/rem value */
   }
 
   /* 6. Typography adjustments for print */
-  b, strong, .font-bold {
+  b,
+  strong,
+  .font-bold {
     font-weight: 600 !important;
   }
 
   /* 5. Force text and icon opacities to 100% */
-  .opacity-30, .opacity-40, .opacity-50, .opacity-60, .opacity-70, .opacity-80, .opacity-90 {
+  .opacity-30,
+  .opacity-40,
+  .opacity-50,
+  .opacity-60,
+  .opacity-70,
+  .opacity-80,
+  .opacity-90 {
     opacity: 1 !important;
   }
 
   /* 6. Page Break Controls */
-  .printable-area p, 
-  .printable-area li, 
+  .printable-area p,
+  .printable-area li,
   .printable-area tr {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
 
-  .printable-area h1, 
-  .printable-area h2, 
-  .printable-area h3, 
-  .printable-area h4, 
-  .printable-area h5, 
+  .printable-area h1,
+  .printable-area h2,
+  .printable-area h3,
+  .printable-area h4,
+  .printable-area h5,
   .printable-area h6 {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
@@ -571,7 +844,7 @@ min-height: 120px;  /* or any px/rem value */
     break-after: avoid !important;
   }
 
-  .printable-area section, 
+  .printable-area section,
   .printable-area ul {
     page-break-inside: auto !important;
     break-inside: auto !important;
