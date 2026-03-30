@@ -6,8 +6,6 @@ import {
   createHashRouter,
   RouterProvider,
 } from 'react-router-dom';
-import V4ProfileForm from './V4/V4ProfileForm.jsx';
-import ModernEditor from './Modern/ModernEditor.jsx';
 import V5Editor from './V5/V5Editor.jsx';
 import NotFoundPage from './NotFound.jsx';
 
@@ -16,14 +14,6 @@ const router=createHashRouter([
 {
   path:"/",
   element:<V5Editor/>
-},
-{
-  path:"/modern",
-  element:<ModernEditor/>
-},
-{
-  path:"/v4",
-  element:<V4ProfileForm/>
 },
 {
   path:"/v5",

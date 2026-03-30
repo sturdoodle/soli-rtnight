@@ -263,6 +263,16 @@ const V5EditorContent = () => {
             >
               About Us
             </button>
+
+            {/* Mobile Branding Signature */}
+            <div className="pt-6 pb-2 flex flex-col items-center justify-center text-center border-t border-black/5 dark:border-white/5 mt-4">
+              <h3 className="text-lg font-black tracking-[-0.05em] text-[var(--v5-heading)] opacity-80 dark:opacity-90 normal-case" style={{ fontFamily: 'Absans, sans-serif' }}>
+                qpkendra
+              </h3>
+              <p className="text-[9px] font-bold text-slate-500 mt-1 tracking-wide normal-case">
+                Crafted with <span className="text-blue-500 text-[10px] inline-block">💙</span> in India
+              </p>
+            </div>
           </div>
         </div>
       )}
@@ -298,13 +308,12 @@ const V5EditorContent = () => {
           <nav className="flex-1 space-y-3 px-4 transition-all">
             <SidebarItem icon={FileText} label="Identity" active={activeTab === 'content'} onClick={() => setActiveTab('content')} activeColor={activeColor} collapsed={isSidebarCollapsed} />
             <SidebarItem icon={Layout} label="Structure" active={activeTab === 'layout'} onClick={() => setActiveTab('layout')} activeColor={activeColor} collapsed={isSidebarCollapsed} />
-            <SidebarItem icon={ArrowLeft} label="Modern" onClick={() => navigate('/modern')} activeColor={activeColor} collapsed={isSidebarCollapsed} />
             <SidebarItem icon={Type} label="Typeface" active={activeTab === 'typography'} onClick={() => setActiveTab('typography')} activeColor={activeColor} collapsed={isSidebarCollapsed} />
             <SidebarItem icon={Settings} label="Settings" active={activeTab === 'snapshots'} onClick={() => setActiveTab('snapshots')} activeColor={activeColor} collapsed={isSidebarCollapsed} />
           </nav>
 
           {resumeData.predictiveScoreEnabled && (
-            <div className={`p-6 mt-auto transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'opacity-0 max-h-0 overflow-hidden p-0 pointer-events-none' : 'opacity-100 max-h-[500px]'}`}>
+            <div className={`px-6 pt-6 transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'opacity-0 max-h-0 overflow-hidden p-0 pointer-events-none' : 'opacity-100 max-h-[500px]'}`}>
               <div className="p-6 rounded-[2.5rem] bg-[var(--v5-canvas)]/50 border border-black/5 dark:border-white/5 hidden lg:block shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
@@ -327,6 +336,16 @@ const V5EditorContent = () => {
               </div>
             </div>
           )}
+
+          {/* QPKendra Branding Signature Side */}
+          <div className={`mt-auto p-6 mb-4 flex flex-col items-center justify-center text-center transition-all duration-500 ${isSidebarCollapsed ? 'opacity-0 max-h-0 overflow-hidden scale-90' : 'opacity-100 max-h-[200px] scale-100'}`}>
+            <h3 className="text-xl font-black tracking-[-0.05em] text-[var(--v5-heading)] opacity-80 dark:opacity-90 transition-opacity" style={{ fontFamily: 'Absans, sans-serif' }}>
+              qpkendra
+            </h3>
+            <p className="text-[9px] font-bold text-slate-500 mt-1 tracking-wide">
+              Crafted with <span className="text-blue-500 text-[11px] inline-block hover:scale-125 transition-transform cursor-default">💙</span> in India
+            </p>
+          </div>
         </aside>
 
         {/* Editor Canvas */}
@@ -348,21 +367,17 @@ const V5EditorContent = () => {
                   <CertificationsSection />
                   <SkillsSection />
 
-                  {/* AI Optimizer Card */}
-                  <div className="p-10 rounded-[3rem] bg-gradient-to-br from-black/5 to-black/10 dark:from-white/5 dark:to-white/10 border border-black/5 dark:border-white/5 relative overflow-hidden group transition-all">
-                    <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-all">
-                      <Zap size={80} style={{ color: activeColor }} />
+                  {/* QPKendra Branding Signature Card */}
+                  <div className="p-10 rounded-[3rem] bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 relative overflow-hidden group transition-all flex flex-col items-center text-center justify-center min-h-[220px]">
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 bg-white/50 dark:bg-black/30 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.3)] transition-all group-hover:scale-110 group-hover:rotate-[-5deg]">
+                      <span className="text-3xl font-black text-[var(--v5-heading)]" style={{ fontFamily: 'Absans, sans-serif', letterSpacing: '-0.05em', color: activeColor }}>qp</span>
                     </div>
-                    <div className="relative z-10 flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-3xl flex items-center justify-center mb-6 border border-black/5 dark:border-white/10 shadow-inner"
-                        style={{ backgroundColor: `${activeColor}20` }}>
-                        <Sparkles style={{ color: activeColor }} size={32} />
-                      </div>
-                      <h2 className="text-2xl font-black text-[var(--v5-heading)] mb-3 text-shadow-sm">AI Optimizer</h2>
-                      <p className="text-[var(--v5-text)] max-w-md mx-auto text-sm mb-8 leading-relaxed">Let our AI analyze your resume and suggest high-conversion bullet points for modern recruiter expectations.</p>
-                      <button className="px-10 py-4 text-white text-xs font-black uppercase tracking-[0.2em] rounded-full hover:scale-110 active:scale-95 transition-all shadow-xl"
-                        style={{ backgroundColor: activeColor, boxShadow: `0 10px 30px -5px ${activeColor}50` }}>Optimize Now</button>
-                    </div>
+                    <h3 className="text-3xl font-black tracking-[-0.05em] text-[var(--v5-heading)] opacity-90 transition-opacity" style={{ fontFamily: 'Absans, sans-serif' }}>
+                      qpkendra
+                    </h3>
+                    <p className="text-xs font-bold text-slate-500 mt-2 uppercase tracking-widest">
+                      Crafted with <span className="text-blue-500 text-sm inline-block animate-pulse mx-1">💙</span> in India
+                    </p>
                   </div>
                 </div>
               )}

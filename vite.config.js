@@ -15,4 +15,15 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['jspdf'],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['lucide-react'],
+          pdf: ['jspdf', 'html2canvas']
+        }
+      }
+    }
+  }
 })
