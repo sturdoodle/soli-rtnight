@@ -768,7 +768,6 @@ input:focus {
 
   /* 4. Completely hide interactive UI elements */
   nav,
-  aside,
   button,
   [role="button"],
   .print-hidden,

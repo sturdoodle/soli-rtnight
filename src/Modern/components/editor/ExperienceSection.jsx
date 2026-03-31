@@ -1,9 +1,11 @@
 import React from 'react';
-import { Briefcase, Plus, Trash2, ChevronRight } from 'lucide-react';
+import { Briefcase, Plus, Trash2, ChevronRight, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import MinimalistInput from '../ui/MinimalistInput';
 import PillButton from '../ui/PillButton';
 import { useResume } from '../../context/ResumeContext';
+import AdSenseAd from '../../../AdsenseAdsBlock.jsx';
+import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../../../MainConstant.js';
 
 const ExperienceSection = () => {
   const { resumeData, updateSection } = useResume();
@@ -56,65 +58,126 @@ const ExperienceSection = () => {
     updateSection('experience', updatedExp);
   };
 
+  const handleAddClient = (expId) => {
+    const updatedExp = resumeData.experience.map(exp => {
+      if (exp.id === expId) {
+        return {
+          ...exp,
+          clients: [
+            ...exp.clients,
+            { id: Date.now(), name: '', bulletPoints: [''] }
+          ]
+        };
+      }
+      return exp;
+    });
+    updateSection('experience', updatedExp);
+  };
+
+  const handleRemoveClient = (expId, clientId) => {
+    const updatedExp = resumeData.experience.map(exp => {
+      if (exp.id === expId) {
+        return {
+          ...exp,
+          clients: exp.clients.filter(c => c.id !== clientId)
+        };
+      }
+      return exp;
+    });
+    updateSection('experience', updatedExp);
+  };
+
   return (
     <GlassCard title="Work Experience" icon={Briefcase} isCollapsible={true}>
       <div className="space-y-6 sm:space-y-8">
-        {(resumeData.experience || []).map((exp) => (
-          <div key={exp.id} className="p-4 sm:p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2 text-slate-400">
-                <Briefcase size={14} />
-                <span className="text-[10px] font-black uppercase tracking-widest leading-none">Experience Unit</span>
+        <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-700">
+          <Sparkles size={14} className="text-blue-500/50" />
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+            Smart Section: This will be automatically removed from your resume if left empty.
+          </p>
+        </div>
+        {(resumeData.experience || []).map((exp, index) => (
+          <React.Fragment key={exp.id}>
+            <div className="p-4 sm:p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2 text-slate-400">
+                  <Briefcase size={14} />
+                  <span className="text-[10px] font-black uppercase tracking-widest leading-none">Experience Unit</span>
+                </div>
+                <PillButton 
+                  variant="danger" 
+                  className="z-20 scaled-icon"
+                  onClick={() => handleRemoveExp(exp.id)}
+                  icon={Trash2}
+                />
               </div>
-              <PillButton 
-                variant="danger" 
-                className="z-20 scaled-icon"
-                onClick={() => handleRemoveExp(exp.id)}
-                icon={Trash2}
-              />
-            </div>
-            
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-6">
-              <MinimalistInput 
-                label="Company" 
-                value={exp.company} 
-                onChange={(e) => handleUpdateExp(exp.id, 'company', e.target.value)} 
-              />
-              <MinimalistInput 
-                label="Role" 
-                value={exp.role} 
-                onChange={(e) => handleUpdateExp(exp.id, 'role', e.target.value)} 
-              />
-              <MinimalistInput 
-                label="Duration" 
-                value={exp.duration} 
-                onChange={(e) => handleUpdateExp(exp.id, 'duration', e.target.value)} 
-              />
+              
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-6">
+                <MinimalistInput 
+                  label="Company" 
+                  value={exp.company} 
+                  onChange={(e) => handleUpdateExp(exp.id, 'company', e.target.value)} 
+                />
+                <MinimalistInput 
+                  label="Role" 
+                  value={exp.role} 
+                  onChange={(e) => handleUpdateExp(exp.id, 'role', e.target.value)} 
+                />
+                <MinimalistInput 
+                  label="Duration" 
+                  value={exp.duration} 
+                  onChange={(e) => handleUpdateExp(exp.id, 'duration', e.target.value)} 
+                />
+              </div>
+
+              <div className="pl-2 sm:pl-6 border-l-2 border-sage-200/50 space-y-8 sm:space-y-10">
+                {exp.clients.map(client => (
+                  <div key={client.id} className="space-y-4 relative group/client">
+                    <div className="flex items-center justify-between mb-2">
+                       <div className="flex items-center gap-2 text-sage-600">
+                        <ChevronRight size={16} />
+                        <h4 className="font-semibold text-sm uppercase tracking-wider">Client / Project</h4>
+                      </div>
+                      <button 
+                        onClick={() => handleRemoveClient(exp.id, client.id)}
+                        className="p-2 text-rose-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all opacity-0 group-hover/client:opacity-100"
+                        title="Remove Client"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                    <MinimalistInput 
+                      value={client.name} 
+                      onChange={(e) => handleUpdateClient(exp.id, client.id, 'name', e.target.value)}
+                      placeholder="Global Fintech Alliance"
+                    />
+                    <MinimalistInput 
+                      textarea 
+                      label="Bullet Points (One per line)" 
+                      value={client.bulletPoints.join('\n')} 
+                      onChange={(e) => handleUpdateBullets(exp.id, client.id, e.target.value)}
+                      placeholder="Architected a micro-frontend architecture..."
+                    />
+                  </div>
+                ))}
+
+                <button
+                  onClick={() => handleAddClient(exp.id)}
+                  className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-sage-50 text-sage-600 hover:bg-sage-100 border border-sage-200/50 transition-all font-black text-[9px] uppercase tracking-[0.2em] w-fit"
+                >
+                  <Plus size={14} />
+                  Add Project / Client
+                </button>
+              </div>
             </div>
 
-            <div className="pl-2 sm:pl-6 border-l-2 border-sage-200/50 space-y-4 sm:space-y-6">
-              {exp.clients.map(client => (
-                <div key={client.id} className="space-y-4">
-                  <div className="flex items-center gap-2 text-sage-600 mb-2">
-                    <ChevronRight size={16} />
-                    <h4 className="font-semibold text-sm uppercase tracking-wider">Client / Project</h4>
-                  </div>
-                  <MinimalistInput 
-                    value={client.name} 
-                    onChange={(e) => handleUpdateClient(exp.id, client.id, 'name', e.target.value)}
-                    placeholder="Global Fintech Alliance"
-                  />
-                  <MinimalistInput 
-                    textarea 
-                    label="Bullet Points (One per line)" 
-                    value={client.bulletPoints.join('\n')} 
-                    onChange={(e) => handleUpdateBullets(exp.id, client.id, e.target.value)}
-                    placeholder="Architected a micro-frontend architecture..."
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+            {/* In-Section Intelligent Ad Injection */}
+            {index === 1 && (resumeData.experience || []).length > 2 && (
+              <div className="p-10 rounded-[3rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-700 my-4 flex items-center justify-center">
+                 <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
+              </div>
+            )}
+          </React.Fragment>
         ))}
         
         <PillButton 

@@ -16,6 +16,8 @@ import EducationSection from '../Modern/components/editor/EducationSection';
 import CertificationsSection from '../Modern/components/editor/CertificationsSection';
 import SkillsSection from '../Modern/components/editor/SkillsSection';
 import logo from '../V4/components/shared/o-logo.png';
+import AdSenseAd from '../AdsenseAdsBlock.jsx';
+import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../MainConstant.js';
 
 const SidebarItem = ({ icon: Icon, label, active, onClick, disabled, activeColor, collapsed }) => (
   <button
@@ -113,12 +115,12 @@ const V5EditorContent = () => {
   };
 
   const tabMeta = {
-    content: { title: "Identity", subtitle: "Crafting your professional narrative" },
-    layout: { title: "Structural Blueprint", subtitle: "Defining the visual frequency." },
-    typography: { title: "Typeface Dynamics", subtitle: "Engineering readability through architectural font systems." },
-    snapshots: { title: "Time Machine", subtitle: "Managing career snapshots and data integrity protocols." },
-    history: { title: "Time Machine", subtitle: "Managing career snapshots and data integrity protocols." },
-    about: { title: "About Us", subtitle: "Privacy First: Your data stays with you." }
+    content: { title: "Identity", subtitle: "Create a compelling professional profile" },
+    layout: { title: "Layout", subtitle: "Select a professional structure for your resume" },
+    typography: { title: "Typography", subtitle: "Choose professional fonts for maximum readability" },
+    snapshots: { title: "Backups", subtitle: "Save and manage your resume drafts" },
+    history: { title: "Backups", subtitle: "Save and manage your resume drafts" },
+    about: { title: "About Us", subtitle: "Privacy First: Your data remains secure and private." }
   };
 
   const currentMeta = tabMeta[activeTab] || tabMeta.content;
@@ -290,7 +292,7 @@ const V5EditorContent = () => {
           </button>
 
           <div className={`px-8 hidden lg:block transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'opacity-0 max-h-0 mb-0 overflow-hidden' : 'opacity-100 max-h-[200px] mb-12'}`}>
-            <h2 className="text-[10px] font-black text-slate-400 dark:text-slate-600 uppercase tracking-[0.3em] mb-4 whitespace-nowrap">Precision Engine</h2>
+            <h2 className="text-[10px] font-black text-slate-400 dark:text-slate-600 uppercase tracking-[0.3em] mb-4 whitespace-nowrap">Resume Editor</h2>
             <div className="p-5 rounded-3xl border border-black/5 dark:border-white/5 flex items-center gap-4 shadow-sm group cursor-pointer hover:bg-black/5 transition-all w-full overflow-hidden"
               style={{ backgroundColor: `${activeColor}05` }}>
               <div className="p-2.5 rounded-2xl text-white shadow-lg shrink-0"
@@ -298,7 +300,7 @@ const V5EditorContent = () => {
                 <Edit3 size={18} />
               </div>
               <div className="flex flex-col overflow-hidden whitespace-nowrap">
-                <span className="text-xs font-black text-[var(--v5-heading)] tracking-tight">Active Canvas</span>
+                <span className="text-xs font-black text-[var(--v5-heading)] tracking-tight">Active Draft</span>
                 <span className="text-[10px] font-bold uppercase tracking-widest leading-none mt-0.5"
                   style={{ color: activeColor }}>Editing Now</span>
               </div>
@@ -337,6 +339,20 @@ const V5EditorContent = () => {
             </div>
           )}
 
+          {/* AdSense Sidebar Block */}
+          {!isSidebarCollapsed && (
+            <div className="px-6 mb-4 animate-in fade-in duration-700 delay-500">
+              <div className="p-4 rounded-3xl bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 backdrop-blur-xl flex items-center justify-center overflow-hidden min-h-[100px] ads-block shadow-sm group">
+                <AdSenseAd 
+                  client={ADSENSE_CLIENT_ID} 
+                  slot={ADSENSE_INBETWEEN_SLOT_ID} 
+                  format="auto" 
+                  containerClassName="w-full opacity-80 group-hover:opacity-100 transition-opacity"
+                />
+              </div>
+            </div>
+          )}
+
           {/* QPKendra Branding Signature Side */}
           <div className={`mt-auto p-6 mb-4 flex flex-col items-center justify-center text-center transition-all duration-500 ${isSidebarCollapsed ? 'opacity-0 max-h-0 overflow-hidden scale-90' : 'opacity-100 max-h-[200px] scale-100'}`}>
             <h3 className="text-xl font-black tracking-[-0.05em] text-[var(--v5-heading)] opacity-80 dark:opacity-90 transition-opacity" style={{ fontFamily: 'Absans, sans-serif' }}>
@@ -356,6 +372,12 @@ const V5EditorContent = () => {
                 <h1 className="text-4xl sm:text-6xl font-black tracking-[-0.05em] text-[var(--v5-heading)] mb-3 leading-[0.9] transition-all duration-700">{currentMeta.title}</h1>
                 <p className="text-sm sm:text-lg text-[var(--v5-text)] font-medium tracking-tight transition-all duration-700 delay-100">{currentMeta.subtitle}</p>
               </header>
+
+              {activeTab === 'content' && (
+                <div className="mb-10 p-6 sm:p-10 rounded-[2.5rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-700">
+                   <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
+                </div>
+              )}
 
               {activeTab === 'content' && (
                 <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -413,7 +435,7 @@ const V5EditorContent = () => {
                       { name: 'Inter Architecture', desc: 'Modern, high-velocity technical sans.', font: 'Inter' },
                       { name: 'Lora Elegant', desc: 'Sophisticated professional serif architecture.', font: 'Lora' },
                       { name: 'Roboto Technical', desc: 'Precise engineering-grade monospace.', font: 'Roboto Mono' },
-                      { name: 'Outfit Liquid', desc: 'Soft-edge, approachable modern geometry.', font: 'Outfit' }
+                      { name: 'Outfit Modern', desc: 'Clean, approachable geometric typeface.', font: 'Outfit' }
                     ].map((f) => {
                       const isActive = resumeData.fontFamily === f.font;
                       return (
@@ -603,9 +625,20 @@ const V5EditorContent = () => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col items-center py-6 px-4 bg-[var(--v5-canvas)]/20 rounded-[2.5rem] border border-black/5 dark:border-white/5">
-            <div className="w-full h-auto rounded-[1.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.1)] dark:shadow-[0_30px_80px_rgba(0,0,0,0.3)] transition-all hover:translate-y-[-2px]">
-              <ModernLivePreview />
+          <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col items-center py-6 bg-[var(--v5-canvas)]/20 rounded-[2.5rem] border border-black/5 dark:border-white/5 relative">
+            <div
+              className="transition-all duration-700"
+              style={{
+                transform: 'scale(0.65)', // Perfectly balanced for 650px width
+                transformOrigin: 'top center',
+                width: '800px',
+                height: '0',
+                paddingBottom: 'calc(100% * 1.40 + 200px)' // Force a scrolling height that matches the content without being excessive
+              }}
+            >
+              <div className="shadow-[0_40px_100px_rgba(0,0,0,0.3)] rounded-[1.5rem] overflow-hidden pointer-events-none">
+                <ModernLivePreview />
+              </div>
             </div>
           </div>
         </section>
@@ -655,7 +688,7 @@ const V5EditorContent = () => {
               </div>
 
               <h2 className="text-3xl font-black text-[var(--v5-heading)] mb-4 tracking-tight">Resume Builder | QPkendra V5</h2>
-              <p className="text-slate-500 leading-relaxed mb-8">Welcome to the future of career engineering. V5 is a precision architect where your profile and structural resonance are tuned with liquid fluidity.</p>
+              <p className="text-slate-500 leading-relaxed mb-8">Build a professional, ATS-friendly resume in minutes. Precision-crafted templates designed to help you land your dream role.</p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full mb-8 sm:mb-10 text-left">
                 <div className="p-4 sm:p-6 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5">

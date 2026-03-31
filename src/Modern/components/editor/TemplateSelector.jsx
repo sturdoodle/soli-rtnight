@@ -38,12 +38,11 @@ const TemplateSelector = () => {
               <button
                 key={color.value}
                 onClick={() => updateThemeColor(color.value)}
-                className={`w-8 h-8 rounded-full transition-all hover:scale-110 active:scale-95 flex items-center justify-center border-2 ${
-                  currentThemeColor === color.value ? 'border-white ring-2 ring-offset-2' : 'border-transparent'
-                }`}
-                style={{ 
+                className={`w-8 h-8 rounded-full transition-all hover:scale-110 active:scale-95 flex items-center justify-center border-2 ${currentThemeColor === color.value ? 'border-white ring-2 ring-offset-2' : 'border-transparent'
+                  }`}
+                style={{
                   backgroundColor: color.value,
-                  '--tw-ring-color': color.value 
+                  '--tw-ring-color': color.value
                 }}
                 title={color.name}
               >
@@ -57,18 +56,17 @@ const TemplateSelector = () => {
         <div className="space-y-4 px-2">
           <div className="flex items-center gap-2 mb-2 transition-colors" style={{ color: currentThemeColor }}>
             <Layout size={16} />
-            <span className="text-xs uppercase tracking-widest font-bold">Choose Layout</span>
+            <span className="text-xs uppercase tracking-widest font-bold">Choose Resume / C.V  Layout</span>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {Object.values(templates).map((template) => (
               <button
                 key={template.id}
                 onClick={() => updateTemplate(template.id)}
-                className={`p-4 rounded-2xl border-2 transition-all text-left flex items-start gap-3 group relative overflow-hidden ${
-                currentTemplate === template.id
-                  ? 'bg-white/80 dark:bg-white/5 shadow-lg shadow-black/5 ring-4'
-                  : 'border-white dark:border-white/5 bg-white/40 dark:bg-zinc-900/5 hover:border-black/10 dark:hover:border-white/10 hover:bg-white/60 dark:hover:bg-zinc-900/10'
-              }`}
+                className={`p-4 rounded-2xl border-2 transition-all text-left flex items-start gap-3 group relative overflow-hidden ${currentTemplate === template.id
+                    ? 'bg-white/80 dark:bg-white/5 shadow-lg shadow-black/5 ring-4'
+                    : 'border-white dark:border-white/5 bg-white/40 dark:bg-zinc-900/5 hover:border-black/10 dark:hover:border-white/10 hover:bg-white/60 dark:hover:bg-zinc-900/10'
+                  }`}
                 style={currentTemplate === template.id ? { borderColor: currentThemeColor, '--tw-ring-color': `${currentThemeColor}10` } : {}}
               >
                 <div className="text-2xl group-hover:scale-110 transition-transform">
@@ -79,9 +77,8 @@ const TemplateSelector = () => {
                     style={currentTemplate === template.id ? { color: currentThemeColor } : {}}>
                     {template.id.replace('template-', 'Design ')}
                   </span>
-                  <span className={`text-xs font-semibold ${
-                    currentTemplate === template.id ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-zinc-400'
-                  }`}>
+                  <span className={`text-xs font-semibold ${currentTemplate === template.id ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-zinc-400'
+                    }`}>
                     {template.name}
                   </span>
                 </div>
@@ -108,7 +105,7 @@ const TemplateSelector = () => {
             <div className="group relative">
               <Info size={14} className="text-sage-300 cursor-help" />
               <div className="absolute right-0 bottom-full mb-2 w-48 p-2 bg-slate-800 text-[10px] text-white rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-xl border border-slate-700">
-                Persistent: Data stays on your device.<br/>Temporary: Data is cleared when you close the tab.
+                Persistent: Data stays on your device.<br />Temporary: Data is cleared when you close the tab.
               </div>
             </div>
           </div>
@@ -116,11 +113,10 @@ const TemplateSelector = () => {
           <div className="flex p-1 bg-black/5 dark:bg-white/5 rounded-xl border border-black/5 dark:border-white/5">
             <button
               onClick={() => updateStorageType('persistent')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-bold transition-all ${
-                storageType === 'persistent'
+              className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-bold transition-all ${storageType === 'persistent'
                   ? 'bg-white dark:bg-white/10 shadow-sm'
                   : 'text-slate-400 hover:text-slate-500'
-              }`}
+                }`}
               style={storageType === 'persistent' ? { color: currentThemeColor } : {}}
             >
               <Database size={14} />
@@ -128,11 +124,10 @@ const TemplateSelector = () => {
             </button>
             <button
               onClick={() => updateStorageType('temporary')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-bold transition-all ${
-                storageType === 'temporary'
+              className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-bold transition-all ${storageType === 'temporary'
                   ? 'bg-white dark:bg-white/10 text-rose-500 shadow-sm'
                   : 'text-sage-400 hover:text-sage-500'
-              }`}
+                }`}
             >
               <ShieldCheck size={14} />
               Temporary
@@ -159,15 +154,15 @@ const TemplateSelector = () => {
               </div>
               <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-3">Wipe Engine Cache?</h3>
               <p className="text-[13px] text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">This will erase all your resume data and reset the structural blueprint to factory defaults. This action cannot be undone.</p>
-              
+
               <div className="flex items-center gap-3 w-full">
-                <button 
+                <button
                   onClick={() => setShowWipeConfirm(false)}
                   className="flex-1 py-3.5 px-4 rounded-xl font-black text-[10px] uppercase tracking-widest text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition-all"
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   onClick={() => { resetResume(); setShowWipeConfirm(false); }}
                   className="flex-1 py-3.5 px-4 rounded-xl font-black text-[10px] uppercase tracking-widest text-white bg-rose-500 hover:bg-rose-600 shadow-lg shadow-rose-500/30 transition-all hover:-translate-y-0.5"
                 >
