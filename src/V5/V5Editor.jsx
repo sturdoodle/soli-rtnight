@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   Plus, Edit3, Layout, Palette, Type, History,
-  Sparkles, ShieldCheck, Moon, Sun, Download,
+  Sparkles, ShieldCheck, Moon, Sun, Download, Upload,
   Trash2, Search, Maximize2, Zap, BarChart3, User, Briefcase, GraduationCap, Award, FileText, FolderCode, Mail, Phone, MapPin, Github, ArrowLeft, X, Rocket, ExternalLink, Menu, ChevronLeft, ChevronRight, Printer, Settings
 } from 'lucide-react';
 import { useResume, ResumeProvider } from '../Modern/context/ResumeContext';
@@ -51,6 +51,8 @@ const V5EditorContent = () => {
   const atsMode = resumeData.atsMode;
   const themeMode = resumeData.themeMode;
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const navbarFileInputRef = React.useRef(null);
+  const mobileFileInputRef = React.useRef(null);
 
   useEffect(() => {
     const hasVisited = localStorage.getItem('v5_onboarding_completed');
@@ -58,6 +60,7 @@ const V5EditorContent = () => {
   }, []);
 
   const atsScore = useMemo(() => {
+    if (!resumeData.atsMode) return 0;
     let score = 0;
     const data = resumeData;
 
@@ -213,6 +216,33 @@ const V5EditorContent = () => {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex flex-row items-center gap-2 sm:gap-2 mr-2 hidden md:flex h-9">
+            <button 
+              onClick={handleExportJSON}
+              className="flex flex-row items-center gap-2 h-full px-3 rounded-xl border border-black/5 dark:border-white/10 hover:bg-emerald-500/10 hover:border-emerald-500/20 transition-all group text-slate-500 hover:text-emerald-500 whitespace-nowrap"
+              title="Export Backup (JSON)"
+            >
+              <Download size={14} className="group-hover:scale-110 transition-transform" />
+              <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap">Export</span>
+            </button>
+            
+            <button 
+              onClick={() => navbarFileInputRef.current?.click()}
+              className="flex flex-row items-center gap-2 h-full px-3 rounded-xl border border-black/5 dark:border-white/10 hover:bg-blue-500/10 hover:border-blue-500/20 transition-all group text-slate-500 hover:text-blue-500 cursor-pointer whitespace-nowrap"
+              title="Import Snapshot (JSON)"
+            >
+              <Upload size={14} className="group-hover:scale-110 transition-transform" />
+              <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap">Import</span>
+            </button>
+            <input 
+              ref={navbarFileInputRef}
+              type="file" 
+              className="hidden" 
+              accept=".json" 
+              onChange={handleImportJSON} 
+            />
+          </div>
+
           <div className={`flex items-center gap-1.5 sm:gap-3 p-1.5 rounded-full border transition-all duration-300 group cursor-pointer ${atsMode ? 'border-transparent shadow-lg' : 'bg-white/5 border-black/5 dark:border-white/10'}`}
             style={atsMode ? { backgroundColor: activeColor } : {}}
             onClick={toggleAts}>
@@ -266,6 +296,29 @@ const V5EditorContent = () => {
               About Us
             </button>
 
+            <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-black/5 dark:border-white/5">
+              <button
+                onClick={() => { handleExportJSON(); setIsMobileMenuOpen(false); }}
+                className="flex items-center justify-center gap-2 py-4 px-4 bg-emerald-500/5 text-emerald-600 rounded-2xl text-[9px] font-black uppercase tracking-widest border border-emerald-500/10"
+              >
+                <Download size={14} /> Export
+              </button>
+              <button 
+                onClick={() => { mobileFileInputRef.current?.click(); setIsMobileMenuOpen(false); }}
+                className="flex items-center justify-center gap-2 py-4 px-4 bg-blue-500/5 text-blue-600 rounded-2xl text-[9px] font-black uppercase tracking-widest border border-blue-500/10 cursor-pointer"
+              >
+                <Upload size={14} /> Import
+              </button>
+              <input 
+                ref={mobileFileInputRef}
+                id="mobile-import-json"
+                type="file" 
+                className="hidden" 
+                accept=".json" 
+                onChange={(e) => { handleImportJSON(e); setIsMobileMenuOpen(false); }} 
+              />
+            </div>
+
             {/* Mobile Branding Signature */}
             <div className="pt-6 pb-2 flex flex-col items-center justify-center text-center border-t border-black/5 dark:border-white/5 mt-4">
               <h3 className="text-lg font-black tracking-[-0.05em] text-[var(--v5-heading)] opacity-80 dark:opacity-90 normal-case" style={{ fontFamily: 'Absans, sans-serif' }}>
@@ -314,7 +367,7 @@ const V5EditorContent = () => {
             <SidebarItem icon={Settings} label="Settings" active={activeTab === 'snapshots'} onClick={() => setActiveTab('snapshots')} activeColor={activeColor} collapsed={isSidebarCollapsed} />
           </nav>
 
-          {resumeData.predictiveScoreEnabled && (
+          {resumeData.predictiveScoreEnabled && resumeData.atsMode && (
             <div className={`px-6 pt-6 transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'opacity-0 max-h-0 overflow-hidden p-0 pointer-events-none' : 'opacity-100 max-h-[500px]'}`}>
               <div className="p-6 rounded-[2.5rem] bg-[var(--v5-canvas)]/50 border border-black/5 dark:border-white/5 hidden lg:block shadow-sm">
                 <div className="flex items-center justify-between mb-4">
@@ -343,10 +396,10 @@ const V5EditorContent = () => {
           {!isSidebarCollapsed && (
             <div className="px-6 mb-4 animate-in fade-in duration-700 delay-500">
               <div className="p-4 rounded-3xl bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 backdrop-blur-xl flex items-center justify-center overflow-hidden min-h-[100px] ads-block shadow-sm group">
-                <AdSenseAd 
-                  client={ADSENSE_CLIENT_ID} 
-                  slot={ADSENSE_INBETWEEN_SLOT_ID} 
-                  format="auto" 
+                <AdSenseAd
+                  client={ADSENSE_CLIENT_ID}
+                  slot={ADSENSE_INBETWEEN_SLOT_ID}
+                  format="auto"
                   containerClassName="w-full opacity-80 group-hover:opacity-100 transition-opacity"
                 />
               </div>
@@ -365,17 +418,17 @@ const V5EditorContent = () => {
         </aside>
 
         {/* Editor Canvas */}
-        <main className="flex-1 overflow-y-auto bg-[var(--v5-canvas)]/10 p-2 sm:p-6 lg:px-4 lg:py-8 pb-24 lg:pb-8 custom-scrollbar print:hidden will-change-transform">
+        <main className="flex-1 overflow-y-auto bg-[var(--v5-canvas)]/10 p-2 sm:p-6 lg:px-4 lg:py-6 pb-24 lg:pb-8 custom-scrollbar print:hidden will-change-transform">
           <div className="max-w-7xl mx-auto h-full">
-            <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] pt-10 pb-32 px-4 sm:px-8 lg:px-12 py-10">
-              <header className="mb-10 lg:mb-12">
-                <h1 className="text-4xl sm:text-6xl font-black tracking-[-0.05em] text-[var(--v5-heading)] mb-3 leading-[0.9] transition-all duration-700">{currentMeta.title}</h1>
-                <p className="text-sm sm:text-lg text-[var(--v5-text)] font-medium tracking-tight transition-all duration-700 delay-100">{currentMeta.subtitle}</p>
+            <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] pt-8 pb-32 px-4 sm:px-8 lg:px-12 py-8">
+              <header className="mb-8 lg:mb-10">
+                <h1 className="text-4xl sm:text-6xl font-black tracking-[-0.05em] text-[var(--v5-heading)] mb-2 leading-[0.9] transition-all duration-700">{currentMeta.title}</h1>
+                <p className="text-sm sm:text-base text-[var(--v5-text)] font-medium tracking-tight transition-all duration-700 delay-100 opacity-80">{currentMeta.subtitle}</p>
               </header>
 
               {activeTab === 'content' && (
-                <div className="mb-10 p-6 sm:p-10 rounded-[2.5rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-700">
-                   <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
+                <div className="mb-8 p-6 sm:p-10 rounded-[2.5rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-700">
+                  <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
                 </div>
               )}
 
