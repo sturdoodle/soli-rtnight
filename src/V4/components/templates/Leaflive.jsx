@@ -1,4 +1,4 @@
-import {ArrowLeft, Printer , Phone, Mail, MapPin, Github, CheckCircle, Award } from 'lucide-react';
+import { ArrowLeft, Printer, Phone, Mail, MapPin, Github, CheckCircle, Award } from 'lucide-react';
 import { getISTFormatDate, processTextFormatting } from '../utils/dataHelper';
 import { BLOCK_ON_PRINT_CSS } from '../../../MainConstant';
 
@@ -31,7 +31,7 @@ const Header = ({ personal }) => {
     <header className="pb-1 border-gray-800">
       <h1 className="text-3xl font-bold text-gray-800 tracking-wider mb-1">{personal.fullName}</h1>
       <h2 className="text-lg font-medium text-gray-600 mb-2">{personal.jobTitle}</h2>
-      
+
       <div className="flex flex-wrap text-sm text-gray-600 gap-x-4">
         {personal.phone && (
           <IconDetail Icon={Phone}>
@@ -58,10 +58,10 @@ const Header = ({ personal }) => {
   );
 };
 
-// --- Technical Skills Component ---
+// --- Skills Component ---
 const TechnicalSkills = ({ skills }) => (
   <div className="resume-section"> {/* ADDED resume-section CLASS */}
-    <SectionHeader title="Technical Skills" />
+    <SectionHeader title="Skills" />
     <div className="text-sm space-y-1">
       {skills.map((skill) => (
         <DetailItem
@@ -95,17 +95,17 @@ const Experience = ({ experiences }) => (
           <div key={client.id} className="mt-1">
             {/* Optional client/project name if available */}
             {client.name && (
-                <div className="text-sm font-semibold text-gray-700 underline mb-1 exp-client-name"> {/* ADDED exp-client-name CLASS */}
-                    {client.name}
-                </div>
+              <div className="text-sm font-semibold text-gray-700 underline mb-1 exp-client-name"> {/* ADDED exp-client-name CLASS */}
+                {client.name}
+              </div>
             )}
-            
+
             {/* Bullet Points with dynamic bolding */}
             <ul className="list-disc ml-5 mt-0.5 text-sm text-gray-700 space-y-0.5 exp-bullet-list"> {/* ADDED exp-bullet-list CLASS */}
               {client.bulletPoints.map((detail, dIndex) => (
                 <li key={dIndex} className="pl-1 leading-snug">
-                  <span 
-                    dangerouslySetInnerHTML={{ __html: processTextFormatting(detail) }} 
+                  <span
+                    dangerouslySetInnerHTML={{ __html: processTextFormatting(detail) }}
                   />
                 </li>
               ))}
@@ -166,15 +166,15 @@ const Certifications = ({ certifications }) => (
     <SectionHeader title="Certifications" />
     <ul className="list-disc ml-5 mt-1 text-sm text-gray-700 space-y-1">
       {certifications.map((cert) => (
-       
+
         <li key={cert.id} className="pl-1 leading-snug flex items-start resume-list-item"> {/* ADDED resume-list-item CLASS */}
-            <Award size={14} className="flex shrink-0 mr-2 mt-0.5 text-yellow-600" />
-            <div>
-                <span className="font-medium text-gray-800">{cert.name}</span>
-                {cert.expiryDate && (
-                <span className="text-gray-600 ml-2 text-sm"> ( Expires: {getISTFormatDate(cert.expiryDate)} ) </span>
-                )}
-            </div>
+          <Award size={14} className="flex shrink-0 mr-2 mt-0.5 text-yellow-600" />
+          <div>
+            <span className="font-medium text-gray-800">{cert.name}</span>
+            {cert.expiryDate && (
+              <span className="text-gray-600 ml-2 text-sm"> ( Expires: {getISTFormatDate(cert.expiryDate)} ) </span>
+            )}
+          </div>
         </li>
       ))}
     </ul>
@@ -189,20 +189,20 @@ const Leaflive = ({ data }) => {
 
   return (
     <div className="bg-white p-4 md:p-8 max-w-4xl mx-auto font-serif text-gray-800 printable-area"> {/* ADDED printable-area CLASS */}
-      
+
       <Header personal={data} />
 
       {/* Summary */}
       {summary && (
         <div className="mt-4 resume-section"> {/* ADDED resume-section CLASS */}
           <SectionHeader title="Summary" />
-          <p className="text-sm text-gray-700 leading-relaxed indent-1" 
-          dangerouslySetInnerHTML={{ __html: processTextFormatting(summary) }}/>
-              
+          <p className="text-sm text-gray-700 leading-relaxed indent-1"
+            dangerouslySetInnerHTML={{ __html: processTextFormatting(summary) }} />
+
         </div>
       )}
 
-      {/* Technical Skills */}
+      {/* Skills */}
       {skills && <TechnicalSkills skills={skills} />}
 
       {/* Experience */}
@@ -213,7 +213,7 @@ const Leaflive = ({ data }) => {
 
       {/* Certifications */}
       {certifications && <Certifications certifications={certifications} />}
-      
+
       {/* Education */}
       {education && <Education education={education} />}
     </div>
@@ -223,7 +223,7 @@ const Leaflive = ({ data }) => {
 
 // --- New Wrapper Component for Print Functionality ---
 
-const PrintableLeaflive = ({ data ,back}) => {
+const PrintableLeaflive = ({ data, back }) => {
   // Function to handle printing the component
   const handlePrint = () => {
     // 1. Store the original title
@@ -235,23 +235,23 @@ const PrintableLeaflive = ({ data ,back}) => {
     }, 50);
   };
 
-    // Style for the print button on screen
-    const printButtonStyle = {
-        padding: '10px 20px',
-        margin: '20px auto 10px auto', // Center the button below the resume
-        cursor: 'pointer',
-        backgroundColor: '#007bff',
-        color: 'white',
-        border: 'none',
-        borderRadius: '5px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-        display: 'block', 
-        textAlign: 'center',
-        maxWidth: '200px', // Restrict button width
-    };
+  // Style for the print button on screen
+  const printButtonStyle = {
+    padding: '10px 20px',
+    margin: '20px auto 10px auto', // Center the button below the resume
+    cursor: 'pointer',
+    backgroundColor: '#007bff',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    display: 'block',
+    textAlign: 'center',
+    maxWidth: '200px', // Restrict button width
+  };
 
-    // Print-specific CSS using a template literal for @media print rules
-    const printStyles = `
+  // Print-specific CSS using a template literal for @media print rules
+  const printStyles = `
         /* Styles that only apply when printing */
         @media print {
             /* 1. Hide everything on the page by default */
@@ -328,34 +328,34 @@ const PrintableLeaflive = ({ data ,back}) => {
         }
     `;
 
-    return (
-        <>
-            {/* INLINE CSS BLOCK: Used for @media print styles */}
-            <style dangerouslySetInnerHTML={{ __html: printStyles }} />
+  return (
+    <>
+      {/* INLINE CSS BLOCK: Used for @media print styles */}
+      <style dangerouslySetInnerHTML={{ __html: printStyles }} />
 
-            <div className="w-full px-4 h-16 flex items-center justify-between">
-                <button
-                    onClick={back}
-                    className="pl-2 pr-2 py-2 hover:bg-gray-300 rounded-xl transition-colors flex hover:border gap-2"
-                // className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 transition duration-150"
-                >
-                    <ArrowLeft className="text-gray-600 " /> Back to Template
-                </button>
-                <button
-                    onClick={handlePrint}
-                    className="pl-2 pr-2 py-2 bg-blue-600 text-white font-medium hover:bg-blue-700 rounded-xl transition-colors flex  gap-2"
-                    // style={printButtonStyle}
-                >
-                   
-                    <Printer className="text-white sm" />  Print Resume
-                </button>
+      <div className="w-full px-4 h-16 flex items-center justify-between">
+        <button
+          onClick={back}
+          className="pl-2 pr-2 py-2 hover:bg-gray-300 rounded-xl transition-colors flex hover:border gap-2"
+        // className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 transition duration-150"
+        >
+          <ArrowLeft className="text-gray-600 " /> Back to Template
+        </button>
+        <button
+          onClick={handlePrint}
+          className="pl-2 pr-2 py-2 bg-blue-600 text-white font-medium hover:bg-blue-700 rounded-xl transition-colors flex  gap-2"
+        // style={printButtonStyle}
+        >
 
-            </div>
+          <Printer className="text-white sm" />  Print Resume
+        </button>
 
-            {/* Render the core Leaflive template */}
-            <Leaflive data={data} />
-        </>
-    );
+      </div>
+
+      {/* Render the core Leaflive template */}
+      <Leaflive data={data} />
+    </>
+  );
 }
 
 // Export the printable wrapper component as the main export

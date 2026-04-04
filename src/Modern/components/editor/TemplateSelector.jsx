@@ -26,7 +26,7 @@ const TemplateSelector = () => {
 
   return (
     <GlassCard title="Design & Appearance" icon={Palette} isCollapsible={false} defaultOpen={true}>
-      <div className="space-y-8">
+      <div className="space-y-6">
         {/* Theme Colors */}
         <div className="space-y-4 px-2">
           <div className="flex items-center gap-2 mb-2 transition-colors" style={{ color: currentThemeColor }}>
@@ -58,12 +58,12 @@ const TemplateSelector = () => {
             <Layout size={16} />
             <span className="text-xs uppercase tracking-widest font-bold">Choose Resume / C.V  Layout</span>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2">
             {Object.values(templates).map((template) => (
               <button
                 key={template.id}
                 onClick={() => updateTemplate(template.id)}
-                className={`p-4 rounded-2xl border-2 transition-all text-left flex items-start gap-3 group relative overflow-hidden ${currentTemplate === template.id
+                className={`p-3 rounded-2xl border-2 transition-all text-left flex items-start gap-2 group relative overflow-hidden ${currentTemplate === template.id
                     ? 'bg-white/80 dark:bg-white/5 shadow-lg shadow-black/5 ring-4'
                     : 'border-white dark:border-white/5 bg-white/40 dark:bg-zinc-900/5 hover:border-black/10 dark:hover:border-white/10 hover:bg-white/60 dark:hover:bg-zinc-900/10'
                   }`}
@@ -96,7 +96,7 @@ const TemplateSelector = () => {
         <div className="h-px bg-sage-100 dark:bg-sage-800/50 mx-2" />
 
         {/* Storage & Privacy */}
-        <div className="space-y-5 px-2">
+        <div className="space-y-4 px-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 transition-colors" style={{ color: currentThemeColor }}>
               <ShieldCheck size={16} />

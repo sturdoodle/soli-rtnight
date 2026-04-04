@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Lora:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;700;900&family=Roboto+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;700;800&family=Figtree:wght@400;700;900&family=DM+Sans:ital,wght@0,400;0,700;0,900;1,400&family=Geist:wght@100..900&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,301,701,300,501,401,901,400&display=swap');
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Lora:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap');
 
 /* Force Tailwind to map the 'dark:' modifier precisely to the .dark class instead of OS media queries */
 @custom-variant dark (&:is(.dark *));
@@ -61,7 +62,7 @@
 label {
   display: block;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 10px;
   margin-bottom: 5px;
   color: #555;
 }
@@ -406,7 +407,7 @@ input:focus {
   --color-text-secondary: var(--color-sage-600);
   --color-text-muted: var(--color-sage-400);
   --color-input-bg: rgba(255, 255, 255, 0.9);
-  --color-input-border: var(--color-sage-200);
+  --color-input-border: var(--color-sage-300);
 
   /* Typography */
   --font-serif: "Lora", "Frank Ruhl Libre", "Georgia", serif;
@@ -421,7 +422,7 @@ input:focus {
   --color-text-secondary: #94a3b8;
   --color-text-muted: #475569;
   --color-input-bg: rgba(15, 23, 20, 0.6);
-  --color-input-border: rgba(255, 255, 255, 0.1);
+  --color-input-border: rgba(255, 255, 255, 0.2);
 
   /* Sage Dark Overrides */
   --color-sage-50: #0a0f0d;
@@ -459,7 +460,7 @@ input:focus {
   --v5-glass-bg: rgba(255, 255, 255, 0.85);
   --v5-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
 
-  border-radius: 24px;
+  border-radius: 20px;
 }
 
 .dark {
@@ -487,9 +488,9 @@ input:focus {
   background: var(--v5-card);
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
-  border: 1px solid var(--v5-border);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 1rem;
-  padding: 0.85rem 1.15rem;
+  padding: 0.75rem 1.15rem;
   color: var(--v5-heading);
   font-weight: 500;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -499,6 +500,7 @@ input:focus {
 }
 
 .dark .liquid-input {
+  border-color: rgba(255, 255, 255, 0.1);
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
     0 4px 6px -1px rgba(0, 0, 0, 0.2);
@@ -544,6 +546,36 @@ input:focus {
 .v5-font-outfit,
 .v5-font-outfit * {
   font-family: 'Outfit', sans-serif !important;
+}
+
+.v5-font-satoshi,
+.v5-font-satoshi * {
+  font-family: 'Satoshi', sans-serif !important;
+}
+
+.v5-font-geist,
+.v5-font-geist * {
+  font-family: 'Geist', sans-serif !important;
+}
+
+.v5-font-plusjakartasans,
+.v5-font-plusjakartasans * {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+.v5-font-figtree,
+.v5-font-figtree * {
+  font-family: 'Figtree', sans-serif !important;
+}
+
+.v5-font-dmsans,
+.v5-font-dmsans * {
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+.v5-font-monasans,
+.v5-font-monasans * {
+  font-family: 'Mona Sans', sans-serif !important;
 }
 
 /* Guidance & Onboarding Modal System */
@@ -592,14 +624,14 @@ input:focus {
 
 /* Precision Density: Compact Vertical Rhythm */
 .v5-compact-space {
-  margin-bottom: 0.75rem !important;
+  margin-bottom: 0.5rem !important;
 }
 
 .glass-input {
   background: var(--color-input-bg);
   border: 1px solid var(--color-input-border);
-  border-radius: 16px;
-  padding: 16px 20px;
+  border-radius: 12px;
+  padding: 12px 16px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   color: var(--color-text-primary);
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);

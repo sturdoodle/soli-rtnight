@@ -19,6 +19,7 @@ const SummarySection = () => {
           name="summary"
           value={resumeData.summary}
           onChange={handleChange}
+          showFormatTip={true}
           placeholder="Briefly describe your career goals and achievements..."
         />
       </div>

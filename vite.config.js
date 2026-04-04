@@ -12,10 +12,12 @@ export default defineConfig({
     }),
   ],
   base: '/#/',
-  optimizeDeps: {
-    exclude: ['jspdf'],
+  esbuild: {
+    drop: ['console', 'debugger'],
+    legalComments: 'none'
   },
   build: {
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: {

@@ -33,7 +33,7 @@ const EducationSection = () => {
 
   return (
     <GlassCard title="Education" icon={GraduationCap} isCollapsible={true}>
-      <div className="space-y-6">
+      <div className="space-y-2">
         <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-700">
           <Sparkles size={14} className="text-blue-500/50" />
           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
@@ -42,8 +42,8 @@ const EducationSection = () => {
         </div>
         {(resumeData.education || []).map((edu, index) => (
           <React.Fragment key={edu.id}>
-            <div className="p-4 sm:p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
-              <div className="flex items-center justify-between mb-4">
+            <div className="p-3 sm:p-5 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
+              <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2 text-slate-400">
                   <GraduationCap size={14} />
                   <span className="text-[10px] font-black uppercase tracking-widest leading-none">Education Unit</span>
@@ -56,7 +56,7 @@ const EducationSection = () => {
                 />
               </div>
               
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-6 gap-y-4 sm:gap-y-6">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-6 gap-y-2">
                 <div className="xl:col-span-2">
                   <MinimalistInput 
                     label="Degree / Course" 
@@ -79,7 +79,7 @@ const EducationSection = () => {
             
             {/* In-Section Intelligent Ad Injection */}
             {index === 1 && (resumeData.education || []).length > 2 && (
-              <div className="p-10 rounded-[3rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-700 my-4 flex items-center justify-center">
+              <div className="p-6 rounded-2xl bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-700 my-2 flex items-center justify-center">
                  <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
               </div>
             )}
@@ -87,10 +87,10 @@ const EducationSection = () => {
         ))}
 
         <PillButton 
-          variant="glass" 
+          variant="add" 
           icon={Plus} 
           onClick={handleAddEdu} 
-          className="w-full py-6 mt-10 border-dashed border-2 border-sage-200/50 dark:border-sage-800/50 hover:border-sage-400"
+          className="w-full py-4 mt-6"
         >
           Add New Education
         </PillButton>

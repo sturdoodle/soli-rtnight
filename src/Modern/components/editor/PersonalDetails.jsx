@@ -13,7 +13,7 @@ const PersonalDetails = () => {
 
   return (
     <GlassCard title="Personal Details" icon={User} isCollapsible={true}>
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-12 gap-y-6 px-2">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-4 gap-y-2 px-1">
         <MinimalistInput
           label="Full Name"
           name="fullName"

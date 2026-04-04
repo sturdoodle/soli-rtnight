@@ -7,7 +7,7 @@ export const LeafLivePremium = ({ data, themeColor, atsMode }) => (
     <header className={`${atsMode ? 'mb-10 text-center border-b-2 border-black pb-8' : 'pb-6 print:pb-3 border-b-2 mb-8 print:mb-4'}`} style={atsMode ? {} : { borderColor: themeColor }}>
       <h1 className={`${atsMode ? 'text-4xl font-bold mb-2' : 'text-4xl font-bold text-slate-900 tracking-tight mb-2'}`}>{data.fullName}</h1>
       <h2 className={`${atsMode ? 'text-xl font-bold mb-6' : 'text-xl font-medium text-slate-600 mb-4'}`}>{data.jobTitle}</h2>
-      
+
       <div className={`${atsMode ? 'mt-6 flex justify-center flex-wrap gap-x-8 gap-y-2 text-sm font-medium' : 'flex flex-wrap text-sm text-slate-600 gap-x-6 gap-y-2'}`} aria-label="Contact Details">
         <ContactItem icon={Mail} text={data.email} atsMode={atsMode} />
         <ContactItem icon={Phone} text={data.phone} atsMode={atsMode} />
@@ -25,9 +25,9 @@ export const LeafLivePremium = ({ data, themeColor, atsMode }) => (
           </div>
         </section>
       )}
- 
-      <section aria-label="Technical Skills">
-        <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Technical Skills</SectionTitle>
+
+      <section aria-label="Skills">
+        <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Skills</SectionTitle>
         <div className={`grid ${atsMode ? 'grid-cols-1 gap-1' : 'md:grid-cols-2 print:grid-cols-2 gap-4 print:gap-2'}`}>
           {data.skills?.map((skill) => (
             <div key={skill.id} className={atsMode ? 'text-base' : 'text-sm'}>
@@ -37,7 +37,7 @@ export const LeafLivePremium = ({ data, themeColor, atsMode }) => (
           ))}
         </div>
       </section>
- 
+
       <section aria-label="Work Experience">
         <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Experience</SectionTitle>
         <div className="space-y-8 print:space-y-4">
@@ -46,7 +46,7 @@ export const LeafLivePremium = ({ data, themeColor, atsMode }) => (
           ))}
         </div>
       </section>
- 
+
       {data.projects && data.projects.length > 0 && (
         <section aria-label="Key Projects">
           <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Projects</SectionTitle>
@@ -57,7 +57,7 @@ export const LeafLivePremium = ({ data, themeColor, atsMode }) => (
           </div>
         </section>
       )}
- 
+
       {data.certifications && data.certifications.length > 0 && (
         <section aria-label="Certifications & Awards">
           <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Certifications</SectionTitle>
@@ -68,7 +68,7 @@ export const LeafLivePremium = ({ data, themeColor, atsMode }) => (
           </div>
         </section>
       )}
- 
+
       <section aria-label="Education">
         <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Education</SectionTitle>
         <div className="space-y-6 print:space-y-3">

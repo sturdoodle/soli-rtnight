@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import {
   Plus, Edit3, Layout, Palette, Type, History,
   Sparkles, ShieldCheck, Moon, Sun, Download, Upload,
-  Trash2, Search, Maximize2, Zap, BarChart3, User, Briefcase, GraduationCap, Award, FileText, FolderCode, Mail, Phone, MapPin, Github, ArrowLeft, X, Rocket, ExternalLink, Menu, ChevronLeft, ChevronRight, Printer, Settings
+  Trash2, Search, Maximize2, Zap, BarChart3, User, Briefcase, GraduationCap, Award, FileText, FolderCode, Mail, Phone, MapPin, Github, ArrowLeft, X, Rocket, ExternalLink, Menu, ChevronLeft, ChevronRight, Printer, Settings, Timer, BookOpen
 } from 'lucide-react';
 import { useResume, ResumeProvider } from '../Modern/context/ResumeContext';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,7 @@ import ProjectsSection from '../Modern/components/editor/ProjectsSection';
 import EducationSection from '../Modern/components/editor/EducationSection';
 import CertificationsSection from '../Modern/components/editor/CertificationsSection';
 import SkillsSection from '../Modern/components/editor/SkillsSection';
+import FormattingTip from '../Modern/components/editor/FormattingTip';
 import logo from '../V4/components/shared/o-logo.png';
 import AdSenseAd from '../AdsenseAdsBlock.jsx';
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../MainConstant.js';
@@ -23,14 +24,14 @@ const SidebarItem = ({ icon: Icon, label, active, onClick, disabled, activeColor
   <button
     onClick={onClick}
     disabled={disabled}
-    className={`w-full flex items-center ${collapsed ? 'justify-center' : 'lg:justify-start justify-center'} gap-4 py-4 px-4 rounded-2xl transition-all group ${disabled ? 'opacity-20 cursor-not-allowed' : ''}`}
+    className={`w-full flex items-center ${collapsed ? 'justify-center' : 'lg:justify-start justify-center'} gap-4 py-2.5 px-4 rounded-2xl transition-all group ${disabled ? 'opacity-20 cursor-not-allowed' : ''}`}
     style={active ? {
       backgroundColor: `${activeColor}15`,
       color: activeColor,
       borderColor: `${activeColor}20`,
       borderWidth: '1px'
     } : {}}
-    title={collapsed ? label : undefined}
+    title={label}
   >
     <Icon size={18} className={`shrink-0 transition-all ${active ? 'scale-110 shadow-[0_0_15px_rgba(14,165,233,0.3)]' : 'group-hover:scale-110 text-slate-500 group-hover:text-[var(--v5-heading)]'}`} />
     {!collapsed && <span className="text-[10px] font-black uppercase tracking-[0.2em] hidden lg:block whitespace-nowrap">{label}</span>}
@@ -54,8 +55,58 @@ const V5EditorContent = () => {
   const navbarFileInputRef = React.useRef(null);
   const mobileFileInputRef = React.useRef(null);
 
+  // Draggable Split Logic
+  const [splitWidth, setSplitWidth] = useState(50); // percentage
+  const [isResizing, setIsResizing] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1280);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1280);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!isResizing) return;
+
+      // Calculate split percentage based on window width
+      // Excluding the sidebar if it's visible
+      const sidebarWidth = isSidebarCollapsed ? 80 : 280; // Approximate widths
+      const availableWidth = window.innerWidth - sidebarWidth;
+      const currentX = e.clientX - sidebarWidth;
+
+      let newWidth = (currentX / availableWidth) * 100;
+
+      // Safety constraints
+      if (newWidth < 30) newWidth = 30; // Min editor width
+      if (newWidth > 70) newWidth = 70; // Max editor width
+
+      setSplitWidth(newWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      document.body.style.cursor = 'default';
+    };
+
+    if (isResizing) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = 'col-resize';
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing, isSidebarCollapsed]);
+
   useEffect(() => {
     const hasVisited = localStorage.getItem('v5_onboarding_completed');
+    // const hasVisited = false;
     if (!hasVisited) setShowOnboarding(true);
   }, []);
 
@@ -217,7 +268,7 @@ const V5EditorContent = () => {
 
         <div className="flex items-center gap-2 sm:gap-4">
           <div className="flex flex-row items-center gap-2 sm:gap-2 mr-2 hidden md:flex h-9">
-            <button 
+            <button
               onClick={handleExportJSON}
               className="flex flex-row items-center gap-2 h-full px-3 rounded-xl border border-black/5 dark:border-white/10 hover:bg-emerald-500/10 hover:border-emerald-500/20 transition-all group text-slate-500 hover:text-emerald-500 whitespace-nowrap"
               title="Export Backup (JSON)"
@@ -225,8 +276,8 @@ const V5EditorContent = () => {
               <Download size={14} className="group-hover:scale-110 transition-transform" />
               <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap">Export</span>
             </button>
-            
-            <button 
+
+            <button
               onClick={() => navbarFileInputRef.current?.click()}
               className="flex flex-row items-center gap-2 h-full px-3 rounded-xl border border-black/5 dark:border-white/10 hover:bg-blue-500/10 hover:border-blue-500/20 transition-all group text-slate-500 hover:text-blue-500 cursor-pointer whitespace-nowrap"
               title="Import Snapshot (JSON)"
@@ -234,12 +285,12 @@ const V5EditorContent = () => {
               <Upload size={14} className="group-hover:scale-110 transition-transform" />
               <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap">Import</span>
             </button>
-            <input 
+            <input
               ref={navbarFileInputRef}
-              type="file" 
-              className="hidden" 
-              accept=".json" 
-              onChange={handleImportJSON} 
+              type="file"
+              className="hidden"
+              accept=".json"
+              onChange={handleImportJSON}
             />
           </div>
 
@@ -263,9 +314,9 @@ const V5EditorContent = () => {
             className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-slate-100 text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95"
             style={{ backgroundColor: activeColor, boxShadow: `0 10px 25px -5px ${activeColor}50` }}
           >
-            <Download size={14} className="hidden xs:block" />
-            <span className="hidden xs:inline">Publish</span>
-            <span className="xs:hidden">GO</span>
+            <Download size={14} />
+            <span className="hidden xs:inline">Resume</span>
+            <span className="xs:hidden">Resume</span>
           </button>
         </div>
       </nav>
@@ -303,19 +354,19 @@ const V5EditorContent = () => {
               >
                 <Download size={14} /> Export
               </button>
-              <button 
+              <button
                 onClick={() => { mobileFileInputRef.current?.click(); setIsMobileMenuOpen(false); }}
                 className="flex items-center justify-center gap-2 py-4 px-4 bg-blue-500/5 text-blue-600 rounded-2xl text-[9px] font-black uppercase tracking-widest border border-blue-500/10 cursor-pointer"
               >
                 <Upload size={14} /> Import
               </button>
-              <input 
+              <input
                 ref={mobileFileInputRef}
                 id="mobile-import-json"
-                type="file" 
-                className="hidden" 
-                accept=".json" 
-                onChange={(e) => { handleImportJSON(e); setIsMobileMenuOpen(false); }} 
+                type="file"
+                className="hidden"
+                accept=".json"
+                onChange={(e) => { handleImportJSON(e); setIsMobileMenuOpen(false); }}
               />
             </div>
 
@@ -336,7 +387,7 @@ const V5EditorContent = () => {
       <div className="flex flex-1 h-[calc(100vh-64px)] print:h-auto print:block relative z-10 overflow-hidden">
 
         {/* Sidebar Navigation - Hidden on Mobile */}
-        <aside className={`hidden lg:flex ${isSidebarCollapsed ? 'w-24' : 'w-72'} border-r border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col pt-10 print:hidden transition-all duration-300 relative`}>
+        <aside className={`hidden lg:flex ${isSidebarCollapsed ? 'w-24' : 'w-72'} border-r border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col pt-6 print:hidden transition-all duration-300 relative`}>
           <button
             onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
             className="absolute -right-3 top-10 w-6 h-6 bg-[var(--v5-card)] border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.1)] hover:scale-110 transition-all z-10 hidden lg:flex text-slate-500 hover:text-[var(--v5-heading)]"
@@ -344,7 +395,7 @@ const V5EditorContent = () => {
             {isSidebarCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
           </button>
 
-          <div className={`px-8 hidden lg:block transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'opacity-0 max-h-0 mb-0 overflow-hidden' : 'opacity-100 max-h-[200px] mb-12'}`}>
+          <div className={`px-8 hidden lg:block transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'opacity-0 max-h-0 mb-0 overflow-hidden' : 'opacity-100 max-h-[200px] mb-6'}`}>
             <h2 className="text-[10px] font-black text-slate-400 dark:text-slate-600 uppercase tracking-[0.3em] mb-4 whitespace-nowrap">Resume Editor</h2>
             <div className="p-5 rounded-3xl border border-black/5 dark:border-white/5 flex items-center gap-4 shadow-sm group cursor-pointer hover:bg-black/5 transition-all w-full overflow-hidden"
               style={{ backgroundColor: `${activeColor}05` }}>
@@ -360,11 +411,40 @@ const V5EditorContent = () => {
             </div>
           </div>
 
-          <nav className="flex-1 space-y-3 px-4 transition-all">
+          <nav className="flex-1 space-y-1 px-4 transition-all">
             <SidebarItem icon={FileText} label="Identity" active={activeTab === 'content'} onClick={() => setActiveTab('content')} activeColor={activeColor} collapsed={isSidebarCollapsed} />
             <SidebarItem icon={Layout} label="Structure" active={activeTab === 'layout'} onClick={() => setActiveTab('layout')} activeColor={activeColor} collapsed={isSidebarCollapsed} />
             <SidebarItem icon={Type} label="Typeface" active={activeTab === 'typography'} onClick={() => setActiveTab('typography')} activeColor={activeColor} collapsed={isSidebarCollapsed} />
             <SidebarItem icon={Settings} label="Settings" active={activeTab === 'snapshots'} onClick={() => setActiveTab('snapshots')} activeColor={activeColor} collapsed={isSidebarCollapsed} />
+            <div className="h-px bg-black/5 dark:border-white/5 my-2 mx-4" />
+            <a
+              href="https://timer.qpkendra.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Timer / Focus Mode"
+              className="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 hover:bg-black/5 dark:hover:bg-white/5 group"
+            >
+              <div className="p-2 rounded-xl transition-all group-hover:scale-110" style={{ color: activeColor, backgroundColor: `${activeColor}15` }}>
+                <Timer size={18} />
+              </div>
+              {!isSidebarCollapsed && (
+                <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-[var(--v5-heading)]">Timer</span>
+              )}
+            </a>
+            <a
+              href="https://qpkendra.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="QPKendra Main Site"
+              className="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 hover:bg-black/5 dark:hover:bg-white/5 group"
+            >
+              <div className="p-2 rounded-xl transition-all group-hover:scale-110" style={{ color: activeColor, backgroundColor: `${activeColor}15` }}>
+                <BookOpen size={18} />
+              </div>
+              {!isSidebarCollapsed && (
+                <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-[var(--v5-heading)]">QPkendra</span>
+              )}
+            </a>
           </nav>
 
           {resumeData.predictiveScoreEnabled && resumeData.atsMode && (
@@ -417,23 +497,22 @@ const V5EditorContent = () => {
           </div>
         </aside>
 
-        {/* Editor Canvas */}
-        <main className="flex-1 overflow-y-auto bg-[var(--v5-canvas)]/10 p-2 sm:p-6 lg:px-4 lg:py-6 pb-24 lg:pb-8 custom-scrollbar print:hidden will-change-transform">
-          <div className="max-w-7xl mx-auto h-full">
-            <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] pt-8 pb-32 px-4 sm:px-8 lg:px-12 py-8">
-              <header className="mb-8 lg:mb-10">
-                <h1 className="text-4xl sm:text-6xl font-black tracking-[-0.05em] text-[var(--v5-heading)] mb-2 leading-[0.9] transition-all duration-700">{currentMeta.title}</h1>
-                <p className="text-sm sm:text-base text-[var(--v5-text)] font-medium tracking-tight transition-all duration-700 delay-100 opacity-80">{currentMeta.subtitle}</p>
-              </header>
-
+        {/* Editor Canvas - Balanced 50:50 Split (Now Dynamic) */}
+        <main
+          className="overflow-y-auto bg-[var(--v5-canvas)]/10 p-4 lg:p-8 pb-24 lg:pb-12 custom-scrollbar print:hidden will-change-transform"
+          style={isDesktop ? { width: `${splitWidth}%` } : { width: '100%' }}
+        >
+          <div className="max-w-[1400px] mx-auto h-full">
+            <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] pt-6 pb-12 px-1.5 sm:px-6 lg:px-8 py-6">
               {activeTab === 'content' && (
-                <div className="mb-8 p-6 sm:p-10 rounded-[2.5rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-700">
+                <div className="mb-4 p-4 sm:p-6 rounded-[2.5rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-700">
                   <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
                 </div>
               )}
 
               {activeTab === 'content' && (
-                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                  <FormattingTip />
                   <PersonalDetails />
                   <SummarySection />
                   <ExperienceSection />
@@ -486,6 +565,12 @@ const V5EditorContent = () => {
 
                     {[
                       { name: 'Inter Architecture', desc: 'Modern, high-velocity technical sans.', font: 'Inter' },
+                      { name: 'Satoshi Signature', desc: 'Modern & Minimal professional sans.', font: 'Satoshi' },
+                      { name: 'Geist Technical', desc: 'Clean & Tech industrial aesthetic.', font: 'Geist' },
+                      { name: 'Plus Jakarta Sans', desc: 'Friendly & Geometric accessibility.', font: 'PlusJakartaSans' },
+                      { name: 'Figtree Minimal', desc: 'Minimalist & Functional clarity.', font: 'Figtree' },
+                      { name: 'DM Sans Balanced', desc: 'Clear & Balanced editorial tone.', font: 'DMSans' },
+                      { name: 'Mona Sans Stylish', desc: 'Versatile & Stylish editorial presence.', font: 'MonaSans' },
                       { name: 'Lora Elegant', desc: 'Sophisticated professional serif architecture.', font: 'Lora' },
                       { name: 'Roboto Technical', desc: 'Precise engineering-grade monospace.', font: 'Roboto Mono' },
                       { name: 'Outfit Modern', desc: 'Clean, approachable geometric typeface.', font: 'Outfit' }
@@ -615,6 +700,14 @@ const V5EditorContent = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Humorous Ads Notice */}
+                  <div className="w-full py-3 px-5 bg-black/5 dark:bg-white/5 rounded-2xl border border-dashed border-black/10 dark:border-white/10 flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
+                    <div className="text-lg text-slate-400 group-hover:rotate-12 transition-transform">☕</div>
+                    <p className="text-[9px] font-bold text-slate-500/80 leading-relaxed uppercase tracking-wider text-left">
+                      <span className="text-amber-500">Ad-Protocol Active:</span> We show Google Ads so we don't have to charge you. They pay for the electricity and the lead dev's questionable caffeine addiction.
+                    </p>
+                  </div>
                 </div>
               )}
 
@@ -664,8 +757,19 @@ const V5EditorContent = () => {
           </div>
         </main>
 
-        {/* Live Preview Pane */}
-        <section className="hidden xl:flex w-[650px] border-l border-white/5 bg-[var(--v5-bg)] flex-col p-4 sm:p-6 print:hidden shadow-2xl overflow-hidden">
+        {/* Resizer Handle */}
+        <div
+          onMouseDown={() => setIsResizing(true)}
+          className={`hidden xl:flex w-1.5 hover:w-2 bg-transparent hover:bg-${activeColor}/20 cursor-col-resize transition-all relative z-50 group items-center justify-center`}
+        >
+          <div className="w-px h-10 bg-black/5 dark:bg-white/10 group-hover:bg-amber-500/50 rounded-full transition-colors" />
+        </div>
+
+        {/* Live Preview Pane - Now Dynamic Split */}
+        <section
+          className="hidden xl:flex border-l border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col p-4 lg:p-8 print:hidden shadow-2xl overflow-hidden relative"
+          style={isDesktop ? { width: `${100 - splitWidth}%` } : {}}
+        >
           <div className="flex items-center justify-between mb-4 px-4">
             <div className="flex items-center gap-3">
               <div className="w-2.5 h-2.5 rounded-full animate-pulse"
@@ -678,15 +782,16 @@ const V5EditorContent = () => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col items-center py-6 bg-[var(--v5-canvas)]/20 rounded-[2.5rem] border border-black/5 dark:border-white/5 relative">
+          <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col items-center relative">
             <div
-              className="transition-all duration-700"
+              className="transition-all duration-700 mx-auto mt-5"
               style={{
-                transform: 'scale(0.65)', // Perfectly balanced for 650px width
+                transform: 'scale(0.90)', // Optimized for high-density 50:50 split
                 transformOrigin: 'top center',
                 width: '800px',
+                maxWidth: '100%',
                 height: '0',
-                paddingBottom: 'calc(100% * 1.40 + 200px)' // Force a scrolling height that matches the content without being excessive
+                paddingBottom: 'calc(100% * 1.40 + 200px)' // Maintaining vertical perspective
               }}
             >
               <div className="shadow-[0_40px_100px_rgba(0,0,0,0.3)] rounded-[1.5rem] overflow-hidden pointer-events-none">
@@ -730,43 +835,115 @@ const V5EditorContent = () => {
 
       {/* Onboarding Modal */}
       {showOnboarding && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-4 v5-modal-overlay">
-          <div className="max-w-xl w-full v5-modal rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-10 relative overflow-y-auto max-h-[min(90vh,800px)] custom-scrollbar animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-4 v5-modal-overlay">
+          <div className="max-w-2xl w-full v5-modal rounded-[2.5rem] sm:rounded-[3rem] p-6 sm:p-10 relative overflow-y-auto max-h-[min(95vh,850px)] custom-scrollbar animate-in zoom-in-95 duration-500 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]">
             {/* Background Glows for Modal */}
-            <div className="absolute top-0 right-0 w-32 h-32 blur-[60px] opacity-20" style={{ backgroundColor: activeColor }} />
+            <div className="absolute top-0 right-0 w-48 h-48 blur-[80px] opacity-10" style={{ backgroundColor: activeColor }} />
+            <div className="absolute bottom-0 left-0 w-32 h-32 blur-[60px] opacity-10 bg-indigo-500" />
 
-            <div className="relative z-10 flex flex-col items-center text-center">
-              <div className="w-20 h-20 bg-indigo-500/10 rounded-3xl flex items-center justify-center mb-8 border border-indigo-500/20">
-                <Sparkles className="text-indigo-500" size={40} />
+            <div className="relative z-10 flex flex-col items-center">
+              {/* Header */}
+              <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-3xl flex items-center justify-center mb-6 shadow-xl border border-black/5 dark:border-white/5 overflow-hidden">
+                <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
               </div>
 
-              <h2 className="text-3xl font-black text-[var(--v5-heading)] mb-4 tracking-tight">Resume Builder | QPkendra V5</h2>
-              <p className="text-slate-500 leading-relaxed mb-8">Build a professional, ATS-friendly resume in minutes. Precision-crafted templates designed to help you land your dream role.</p>
+              <h2 className="text-3xl font-black text-[var(--v5-heading)] mb-1 tracking-tight text-center">ResumeBuilder v5</h2>
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-8 text-center opacity-70">by qpkendra</p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full mb-8 sm:mb-10 text-left">
-                <div className="p-4 sm:p-6 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="p-1.5 bg-blue-500/10 rounded-lg"><Settings size={14} className="text-blue-500" /></div>
-                    <h4 className="text-[10px] font-black uppercase tracking-widest">Time Machine</h4>
-                  </div>
-                  <p className="text-[10px] text-slate-500 leading-relaxed">Use the Settings tab to export master JSON snapshots or restore any past career version.</p>
+              {/* Privacy Notice Pill */}
+              <div className="w-full mb-6 py-3.5 px-6 bg-emerald-500/5 dark:bg-emerald-400/10 border border-emerald-500/20 rounded-2xl flex items-center gap-4">
+                <div className="p-2 bg-emerald-500/20 rounded-xl">
+                  <ShieldCheck className="text-emerald-500" size={18} />
                 </div>
-                <div className="p-4 sm:p-6 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="p-1.5 bg-emerald-500/10 rounded-lg"><ShieldCheck size={14} className="text-emerald-500" /></div>
-                    <h4 className="text-[10px] font-black uppercase tracking-widest">Data Guard</h4>
-                  </div>
-                  <p className="text-[10px] text-slate-500 leading-relaxed">Toggle between Permanent and Temporary storage depending on your work environment.</p>
+                <div className="flex-1">
+                  <h4 className="text-[11px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-0.5">Absolute Privacy</h4>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Your data stays on your device. We use browser storage—no accounts, no tracking, no cloud sync.</p>
                 </div>
+              </div>
+
+              {/* Storage Selection Toggle */}
+              <div className="w-full mb-10 p-5 bg-black/5 dark:bg-white/5 rounded-3xl border border-black/5 dark:border-white/5">
+                <div className="flex items-center justify-between gap-4 mb-4">
+                  <h4 className="text-[11px] font-black text-[var(--v5-heading)] uppercase tracking-widest">Storage Preference</h4>
+                  <div className="flex bg-black/10 dark:bg-black/20 p-1 rounded-xl border border-black/5 dark:border-white/10">
+                    {['persistent', 'session'].map((mode) => {
+                      const isActive = resumeData.storageType === mode;
+                      return (
+                        <button
+                          key={mode}
+                          onClick={() => updateStorageType(mode)}
+                          className={`px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${isActive ? 'text-white shadow-lg' : 'text-slate-500 hover:text-slate-400'}`}
+                          style={isActive ? { backgroundColor: activeColor } : {}}
+                        >
+                          {mode === 'persistent' ? 'Permanent' : 'Temporary'}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <p className="text-[10px] text-slate-500 leading-relaxed font-medium bg-white/40 dark:bg-black/20 p-3 rounded-xl border border-black/5 dark:border-white/5 mb-3">
+                  {resumeData.storageType === 'persistent'
+                    ? "🚀 Permanent Mode: Your work is saved automatically. You can close this tab and come back later to finish."
+                    : "🔒 Temporary Mode: Your work is deleted instantly when you close this tab. Perfect for public computers."
+                  }
+                </p>
+                <p className="text-[10px] font-black text-slate-700 dark:text-slate-200 text-center flex items-center justify-center gap-2">
+                  <span className="text-amber-500">💡</span> Made a mistake or have commitment issues? You can always change this in the Settings tab later.
+                </p>
+              </div>
+
+              {/* Workflow Steps */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-10">
+                {[
+                  { icon: FileText, title: "1. Identity", desc: "Build your profile with real-time markdown formatting.", color: "blue" },
+                  { icon: Layout, title: "2. Refine", desc: "Switch structures and typography instantly.", color: "indigo" },
+                  { icon: Zap, title: "3. Deploy", desc: "Click the 'Resume' button to save as PDF, or use Ctrl+P.", color: "amber" }
+                ].map((step, i) => (
+                  <div key={i} className="flex flex-col items-center text-center p-4 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5 group hover:bg-black/[0.08] dark:hover:bg-white/[0.08] transition-all">
+                    <div className={`p-3 rounded-xl mb-3 mb-4 bg-${step.color}-500/10 text-${step.color}-500 group-hover:scale-110 transition-transform`}>
+                      <step.icon size={20} />
+                    </div>
+                    <h5 className="text-[11px] font-black uppercase tracking-widest mb-2 text-[var(--v5-heading)]">{step.title}</h5>
+                    <p className="text-[10px] text-slate-500 leading-relaxed font-medium">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Advanced Features (Row) */}
+              <div className="w-full flex flex-col gap-3 mb-10">
+                <div className="p-5 bg-indigo-500/5 border border-indigo-500/10 rounded-2xl flex items-start gap-4">
+                  <div className="p-2 bg-indigo-500/10 rounded-lg mt-1"><Sparkles size={16} className="text-indigo-500" /></div>
+                  <div>
+                    <h4 className="text-[11px] font-black text-indigo-500 uppercase tracking-[0.15em] mb-1">ATS Intelligence</h4>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Monitor your keyword density and professional score in real-time. Smart sections auto-hide if left empty.</p>
+                  </div>
+                </div>
+                <div className="p-5 bg-amber-500/5 border border-amber-500/10 rounded-2xl flex items-start gap-4">
+                  <div className="p-2 bg-amber-500/10 rounded-lg mt-1"><Settings size={16} className="text-amber-500" /></div>
+                  <div>
+                    <h4 className="text-[11px] font-black text-amber-500 uppercase tracking-[0.15em] mb-1">Time Machine (Snapshots)</h4>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Use the Snapshots tab to save Master JSON backups. Restore any career version in seconds.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Humorous Ads Notice */}
+              <div className="w-full mb-8 py-3 px-5 bg-black/5 dark:bg-white/5 rounded-2xl border border-dashed border-black/10 dark:border-white/10 flex items-center gap-3">
+                <div className="text-lg text-slate-400 group-hover:rotate-12 transition-transform">☕</div>
+                <p className="text-[9px] font-bold text-slate-500/80 leading-relaxed uppercase tracking-wider">
+                  <span className="text-amber-500">Ad-Protocol Active:</span> We show Google Ads so we don't have to charge you. They pay for the electricity and the lead dev's questionable caffeine addiction.
+                </p>
               </div>
 
               <button
                 onClick={completeOnboarding}
-                className="w-full py-5 text-white font-black uppercase tracking-[0.3em] rounded-full shadow-2xl hover:scale-[1.02] active:scale-95 transition-all"
+                className="w-full py-5 text-white font-black uppercase tracking-[0.3em] rounded-full shadow-2xl hover:scale-[1.01] active:scale-95 transition-all text-[11px]"
                 style={{ backgroundColor: activeColor, boxShadow: `0 20px 40px -10px ${activeColor}40` }}
               >
-                Activate Engine
+                Enter Workspace
               </button>
+
+              <p className="mt-6 text-[9px] font-bold text-slate-400 uppercase tracking-widest opacity-50">Version 5.0.0 • Stable Release</p>
             </div>
           </div>
         </div>

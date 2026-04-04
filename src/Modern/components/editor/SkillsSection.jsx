@@ -31,7 +31,7 @@ const SkillsSection = () => {
 
   return (
     <GlassCard title="Skills" icon={Award} isCollapsible={true}>
-      <div className="space-y-6">
+      <div className="space-y-2">
         <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-700">
           <Sparkles size={14} className="text-blue-500/50" />
           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
@@ -39,10 +39,10 @@ const SkillsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-3">
           {(resumeData.skills || []).map((skill) => (
-            <div key={skill.id} className="p-4 sm:p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500 relative">
-              <div className="flex items-center justify-between mb-6">
+            <div key={skill.id} className="p-3 sm:p-5 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500 relative">
+              <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2 text-slate-400">
                   <Award size={14} />
                   <span className="text-[10px] font-black uppercase tracking-widest leading-none">Skill Grouping</span>
@@ -55,7 +55,7 @@ const SkillsSection = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                 <div className="lg:col-span-4">
                   <MinimalistInput
                     label="Skill Group (e.g. Frontend)"
@@ -78,15 +78,14 @@ const SkillsSection = () => {
           ))}
         </div>
 
-        <button
+        <PillButton
+          variant="add"
+          icon={Plus}
           onClick={handleAddSkill}
-          className="w-full py-8 mt-4 rounded-3xl border-2 border-dashed border-sage-200/50 dark:border-sage-800/50 text-sage-400 hover:text-sage-600 hover:border-sage-400 hover:bg-sage-50/10 transition-all flex flex-col items-center justify-center gap-3 group"
+          className="w-full py-4 mt-2"
         >
-          <div className="p-3 rounded-2xl bg-sage-50 dark:bg-sage-900 group-hover:scale-110 transition-transform">
-            <Plus size={24} className="text-sage-500" />
-          </div>
-          <span className="text-xs font-black uppercase tracking-[0.3em]">Add Skill Group</span>
-        </button>
+          Add Skill Group
+        </PillButton>
       </div>
     </GlassCard>
   );

@@ -8,7 +8,7 @@ export const TechEngineer = ({ data, themeColor, atsMode }) => (
       <div className="flex-1">
         <h1 className="text-4xl font-extrabold tracking-tight mb-2" style={atsMode ? { color: 'black' } : { color: themeColor }}>{data.fullName}</h1>
         <p className="text-xl font-mono opacity-80 mb-6">{data.jobTitle}</p>
-        
+
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
           <ContactItem icon={Mail} text={data.email} atsMode={atsMode} />
           <ContactItem icon={Phone} text={data.phone} atsMode={atsMode} />
@@ -28,7 +28,7 @@ export const TechEngineer = ({ data, themeColor, atsMode }) => (
         </section>
 
         <section>
-          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Technical Skills</SectionTitle>
+          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Skills</SectionTitle>
           <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'} gap-6`}>
             {data.skills?.map(skill => (
               <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />

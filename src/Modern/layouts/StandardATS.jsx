@@ -30,8 +30,8 @@ export const StandardATS = ({ data, themeColor, atsMode }) => (
         </section>
       )}
 
-      <section aria-label="Technical Skills">
-        <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1">Technical Skills</h2>
+      <section aria-label="Skills">
+        <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1">Skills</h2>
         <div className="space-y-2">
           {data.skills?.map((skill) => (
             <div key={skill.id} className="text-[13px]">

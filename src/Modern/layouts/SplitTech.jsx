@@ -37,36 +37,36 @@ export const SplitTech = ({ data, themeColor, atsMode }) => (
           </section>
         )}
 
-      <section aria-label="Technical Skills">
-        <SectionTitle className={atsMode ? '' : 'text-slate-400 border-b border-slate-800 pb-2 mb-6'} themeColor={atsMode ? 'black' : '#fff'} atsMode={atsMode}>Tech Stack</SectionTitle>
-        <div className="space-y-6">
-          {data.skills?.map(skill => (
-            <div key={skill.id} className={atsMode ? '' : 'bg-slate-800/50 p-4 rounded-xl border border-slate-700/50'} aria-label={skill.category}>
-              <h3 className={`text-[10px] font-bold uppercase tracking-widest mb-2 flex items-center gap-2 ${atsMode ? 'text-black' : 'text-slate-400'}`}>
-                {!atsMode && <Code size={12} style={{ color: themeColor }} />} {skill.category}
-              </h3>
-              <p className={`text-xs leading-relaxed ${atsMode ? 'text-black' : 'text-slate-300 font-mono'}`}>{skill.items}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {data.certifications && data.certifications.length > 0 && (
-        <section aria-label="Certifications">
-          <SectionTitle className={atsMode ? '' : 'text-slate-400 border-b border-slate-800 pb-2 mb-6'} themeColor={atsMode ? 'black' : '#fff'} atsMode={atsMode}>Certifications</SectionTitle>
-          <div className="space-y-4">
-            {data.certifications.map(cert => (
-              <CertificationItem key={cert.id} cert={cert} themeColor={themeColor} atsMode={atsMode} />
+        <section aria-label="Skills">
+          <SectionTitle className={atsMode ? '' : 'text-slate-400 border-b border-slate-800 pb-2 mb-6'} themeColor={atsMode ? 'black' : '#fff'} atsMode={atsMode}>Tech Stack</SectionTitle>
+          <div className="space-y-6">
+            {data.skills?.map(skill => (
+              <div key={skill.id} className={atsMode ? '' : 'bg-slate-800/50 p-4 rounded-xl border border-slate-700/50'} aria-label={skill.category}>
+                <h3 className={`text-[10px] font-bold uppercase tracking-widest mb-2 flex items-center gap-2 ${atsMode ? 'text-black' : 'text-slate-400'}`}>
+                  {!atsMode && <Code size={12} style={{ color: themeColor }} />} {skill.category}
+                </h3>
+                <p className={`text-xs leading-relaxed ${atsMode ? 'text-black' : 'text-slate-300 font-mono'}`}>{skill.items}</p>
+              </div>
             ))}
           </div>
         </section>
-      )}
 
-      {!atsMode && (
-        <footer className="mt-auto pt-8 opacity-20 text-[10px] lowercase font-bold tracking-[0.3em]">
-          {data.GENERATED_BY}
-        </footer>
-      )}
+        {data.certifications && data.certifications.length > 0 && (
+          <section aria-label="Certifications">
+            <SectionTitle className={atsMode ? '' : 'text-slate-400 border-b border-slate-800 pb-2 mb-6'} themeColor={atsMode ? 'black' : '#fff'} atsMode={atsMode}>Certifications</SectionTitle>
+            <div className="space-y-4">
+              {data.certifications.map(cert => (
+                <CertificationItem key={cert.id} cert={cert} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {!atsMode && (
+          <footer className="mt-auto pt-8 opacity-20 text-[10px] lowercase font-bold tracking-[0.3em]">
+            {data.GENERATED_BY}
+          </footer>
+        )}
       </aside>
 
       {/* Main Content */}
