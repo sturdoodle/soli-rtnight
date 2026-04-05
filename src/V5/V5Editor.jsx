@@ -233,8 +233,8 @@ const V5EditorContent = () => {
       <nav className="h-16 border-b border-black/5 dark:border-white/5 bg-[var(--v5-card)]/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-50 print:hidden shadow-sm transition-all duration-500">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-3 font-bold group">
-            <button 
-              className="lg:hidden p-2 -ml-2 text-slate-500 hover:text-[var(--v5-heading)] transition-colors pr-1" 
+            <button
+              className="lg:hidden p-2 -ml-2 text-slate-500 hover:text-[var(--v5-heading)] transition-colors pr-1"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Open Navigation Menu"
             >
@@ -321,9 +321,20 @@ const V5EditorContent = () => {
             <button
               onClick={toggleTheme}
               aria-label="Toggle dark/light mode"
-              className="p-3 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 text-[var(--v5-text)] hover:scale-105 transition-all active:scale-95 shadow-sm group"
+              className="w-9 h-9 bg-black/5 dark:bg-white/5 rounded-xl border border-black/5 dark:border-white/10 hover:scale-105 transition-all active:scale-95 shadow-sm group relative overflow-hidden flex items-center justify-center"
             >
-              {resumeData.themeMode === 'dark' ? <Sun size={20} className="group-hover:rotate-12 transition-transform" /> : <Moon size={20} className="group-hover:rotate-[-12px] transition-transform" />}
+              <div className="relative z-10 transition-all duration-700 ease-out group-hover:scale-125 group-hover:rotate-[360deg]">
+                {resumeData.themeMode === 'dark' ? (
+                  <Sun size={18} className="text-amber-500 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
+                ) : (
+                  <Moon size={18} className="text-indigo-400 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]" />
+                )}
+              </div>
+              
+              {/* Dynamic Aura Animation */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity duration-500 blur-xl scale-150"
+                  style={{ backgroundColor: resumeData.themeMode === 'dark' ? '#f59e0b' : '#818cf8' }}
+              />
             </button>
           </div>
 
@@ -541,7 +552,7 @@ const V5EditorContent = () => {
         >
           {/* Hidden H1 for SEO Authority & AI Summary agents */}
           <h1 className="sr-only">QPkendra AI Resume Builder & CV Maker 2026 - Free ATS Friendly Resume Templates</h1>
-          
+
           <div className="max-w-[1400px] mx-auto h-full">
             <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] pt-6 pb-12 px-1.5 sm:px-6 lg:px-8 py-6">
               {activeTab === 'content' && (
@@ -564,10 +575,8 @@ const V5EditorContent = () => {
                   {/* QPKendra Branding Signature Card */}
                   <div className="p-10 rounded-[3rem] bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 relative overflow-hidden group transition-all flex flex-col items-center text-center justify-center min-h-[220px]">
                     <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 bg-white/50 dark:bg-black/30 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.3)] transition-all group-hover:scale-110 group-hover:rotate-[-5deg]">
-                      <div className="p-2.5 rounded-2xl bg-white/50 dark:bg-black/20 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] group-hover:scale-105 transition-all duration-500 group-hover:rotate-[-5deg]">
-              <img src="./o-logo.png" alt="QPkendra Logo" className="w-6 h-6 object-contain" />
-            </div>
-              <span className="text-3xl font-black text-[var(--v5-heading)]" style={{ fontFamily: 'Absans, sans-serif', letterSpacing: '-0.05em', color: activeColor }}>qp</span>
+
+                      <span className="text-3xl font-black text-[var(--v5-heading)]" style={{ fontFamily: 'Absans, sans-serif', letterSpacing: '-0.05em', color: activeColor }}>qp</span>
                     </div>
                     <h3 className="text-3xl font-black tracking-[-0.05em] text-[var(--v5-heading)] opacity-90 transition-opacity" style={{ fontFamily: 'Absans, sans-serif' }}>
                       qpkendra
