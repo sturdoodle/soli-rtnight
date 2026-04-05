@@ -18,13 +18,13 @@ const PREMIUM_COLORS = [
 ];
 
 const TemplateSelector = () => {
-  const { resumeData, updateTemplate, updateThemeColor, updateStorageType, resetResume } = useResume();
+  const { resumeData, updateTemplate, updateThemeColor, updateStorageType, resetResume, toggleSectionTheming } = useResume();
   const [showWipeConfirm, setShowWipeConfirm] = React.useState(false);
   const currentTemplate = resumeData.selectedTemplate || 'template-1';
   const currentThemeColor = resumeData.themeColor || '#4f46e5';
-  const sectionThemingEnabled = resumeData.sectionThemingEnabled;
+  const sectionThemingEnabled = resumeData.sectionThemingEnabled ?? true;
+  const atsMode = resumeData.atsMode || false;
   const storageType = resumeData.storageType || 'persistent';
-  const { toggleSectionTheming } = useResume();
 
   return (
     <GlassCard title="Design & Appearance" icon={Palette} isCollapsible={false} defaultOpen={true}>
@@ -39,9 +39,13 @@ const TemplateSelector = () => {
             {/* Minimalist Section Color Toggle */}
             <button 
               onClick={toggleSectionTheming}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-all group ai-glow-wrapper ${sectionThemingEnabled ? 'bg-white/10 active shadow-lg' : 'bg-slate-100 hover:bg-slate-200'}`}
+              disabled={atsMode}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-all group ai-glow-wrapper ${atsMode ? 'opacity-40 grayscale pointer-events-none cursor-not-allowed bg-slate-100' : sectionThemingEnabled ? 'bg-white/10 active shadow-lg' : 'bg-slate-100 hover:bg-slate-200'}`}
+              title={atsMode ? "Section coloring is disabled in ATS Mode" : "Toggle Section Theme Compliance"}
             >
-              <span className="text-[8px] font-black uppercase tracking-widest text-slate-500">Section Color</span>
+              <span className="text-[8px] font-black uppercase tracking-widest text-slate-500">
+                {atsMode ? "Section Color (N/A)" : "Section Color"}
+              </span>
               <div className={`w-8 h-4 rounded-full relative transition-all ${sectionThemingEnabled ? 'bg-white/20' : 'bg-slate-400/20'}`}
                 style={sectionThemingEnabled ? { backgroundColor: `${currentThemeColor}40` } : {}}>
                 <div className={`absolute top-0.5 w-3 h-3 rounded-full transition-all shadow-sm ${sectionThemingEnabled ? 'right-0.5 animate-pulse' : 'left-0.5'}`}

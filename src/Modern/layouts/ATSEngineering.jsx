@@ -8,7 +8,7 @@ export const ATSEngineering = ({ data, themeColor, atsMode, sectionThemingEnable
       <h1 className="text-3xl font-bold uppercase mb-2 tracking-widest transition-colors" style={atsMode ? { color: '#111827' } : { color: sectionThemingEnabled ? themeColor : '#111827' }}>{data.fullName}</h1>
       <div className="flex flex-col items-center text-sm font-medium space-y-1">
         <span>{data.phone}</span>
-        <span className="text-blue-700 underline decoration-blue-700/20">{data.email}</span>
+        <span className="text-black/70 underline decoration-black/10">{data.email}</span>
         {data.location && <span className="text-gray-600 font-normal">{data.location}</span>}
       </div>
     </header>

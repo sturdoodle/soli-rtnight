@@ -24,9 +24,9 @@ const ModernLivePreview = () => {
     >
       <TemplateComponent 
         data={resumeData} 
-        themeColor={themeColor} 
-        atsMode={atsMode} 
-        sectionThemingEnabled={sectionThemingEnabled}
+        themeColor={resumeData.themeColor} 
+        atsMode={resumeData.atsMode}
+        sectionThemingEnabled={resumeData.atsMode ? false : (resumeData.sectionThemingEnabled ?? true)}
       />
 
       <footer className="p-8 bg-zinc-50 border-t border-zinc-100 text-center text-[10px] text-zinc-400 uppercase tracking-[0.2em] print:hidden">

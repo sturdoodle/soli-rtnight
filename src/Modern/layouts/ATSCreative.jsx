@@ -8,7 +8,7 @@ export const ATSCreative = ({ data, themeColor, atsMode, sectionThemingEnabled }
       <h1 className="text-4xl font-black mb-2 tracking-tight transition-colors" style={atsMode ? { color: '#111827' } : { color: sectionThemingEnabled ? themeColor : '#111827' }}>{data.fullName}</h1>
       <div className="flex flex-col items-end text-sm font-medium space-y-0.5">
         <span>{data.phone}</span>
-        <span className="text-blue-600 underline decoration-blue-600/30">{data.email}</span>
+        <span className="text-black/70 underline decoration-black/10">{data.email}</span>
         {data.location && <span className="text-gray-500">{data.location}</span>}
       </div>
     </header>
