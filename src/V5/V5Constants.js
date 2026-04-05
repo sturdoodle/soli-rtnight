@@ -1,9 +1,7 @@
 import { FileText, Layout, Zap } from 'lucide-react';
 
 // export const isDevelopmentMode = false
-export const isDevelopmentMode = window.location.hostname === 'localhost' ||
-  window.location.hostname.startsWith('192.168.') ||
-  window.location.hostname === '127.0.0.1';
+export const isDevelopmentMode = window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.') || window.location.hostname === '127.0.0.1';
 
 export const TAB_META = {
   content: { title: "Identity", subtitle: "Create a compelling professional profile" },

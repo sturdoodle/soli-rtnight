@@ -1134,6 +1134,7 @@ const V5EditorContent = () => {
         adCountdown={adCountdown} 
         activeColor={activeColor} 
         finalizePrintAction={finalizePrintAction} 
+        onClose={() => setShowPrintAd(false)}
       />
     </div>
   );
