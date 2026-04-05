@@ -19,24 +19,10 @@ import FormattingTip from '../Modern/components/editor/FormattingTip';
 import logo from '../V4/components/shared/o-logo.png';
 import AdSenseAd from '../AdsenseAdsBlock.jsx';
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../MainConstant.js';
+import { isDevelopmentMode, TAB_META, ONBOARDING_STEPS } from './V5Constants';
+import SidebarItem from './components/SidebarItem';
+import PrintAdModal from './components/PrintAdModal';
 
-const SidebarItem = ({ icon: Icon, label, active, onClick, disabled, activeColor, collapsed }) => (
-  <button
-    onClick={onClick}
-    disabled={disabled}
-    className={`w-full flex items-center ${collapsed ? 'justify-center' : 'lg:justify-start justify-center'} gap-4 py-2.5 px-4 rounded-2xl transition-all group ${disabled ? 'opacity-20 cursor-not-allowed' : ''}`}
-    style={active ? {
-      backgroundColor: `${activeColor}15`,
-      color: activeColor,
-      borderColor: `${activeColor}20`,
-      borderWidth: '1px'
-    } : {}}
-    title={label}
-  >
-    <Icon size={18} className={`shrink-0 transition-all ${active ? 'scale-110 shadow-[0_0_15px_rgba(14,165,233,0.3)]' : 'group-hover:scale-110 text-slate-500 group-hover:text-[var(--v5-heading)]'}`} />
-    {!collapsed && <span className="text-[10px] font-black uppercase tracking-[0.2em] hidden lg:block whitespace-nowrap">{label}</span>}
-  </button>
-);
 
 const V5EditorContent = () => {
   const {
@@ -52,6 +38,11 @@ const V5EditorContent = () => {
   const atsMode = resumeData.atsMode;
   const themeMode = resumeData.themeMode;
   const [showOnboarding, setShowOnboarding] = useState(false);
+
+  // Print Ad Interstitial Logic
+  const [showPrintAd, setShowPrintAd] = useState(false);
+  const [adCountdown, setAdCountdown] = useState(7);
+
   const navbarFileInputRef = React.useRef(null);
   const mobileFileInputRef = React.useRef(null);
 
@@ -168,23 +159,56 @@ const V5EditorContent = () => {
     setShowOnboarding(false);
   };
 
-  const tabMeta = {
-    content: { title: "Identity", subtitle: "Create a compelling professional profile" },
-    layout: { title: "Layout", subtitle: "Select a professional structure for your resume" },
-    typography: { title: "Typography", subtitle: "Choose professional fonts for maximum readability" },
-    snapshots: { title: "Backups", subtitle: "Save and manage your resume drafts" },
-    history: { title: "Backups", subtitle: "Save and manage your resume drafts" },
-    help: { title: "Help & Guidance", subtitle: "Master the V5 Resume Builder Ecosystem." },
-    about: { title: "About Us", subtitle: "Privacy First: Your data remains secure and private." }
-  };
-
-  const currentMeta = tabMeta[activeTab] || tabMeta.content;
+  const currentMeta = TAB_META[activeTab] || TAB_META.content;
 
   useEffect(() => {
     setEditorStyle('liquid');
   }, []);
 
-  const handleDownload = () => window.print();
+  // --------------------------------------------------------------------------
+  // Interactions & Actions
+  // --------------------------------------------------------------------------
+  
+  const handleDownload = () => {
+    if (isDevelopmentMode) {
+      window.print();
+      return;
+    }
+    setShowPrintAd(true);
+    setAdCountdown(7);
+  };
+
+  const finalizePrintAction = () => {
+    setShowPrintAd(false);
+    // Short delay to allow modal to close before print dialog freezes UI
+    setTimeout(() => {
+      window.print();
+    }, 300);
+  };
+
+  // Keyboard Shortcut Interceptor (Ctrl+P)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+        e.preventDefault();
+        handleDownload();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isDevelopmentMode]); // Re-bind if dev mode status somehow changes (rare)
+
+  // Ad Countdown Timer
+  useEffect(() => {
+    let timer;
+    if (showPrintAd && adCountdown > 0) {
+      timer = setInterval(() => {
+        setAdCountdown(prev => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [showPrintAd, adCountdown]);
 
   const handleExportJSON = () => {
     const dataStr = JSON.stringify(resumeData, null, 2);
@@ -1004,11 +1028,7 @@ const V5EditorContent = () => {
 
               {/* Workflow Steps */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-10">
-                {[
-                  { icon: FileText, title: "1. Identity", desc: "Build your profile with real-time markdown formatting.", color: "blue" },
-                  { icon: Layout, title: "2. Refine", desc: "Switch structures and typography instantly.", color: "indigo" },
-                  { icon: Zap, title: "3. Deploy", desc: "Click the 'Resume' button to save as PDF, or use Ctrl+P.", color: "amber" }
-                ].map((step, i) => (
+                {ONBOARDING_STEPS.map((step, i) => (
                   <div key={i} className="flex flex-col items-center text-center p-4 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5 group hover:bg-black/[0.08] dark:hover:bg-white/[0.08] transition-all">
                     <div className={`p-3 rounded-xl mb-3 mb-4 bg-${step.color}-500/10 text-${step.color}-500 group-hover:scale-110 transition-transform`}>
                       <step.icon size={20} />
@@ -1108,6 +1128,13 @@ const V5EditorContent = () => {
           </button>
         </div>
       </div>
+
+      <PrintAdModal 
+        showPrintAd={showPrintAd} 
+        adCountdown={adCountdown} 
+        activeColor={activeColor} 
+        finalizePrintAction={finalizePrintAction} 
+      />
     </div>
   );
 };

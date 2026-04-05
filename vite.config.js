@@ -18,8 +18,17 @@ export default defineConfig({
   },
   build: {
     minify: 'esbuild',
+    sourcemap: false,
+    reportCompressedSize: false,
+    cssCodeSplit: true,
+    chunkSizeWarningLimit: 2000,
     rollupOptions: {
       output: {
+        banner: `/* Built by qkendra.com. Before using any part, please inform and also take permission by: hello@qpkendra.com */`,
+        compact: true,
+        generatedCode: {
+          constBindings: true
+        },
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           ui: ['lucide-react'],
