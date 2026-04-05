@@ -5,25 +5,35 @@ const ResumeContext = createContext();
 
 const STORAGE_KEY = 'modern_resume_data';
 const STORAGE_TYPE_KEY = 'modern_resume_storage_preference';
+const STORAGE_TIMESTAMP_KEY = 'modern_resume_timestamp';
+const EXPIRATION_MS = 3 * 24 * 60 * 60 * 1000; // 3 Days in milliseconds
 
 const getInitialState = () => {
   try {
     // 1. Determine preference (default to persistent)
     const type = localStorage.getItem(STORAGE_TYPE_KEY) || 'persistent';
     
-    // 2. Load from the preferred storage
+    // 2. Check for expiration (3-day TTL)
+    const timestamp = localStorage.getItem(STORAGE_TIMESTAMP_KEY);
+    if (timestamp && Date.now() - parseInt(timestamp) > EXPIRATION_MS) {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STORAGE_TIMESTAMP_KEY);
+      localStorage.removeItem(STORAGE_TYPE_KEY);
+    }
+
+    // 3. Load from the preferred storage
     const storage = type === 'persistent' ? localStorage : sessionStorage;
     const savedData = storage.getItem(STORAGE_KEY);
     
     if (!savedData || savedData === 'undefined') return {
       ...SAMPLE_JSON_DATA,
-      selectedTemplate: 'template-1',
-      themeColor: '#4f46e5',
-      themeMode: 'light',
-      atsMode: false,
+      selectedTemplate: SAMPLE_JSON_DATA.selectedTemplate || 'template-2',
+      themeColor: SAMPLE_JSON_DATA.themeColor || '#334155',
+      themeMode: SAMPLE_JSON_DATA.themeMode || 'dark',
+      atsMode: SAMPLE_JSON_DATA.atsMode ?? true,
       storageType: type,
       editorStyle: 'modern',
-      fontFamily: 'Default',
+      fontFamily: SAMPLE_JSON_DATA.fontFamily || 'Default',
       predictiveScoreEnabled: false,
       sectionThemingEnabled: true
     };
@@ -40,10 +50,10 @@ const getInitialState = () => {
     console.error("Error loading saved resume data:", error);
     return {
       ...SAMPLE_JSON_DATA,
-      selectedTemplate: 'template-1',
-      themeColor: '#4f46e5',
-      themeMode: 'light',
-      atsMode: false,
+      selectedTemplate: SAMPLE_JSON_DATA.selectedTemplate || 'template-2',
+      themeColor: SAMPLE_JSON_DATA.themeColor || '#334155',
+      themeMode: SAMPLE_JSON_DATA.themeMode || 'dark',
+      atsMode: SAMPLE_JSON_DATA.atsMode ?? true,
       storageType: 'persistent',
       predictiveScoreEnabled: false,
       sectionThemingEnabled: true
@@ -89,10 +99,10 @@ function resumeReducer(state, action) {
     case 'RESET_RESUME':
       newState = {
         ...SAMPLE_JSON_DATA,
-        selectedTemplate: 'template-1',
-        themeColor: '#4f46e5',
-        themeMode: 'light',
-        atsMode: false,
+        selectedTemplate: SAMPLE_JSON_DATA.selectedTemplate || 'template-2',
+        themeColor: SAMPLE_JSON_DATA.themeColor || '#334155',
+        themeMode: SAMPLE_JSON_DATA.themeMode || 'dark',
+        atsMode: SAMPLE_JSON_DATA.atsMode ?? true,
         storageType: state.storageType,
         predictiveScoreEnabled: false,
         sectionThemingEnabled: true
@@ -112,8 +122,9 @@ export function ResumeProvider({ children }) {
     const storage = state.storageType === 'persistent' ? localStorage : sessionStorage;
     storage.setItem(STORAGE_KEY, JSON.stringify(state));
     
-    // 2. Update preference key (always in local, it's just a setting)
+    // 2. Update preference key and timestamp (3-day TTL tracker)
     localStorage.setItem(STORAGE_TYPE_KEY, state.storageType);
+    localStorage.setItem(STORAGE_TIMESTAMP_KEY, Date.now().toString());
 
     // 3. Cleanup logic: when switching, ensure the other storage is wiped
     if (state.storageType === 'persistent') {

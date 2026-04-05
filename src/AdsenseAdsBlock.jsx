@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
+import { isDevelopmentMode } from './V5/V5Constants';
 
 const AdSenseAd = ({ client, slot, format = 'auto', containerClassName = '' }) => {
+    // Global Developer Bypass: Hide ads on local/dev environments
+    if (isDevelopmentMode) return null;
 
     // 1. Function to insert the main AdSense script
     const insertAdScript = () => {
