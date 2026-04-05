@@ -2,13 +2,16 @@ import React, { useRef, useState } from 'react';
 import { useResume } from '../../context/ResumeContext';
 import { Bold, Italic, Underline, Link as LinkIcon, Info } from 'lucide-react';
 
-const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'text', textarea = false, className = '', variant, showFormatTip = false }) => {
+const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'text', textarea = false, className = '', variant, showFormatTip = false, id }) => {
   const { resumeData } = useResume();
   const activeVariant = variant || resumeData.editorStyle || 'glass';
   const activeColor = resumeData.themeColor || '#0ea5e9';
   const isLiquid = activeVariant === 'liquid';
   const inputRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
+  
+  // Generate a unique ID if none is provided for accessibility mapping
+  const inputId = id || `v5-input-${name || Math.random().toString(36).substr(2, 9)}`;
   
   const applyFormat = (formatType) => {
     if (!inputRef.current) return;
@@ -62,6 +65,7 @@ const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'te
   };
   
   const inputProps = {
+    id: inputId, // Map the ID for accessibility
     ref: inputRef,
     name,
     value,
@@ -77,7 +81,10 @@ const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'te
     <div className="mb-2 relative group">
       <div className="flex items-center justify-between mb-1 ml-1">
         {label && (
-          <label className={`block text-[7px] font-black uppercase tracking-[0.2em] opacity-80 ${isLiquid ? 'text-[var(--v5-heading)]' : 'text-sage-700 dark:text-sage-300'}`}>
+          <label 
+            htmlFor={inputId} // Associate label with input
+            className={`block text-[7px] font-black uppercase tracking-[0.2em] opacity-80 cursor-pointer ${isLiquid ? 'text-[var(--v5-heading)]' : 'text-sage-700 dark:text-sage-300'}`}
+          >
             {label}
           </label>
         )}

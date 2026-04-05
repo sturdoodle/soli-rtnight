@@ -5,16 +5,32 @@ export const StandardATS = ({ data, themeColor, atsMode, sectionThemingEnabled }
   <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? 'font-sans' : 'font-serif'}`}>
     <header className="border-b-2 border-black pb-4 mb-8 transition-colors" style={atsMode ? {} : { borderColor: sectionThemingEnabled ? themeColor : 'black' }}>
       <h1 className="text-3xl font-bold uppercase mb-2 tracking-wide transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>{data.fullName}</h1>
-      <div className="text-sm font-medium space-x-2">
+      <div className="flex flex-wrap items-center gap-2 text-sm font-medium">
         <span>{data.email}</span>
         <span>|</span>
         <span>{data.phone}</span>
-        <span>|</span>
-        <span>{data.location}</span>
+        {data.location && (
+          <>
+            <span>|</span>
+            <span>{data.location}</span>
+          </>
+        )}
         {data.github && (
           <>
             <span>|</span>
             <span>{data.github}</span>
+          </>
+        )}
+        {data.linkedin && (
+          <>
+            <span>|</span>
+            <span>{data.linkedin}</span>
+          </>
+        )}
+        {data.portfolio && (
+          <>
+            <span>|</span>
+            <span>{data.portfolio}</span>
           </>
         )}
       </div>

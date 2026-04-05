@@ -61,6 +61,7 @@ const ProjectsSection = () => {
               <div className="grid grid-cols-1 xl:grid-cols-12 gap-2 mb-2">
                 <div className="xl:col-span-8">
                   <MinimalistInput 
+                    id={`v5-proj-${proj.id}-name`}
                     label="Project Title" 
                     value={proj.name} 
                     onChange={(e) => handleUpdateProject(proj.id, 'name', e.target.value)} 
@@ -68,6 +69,7 @@ const ProjectsSection = () => {
                 </div>
                 <div className="xl:col-span-4">
                   <MinimalistInput 
+                    id={`v5-proj-${proj.id}-tech`}
                     label="Tech Stack" 
                     icon={Code}
                     value={proj.tech} 
@@ -79,6 +81,7 @@ const ProjectsSection = () => {
               <div className="grid grid-cols-1 xl:grid-cols-12 gap-2">
                 <div className="xl:col-span-12">
                   <MinimalistInput 
+                    id={`v5-proj-${proj.id}-desc`}
                     textarea 
                     label="Description" 
                     value={proj.description} 
@@ -91,6 +94,7 @@ const ProjectsSection = () => {
 
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 mt-1">
                 <MinimalistInput 
+                  id={`v5-proj-${proj.id}-link`}
                   label="Project Link (Optional)" 
                   icon={LinkIcon}
                   value={proj.link || ''} 
@@ -98,6 +102,7 @@ const ProjectsSection = () => {
                   placeholder="https://github.com/..."
                 />
                 <MinimalistInput 
+                  id={`v5-proj-${proj.id}-icon`}
                   label="Icon / Emoji" 
                   value={proj.icon || '🚀'} 
                   onChange={(e) => handleUpdateProject(proj.id, 'icon', e.target.value)} 

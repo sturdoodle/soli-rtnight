@@ -58,6 +58,7 @@ const CertificationsSection = () => {
               <div className="grid grid-cols-1 xl:grid-cols-12 gap-2">
                 <div className="xl:col-span-7">
                   <MinimalistInput 
+                    id={`v5-cert-${cert.id}-name`}
                     label="Certificate Name" 
                     icon={ShieldCheck}
                     value={cert.name} 
@@ -69,6 +70,7 @@ const CertificationsSection = () => {
                   <div className="flex flex-col h-full">
                     <div className="flex-1">
                       <MinimalistInput 
+                        id={`v5-cert-${cert.id}-expiry`}
                         label="Date or Status" 
                         icon={Calendar}
                         value={cert.expiryDate === null ? 'Never Expires' : cert.expiryDate} 

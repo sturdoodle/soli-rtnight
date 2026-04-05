@@ -174,6 +174,7 @@ const V5EditorContent = () => {
     typography: { title: "Typography", subtitle: "Choose professional fonts for maximum readability" },
     snapshots: { title: "Backups", subtitle: "Save and manage your resume drafts" },
     history: { title: "Backups", subtitle: "Save and manage your resume drafts" },
+    help: { title: "Help & Guidance", subtitle: "Master the V5 Resume Builder Ecosystem." },
     about: { title: "About Us", subtitle: "Privacy First: Your data remains secure and private." }
   };
 
@@ -232,7 +233,11 @@ const V5EditorContent = () => {
       <nav className="h-16 border-b border-black/5 dark:border-white/5 bg-[var(--v5-card)]/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-50 print:hidden shadow-sm transition-all duration-500">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-3 font-bold group">
-            <button className="lg:hidden p-2 -ml-2 text-slate-500 hover:text-[var(--v5-heading)] transition-colors pr-1" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <button 
+              className="lg:hidden p-2 -ml-2 text-slate-500 hover:text-[var(--v5-heading)] transition-colors pr-1" 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Open Navigation Menu"
+            >
               <Menu size={24} />
             </button>
             <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 cursor-pointer"
@@ -255,6 +260,13 @@ const V5EditorContent = () => {
               style={activeTab === 'layout' ? { borderColor: activeColor, color: activeColor } : { borderColor: 'transparent' }}
             >
               Structure
+            </button>
+            <button
+              onClick={() => setActiveTab('help')}
+              className={`pb-5 pt-5 border-b-2 transition-all`}
+              style={activeTab === 'help' ? { borderColor: activeColor, color: activeColor } : { borderColor: 'transparent' }}
+            >
+              Help
             </button>
             <button
               onClick={() => setActiveTab('about')}
@@ -305,9 +317,15 @@ const V5EditorContent = () => {
             </div>
           </div>
 
-          <button onClick={toggleTheme} className="p-2 sm:p-2.5 rounded-xl border border-black/5 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition-all group">
-            {themeMode === 'dark' ? <Sun size={18} className="text-amber-400 group-hover:rotate-45 transition-transform" /> : <Moon size={18} style={{ color: activeColor }} className="group-hover:rotate-[-45deg] transition-transform" />}
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle dark/light mode"
+              className="p-3 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 text-[var(--v5-text)] hover:scale-105 transition-all active:scale-95 shadow-sm group"
+            >
+              {resumeData.themeMode === 'dark' ? <Sun size={20} className="group-hover:rotate-12 transition-transform" /> : <Moon size={20} className="group-hover:rotate-[-12px] transition-transform" />}
+            </button>
+          </div>
 
           <button
             onClick={handleDownload}
@@ -327,20 +345,39 @@ const V5EditorContent = () => {
           <div className="flex flex-col p-4 text-[11px] font-black uppercase tracking-[0.2em] max-w-7xl mx-auto space-y-1">
             <button
               onClick={() => { setActiveTab('content'); setIsMobileMenuOpen(false); }}
+              aria-label="Identity Editor"
               className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'content' ? 'bg-black/5 dark:bg-white/5' : ''}`}
               style={{ color: activeTab === 'content' ? activeColor : 'var(--v5-text)' }}
             >
               Editor
             </button>
             <button
+              onClick={() => { setActiveTab('typography'); setIsMobileMenuOpen(false); }}
+              aria-label="Typography Settings"
+              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'typography' ? 'bg-black/5 dark:bg-white/5' : ''}`}
+              style={{ color: activeTab === 'typography' ? activeColor : 'var(--v5-text)' }}
+            >
+              Typeface
+            </button>
+            <button
               onClick={() => { setActiveTab('layout'); setIsMobileMenuOpen(false); }}
+              aria-label="Structure Layout"
               className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'layout' ? 'bg-black/5 dark:bg-white/5' : ''}`}
               style={{ color: activeTab === 'layout' ? activeColor : 'var(--v5-text)' }}
             >
               Structure
             </button>
             <button
+              onClick={() => { setActiveTab('help'); setIsMobileMenuOpen(false); }}
+              aria-label="Help and Guidance"
+              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'help' ? 'bg-black/5 dark:bg-white/5' : ''}`}
+              style={{ color: activeTab === 'help' ? activeColor : 'var(--v5-text)' }}
+            >
+              Help
+            </button>
+            <button
               onClick={() => { setActiveTab('about'); setIsMobileMenuOpen(false); }}
+              aria-label="About the App"
               className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'about' ? 'bg-black/5 dark:bg-white/5' : ''}`}
               style={{ color: activeTab === 'about' ? activeColor : 'var(--v5-text)' }}
             >
@@ -502,6 +539,9 @@ const V5EditorContent = () => {
           className="overflow-y-auto bg-[var(--v5-canvas)]/10 p-4 lg:p-8 pb-24 lg:pb-12 custom-scrollbar print:hidden will-change-transform"
           style={isDesktop ? { width: `${splitWidth}%` } : { width: '100%' }}
         >
+          {/* Hidden H1 for SEO Authority & AI Summary agents */}
+          <h1 className="sr-only">QPkendra AI Resume Builder & CV Maker 2026 - Free ATS Friendly Resume Templates</h1>
+          
           <div className="max-w-[1400px] mx-auto h-full">
             <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] pt-6 pb-12 px-1.5 sm:px-6 lg:px-8 py-6">
               {activeTab === 'content' && (
@@ -524,7 +564,10 @@ const V5EditorContent = () => {
                   {/* QPKendra Branding Signature Card */}
                   <div className="p-10 rounded-[3rem] bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 relative overflow-hidden group transition-all flex flex-col items-center text-center justify-center min-h-[220px]">
                     <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 bg-white/50 dark:bg-black/30 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.3)] transition-all group-hover:scale-110 group-hover:rotate-[-5deg]">
-                      <span className="text-3xl font-black text-[var(--v5-heading)]" style={{ fontFamily: 'Absans, sans-serif', letterSpacing: '-0.05em', color: activeColor }}>qp</span>
+                      <div className="p-2.5 rounded-2xl bg-white/50 dark:bg-black/20 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] group-hover:scale-105 transition-all duration-500 group-hover:rotate-[-5deg]">
+              <img src="./o-logo.png" alt="QPkendra Logo" className="w-6 h-6 object-contain" />
+            </div>
+              <span className="text-3xl font-black text-[var(--v5-heading)]" style={{ fontFamily: 'Absans, sans-serif', letterSpacing: '-0.05em', color: activeColor }}>qp</span>
                     </div>
                     <h3 className="text-3xl font-black tracking-[-0.05em] text-[var(--v5-heading)] opacity-90 transition-opacity" style={{ fontFamily: 'Absans, sans-serif' }}>
                       qpkendra
@@ -638,7 +681,8 @@ const V5EditorContent = () => {
                             <button
                               key={mode}
                               onClick={() => updateStorageType(mode)}
-                              className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${isActive ? 'text-white shadow-xl scale-105' : 'text-slate-500 hover:text-slate-400'}`}
+                              aria-label={`Set storage to ${mode === 'persistent' ? 'Permanent' : 'Temporary'}`}
+                              className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${isActive ? 'text-white shadow-xl scale-105' : 'text-slate-500 hover:text-slate-400'}`}
                               style={isActive ? { backgroundColor: activeColor, boxShadow: `0 8px 20px -4px ${activeColor}60` } : {}}
                             >
                               {mode === 'persistent' ? 'Permanent' : 'Temporary'}
@@ -707,6 +751,63 @@ const V5EditorContent = () => {
                     <p className="text-[9px] font-bold text-slate-500/80 leading-relaxed uppercase tracking-wider text-left">
                       <span className="text-amber-500">Ad-Protocol Active:</span> We show Google Ads so we don't have to charge you. They pay for the electricity and the lead dev's questionable caffeine addiction.
                     </p>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'help' && (
+                <div className="p-10 space-y-12 max-w-4xl mx-auto rounded-[3rem] bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                  <div className="flex flex-col items-center text-center space-y-4">
+                    <Rocket className="w-16 h-16" style={{ color: activeColor }} />
+                    <h2 className="text-3xl font-black tracking-tight text-[var(--v5-heading)]">Master the V5 Ecosystem</h2>
+                    <p className="text-sm text-slate-500 max-w-lg">Everything you need to know about our professional resume engineering engine.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Pillar 1: Getting Started */}
+                    <div className="p-8 rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
+                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-blue-500/10 text-blue-500 group-hover:scale-110 transition-transform">
+                        <Plus size={24} />
+                      </div>
+                      <h3 className="text-lg font-black text-[var(--v5-heading)]">1. Getting Started</h3>
+                      <p className="text-xs leading-relaxed text-slate-500">Begin by filling out your <strong>Identity</strong> and <strong>Summary</strong>. Expand your narrative using the Experience, Projects, and Education modules. Each item you add builds your <strong>ATS score</strong> in real-time.</p>
+                    </div>
+
+                    {/* Pillar 2: Section Color Logic */}
+                    <div className="p-8 rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
+                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-amber-500/10 text-amber-500 group-hover:scale-110 transition-transform">
+                        <Palette size={24} />
+                      </div>
+                      <h3 className="text-lg font-black text-[var(--v5-heading)]">2. Design Compliance</h3>
+                      <p className="text-xs leading-relaxed text-slate-500">In the <strong>Structure</strong> tab, use the <strong>Section Color</strong> toggle to switch between high-impact and neutral aesthetics. This allows you to apply theme colors to headers and icons or keep them professionally black.</p>
+                    </div>
+
+                    {/* Pillar 3: Smart Section Cleanup */}
+                    <div className="p-8 rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
+                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-emerald-500/10 text-emerald-500 group-hover:scale-110 transition-transform">
+                        <Sparkles size={24} />
+                      </div>
+                      <h3 className="text-lg font-black text-[var(--v5-heading)]">3. Intelligent Cleanup</h3>
+                      <p className="text-xs leading-relaxed text-slate-500">Don't have any projects or certifications? <strong>No problem.</strong> Our engine automatically detects empty sections and removes their headers and spacing from both the <strong>Live Preview</strong> and the final <strong>PDF</strong>.</p>
+                    </div>
+
+                    {/* Pillar 4: ATS Optimization */}
+                    <div className="p-8 rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
+                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-indigo-500/10 text-indigo-500 group-hover:scale-110 transition-transform">
+                        <ShieldCheck size={24} />
+                      </div>
+                      <h3 className="text-lg font-black text-[var(--v5-heading)]">4. ATS Blueprints</h3>
+                      <p className="text-xs leading-relaxed text-slate-500">Toggle the <strong>ATS Switch</strong> to instantly transform your resume into a machine-readable blueprint. We force-disable section colors and optimize spacing to ensure your resume passes through screening software with <strong>100% fidelity</strong>.</p>
+                    </div>
+                  </div>
+
+                  {/* Pro Tip */}
+                  <div className="p-6 rounded-[2rem] bg-amber-500/5 border border-amber-500/20 flex items-start gap-4">
+                    <Zap className="text-amber-500 mt-1 shrink-0" size={20} />
+                    <div>
+                      <h4 className="text-xs font-black uppercase tracking-widest text-amber-600 mb-1">Pro Strategy</h4>
+                      <p className="text-xs text-slate-500 leading-relaxed">Use the <strong>Export Snapshot</strong> button regularly to keep local backups of your different resume versions. You can restore them anytime using <strong>Import</strong>.</p>
+                    </div>
                   </div>
                 </div>
               )}
@@ -993,7 +1094,7 @@ const V5EditorContent = () => {
           <button onClick={handleDownload} className="p-2 xs:p-3 rounded-full text-white hover:bg-white/10 transition-colors" title="Print as PDF">
             <Printer size={20} />
           </button>
-          <button onClick={() => setIsEnlarged(true)} className="p-2 xs:p-3 rounded-full text-white bg-white/10 ml-1 hover:scale-110 transition-transform">
+          <button onClick={() => setIsEnlarged(true)} aria-label="Enter Zen Mode Fullscreen Preview" className="p-2 xs:p-3 rounded-full text-white bg-white/10 ml-1 hover:scale-110 transition-transform">
             <Maximize2 size={20} />
           </button>
         </div>

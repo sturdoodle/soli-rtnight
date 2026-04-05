@@ -58,6 +58,7 @@ const SkillsSection = () => {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                 <div className="lg:col-span-4">
                   <MinimalistInput
+                    id={`v5-skill-${skill.id}-category`}
                     label="Skill Group (e.g. Frontend)"
                     value={skill.category}
                     onChange={(e) => handleUpdateSkill(skill.id, 'category', e.target.value)}
@@ -66,6 +67,7 @@ const SkillsSection = () => {
                 </div>
                 <div className="lg:col-span-8">
                   <MinimalistInput
+                    id={`v5-skill-${skill.id}-items`}
                     label="List of Skills (comma-separated)"
                     textarea
                     value={skill.items}

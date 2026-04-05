@@ -114,16 +114,19 @@ const ExperienceSection = () => {
               
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 mb-3">
                 <MinimalistInput 
+                  id={`v5-exp-${exp.id}-company`}
                   label="Company" 
                   value={exp.company} 
                   onChange={(e) => handleUpdateExp(exp.id, 'company', e.target.value)} 
                 />
                 <MinimalistInput 
+                  id={`v5-exp-${exp.id}-role`}
                   label="Role" 
                   value={exp.role} 
                   onChange={(e) => handleUpdateExp(exp.id, 'role', e.target.value)} 
                 />
                 <MinimalistInput 
+                  id={`v5-exp-${exp.id}-duration`}
                   label="Duration" 
                   value={exp.duration} 
                   onChange={(e) => handleUpdateExp(exp.id, 'duration', e.target.value)} 
@@ -147,11 +150,14 @@ const ExperienceSection = () => {
                       </button>
                     </div>
                     <MinimalistInput 
+                      id={`v5-exp-client-${client.id}-name`}
+                      label="Client / Project Name"
                       value={client.name} 
                       onChange={(e) => handleUpdateClient(exp.id, client.id, 'name', e.target.value)}
                       placeholder="Global Fintech Alliance"
                     />
                     <MinimalistInput 
+                      id={`v5-exp-client-${client.id}-bullets`}
                       textarea 
                       label="Bullet Points (One per line)" 
                       value={client.bulletPoints.join('\n')} 

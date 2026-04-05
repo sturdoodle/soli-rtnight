@@ -15,6 +15,7 @@ const PersonalDetails = () => {
     <GlassCard title="Personal Details" icon={User} isCollapsible={true}>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-4 gap-y-2 px-1">
         <MinimalistInput
+          id="v5-input-fullname"
           label="Full Name"
           name="fullName"
           value={resumeData.fullName}
@@ -22,6 +23,7 @@ const PersonalDetails = () => {
           placeholder="e.g. Jane Doe"
         />
         <MinimalistInput
+          id="v5-input-jobtitle"
           label="Job Title"
           name="jobTitle"
           value={resumeData.jobTitle}
@@ -29,6 +31,7 @@ const PersonalDetails = () => {
           placeholder="e.g. Senior Software Engineer"
         />
         <MinimalistInput
+          id="v5-input-location"
           label="Location"
           name="location"
           value={resumeData.location}
@@ -36,6 +39,7 @@ const PersonalDetails = () => {
           placeholder="e.g. Bangalore, India"
         />
         <MinimalistInput
+          id="v5-input-phone"
           label="Phone"
           name="phone"
           value={resumeData.phone}
@@ -43,6 +47,7 @@ const PersonalDetails = () => {
           placeholder="e.g. +91 9876543210"
         />
         <MinimalistInput
+          id="v5-input-email"
           label="Email"
           name="email"
           value={resumeData.email}
@@ -50,6 +55,7 @@ const PersonalDetails = () => {
           placeholder="e.g. jane@example.com"
         />
         <MinimalistInput
+          id="v5-input-social"
           label="GitHub / Portfolio"
           name="github"
           value={resumeData.github}

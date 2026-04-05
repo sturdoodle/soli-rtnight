@@ -6,20 +6,47 @@ export const ATSProfessional = ({ data, themeColor, atsMode, sectionThemingEnabl
     {/* Centered Header */}
     <header className="text-center mb-8">
       <h1 className="text-3xl font-bold uppercase mb-2 tracking-widest transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>{data.fullName}</h1>
-      <div className="text-sm font-medium space-x-2">
-        <span>{data.phone}</span>
-        <span>•</span>
-        <span>{data.email}</span>
-        {data.location && (
-          <>
-            <span>•</span>
-            <span>{data.location}</span>
-          </>
-        )}
+      <div className="flex flex-col items-center text-sm font-medium space-y-1">
+        <div className="flex items-center gap-2 flex-wrap justify-center">
+          <span>{data.phone}</span>
+          <span>•</span>
+          <span>{data.email}</span>
+          {data.location && (
+            <>
+              <span>•</span>
+              <span>{data.location}</span>
+            </>
+          )}
+        </div>
+        <div className="flex items-center gap-2 flex-wrap justify-center text-[11px] opacity-70">
+          {data.github && <span className="underline italic tracking-tight">{data.github}</span>}
+          {data.linkedin && (
+            <>
+              {data.github && <span>•</span>}
+              <span className="underline italic tracking-tight">{data.linkedin}</span>
+            </>
+          )}
+          {data.portfolio && (
+            <>
+              {(data.github || data.linkedin) && <span>•</span>}
+              <span className="underline italic tracking-tight">{data.portfolio}</span>
+            </>
+          )}
+        </div>
       </div>
     </header>
 
     <div className="space-y-6">
+      {/* Summary Section */}
+      {data.summary && (
+        <section aria-label="Professional Summary">
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Professional Summary</h2>
+          <div className="text-[13px] leading-relaxed">
+            <FormattedText text={data.summary} />
+          </div>
+        </section>
+      )}
+
       {/* Education Section */}
       {data.education && data.education.length > 0 && (
         <section aria-label="Education">
@@ -104,6 +131,17 @@ export const ATSProfessional = ({ data, themeColor, atsMode, sectionThemingEnabl
               </div>
             ))}
           </div>
+        </section>
+      )}
+      {/* Certifications Section */}
+      {data.certifications && data.certifications.length > 0 && (
+        <section aria-label="Certifications">
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Certifications</h2>
+          <ul className="list-disc ml-5 text-[12px] space-y-1">
+            {data.certifications?.map((cert) => (
+              <li key={cert.id}>{cert.name} {cert.expiryDate && `| Expires: ${cert.expiryDate}`}</li>
+            ))}
+          </ul>
         </section>
       )}
     </div>

@@ -40,6 +40,7 @@ const TemplateSelector = () => {
             <button 
               onClick={toggleSectionTheming}
               disabled={atsMode}
+              aria-label={atsMode ? "Section coloring is disabled in ATS Mode" : `Turn Section Theme ${sectionThemingEnabled ? 'Off' : 'On'}`}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-all group ai-glow-wrapper ${atsMode ? 'opacity-40 grayscale pointer-events-none cursor-not-allowed bg-slate-100' : sectionThemingEnabled ? 'bg-white/10 active shadow-lg' : 'bg-slate-100 hover:bg-slate-200'}`}
               title={atsMode ? "Section coloring is disabled in ATS Mode" : "Toggle Section Theme Compliance"}
             >
@@ -86,6 +87,7 @@ const TemplateSelector = () => {
               <button
                 key={template.id}
                 onClick={() => updateTemplate(template.id)}
+                aria-label={`Select ${template.name} template`}
                 className={`p-3 rounded-2xl border-2 transition-all text-left flex items-start gap-2 group relative overflow-hidden ${currentTemplate === template.id
                     ? 'bg-white/80 dark:bg-white/5 shadow-lg shadow-black/5 ring-4'
                     : 'border-white dark:border-white/5 bg-white/40 dark:bg-zinc-900/5 hover:border-black/10 dark:hover:border-white/10 hover:bg-white/60 dark:hover:bg-zinc-900/10'

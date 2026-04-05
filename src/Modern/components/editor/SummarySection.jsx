@@ -15,6 +15,8 @@ const SummarySection = () => {
     <GlassCard title="Professional Summary" icon={FileText} isCollapsible={true}>
       <div className="px-2">
         <MinimalistInput
+          id="v5-input-summary"
+          label="Summary"
           textarea
           name="summary"
           value={resumeData.summary}

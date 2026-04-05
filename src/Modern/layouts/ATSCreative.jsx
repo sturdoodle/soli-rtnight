@@ -4,16 +4,41 @@ import { FormattedText } from './SharedComponents';
 export const ATSCreative = ({ data, themeColor, atsMode, sectionThemingEnabled }) => (
   <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? 'font-sans' : 'font-serif'}`}>
     {/* Right-Aligned Header */}
-    <header className="flex flex-col items-end mb-10 text-right">
+    <header className="flex justify-between items-start mb-8 border-b-2 border-black pb-4 transition-colors" style={atsMode ? {} : { borderColor: sectionThemingEnabled ? themeColor : 'black' }}>
       <h1 className="text-4xl font-black mb-2 tracking-tight transition-colors" style={atsMode ? { color: '#111827' } : { color: sectionThemingEnabled ? themeColor : '#111827' }}>{data.fullName}</h1>
-      <div className="flex flex-col items-end text-sm font-medium space-y-0.5">
+      <div className="flex flex-col items-end text-sm font-medium space-y-0.5 text-right">
         <span>{data.phone}</span>
         <span className="text-black/70 underline decoration-black/10">{data.email}</span>
         {data.location && <span className="text-gray-500">{data.location}</span>}
+        <div className="flex items-center gap-2 mt-1 text-[11px] opacity-70">
+          {data.portfolio && <span className="underline">{data.portfolio}</span>}
+          {data.linkedin && (
+            <>
+              {data.portfolio && <span>|</span>}
+              <span className="underline">{data.linkedin}</span>
+            </>
+          )}
+          {data.github && (
+            <>
+              {(data.portfolio || data.linkedin) && <span>|</span>}
+              <span className="underline">{data.github}</span>
+            </>
+          )}
+        </div>
       </div>
     </header>
 
-    <div className="space-y-8">
+    <div className="space-y-6">
+      {/* Summary Section */}
+      {data.summary && (
+        <section aria-label="Professional Summary">
+          <h2 className="text-sm font-bold uppercase mb-3 transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>Professional Summary</h2>
+          <div className="text-[13px] leading-relaxed italic">
+            <FormattedText text={data.summary} />
+          </div>
+        </section>
+      )}
+
       {/* Education */}
       {data.education && data.education.length > 0 && (
         <section aria-label="Education">
@@ -93,6 +118,17 @@ export const ATSCreative = ({ data, themeColor, atsMode, sectionThemingEnabled }
               </div>
             ))}
           </div>
+        </section>
+      )}
+      {/* Certifications Section */}
+      {data.certifications && data.certifications.length > 0 && (
+        <section aria-label="Certifications" className="flex flex-col items-end text-right">
+          <h2 className="text-sm font-bold uppercase mb-3 transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>Certifications</h2>
+          <ul className="text-[12px] space-y-1">
+            {data.certifications?.map((cert) => (
+              <li key={cert.id}>{cert.name} {cert.expiryDate && <span className="opacity-60 italic">| {cert.expiryDate}</span>}</li>
+            ))}
+          </ul>
         </section>
       )}
     </div>

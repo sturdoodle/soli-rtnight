@@ -59,17 +59,20 @@ const EducationSection = () => {
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-6 gap-y-2">
                 <div className="xl:col-span-2">
                   <MinimalistInput 
+                    id={`v5-edu-${edu.id}-degree`}
                     label="Degree / Course" 
                     value={edu.degree} 
                     onChange={(e) => handleUpdateEdu(edu.id, 'degree', e.target.value)} 
                   />
                 </div>
                 <MinimalistInput 
+                  id={`v5-edu-${edu.id}-institution`}
                   label="Institution" 
                   value={edu.institution} 
                   onChange={(e) => handleUpdateEdu(edu.id, 'institution', e.target.value)} 
                 />
                 <MinimalistInput 
+                  id={`v5-edu-${edu.id}-duration`}
                   label="Duration" 
                   value={edu.duration} 
                   onChange={(e) => handleUpdateEdu(edu.id, 'duration', e.target.value)} 
