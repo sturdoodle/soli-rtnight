@@ -1,11 +1,11 @@
 import React from 'react';
 import { FormattedText } from './SharedComponents';
 
-export const ATSProfessional = ({ data, themeColor, atsMode }) => (
+export const ATSProfessional = ({ data, themeColor, atsMode, sectionThemingEnabled }) => (
   <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? 'font-sans' : 'font-serif'}`}>
     {/* Centered Header */}
     <header className="text-center mb-8">
-      <h1 className="text-3xl font-bold uppercase mb-2 tracking-widest transition-colors" style={atsMode ? {} : { color: themeColor }}>{data.fullName}</h1>
+      <h1 className="text-3xl font-bold uppercase mb-2 tracking-widest transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>{data.fullName}</h1>
       <div className="text-sm font-medium space-x-2">
         <span>{data.phone}</span>
         <span>•</span>
@@ -23,7 +23,7 @@ export const ATSProfessional = ({ data, themeColor, atsMode }) => (
       {/* Education Section */}
       {data.education && data.education.length > 0 && (
         <section aria-label="Education">
-          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Education</h2>
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Education</h2>
           <div className="space-y-4">
             {data.education?.map((edu) => (
               <div key={edu.id} className="text-[13px]">
@@ -45,7 +45,7 @@ export const ATSProfessional = ({ data, themeColor, atsMode }) => (
       {/* Experience Section */}
       {data.experience && data.experience.length > 0 && (
         <section aria-label="Professional Experience">
-          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Experience</h2>
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Experience</h2>
           <div className="space-y-6">
             {data.experience?.map((exp) => (
               <div key={exp.id}>
@@ -59,7 +59,7 @@ export const ATSProfessional = ({ data, themeColor, atsMode }) => (
                 </div>
                 {exp.clients?.map((client) => (
                   <div key={client.id} className="mt-1 mb-3">
-                    {client.name && <div className="text-[12px] font-bold opacity-80 mb-1 transition-colors" style={atsMode ? {} : { color: themeColor }}>{client.name}</div>}
+                    {client.name && <div className="text-[12px] font-bold opacity-80 mb-1 transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>{client.name}</div>}
                     <ul className="list-disc ml-5 text-[12px] space-y-1">
                       {client.bulletPoints?.map((point, idx) => (
                         <li key={idx}><FormattedText text={point} /></li>
@@ -76,7 +76,7 @@ export const ATSProfessional = ({ data, themeColor, atsMode }) => (
       {/* Leadership / Projects */}
       {data.projects && data.projects.length > 0 && (
         <section aria-label="Leadership">
-          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Leadership</h2>
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Leadership</h2>
           <div className="space-y-4">
             {data.projects.map((proj) => (
               <div key={proj.id}>
@@ -96,7 +96,7 @@ export const ATSProfessional = ({ data, themeColor, atsMode }) => (
       {/* Skills Section */}
       {data.skills && data.skills.length > 0 && (
         <section aria-label="Skills & Interests">
-          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Skills & Interests</h2>
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Skills & Interests</h2>
           <div className="space-y-1.5 text-[12px]">
             {data.skills?.map((skill) => (
               <div key={skill.id}>

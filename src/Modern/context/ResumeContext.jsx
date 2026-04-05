@@ -24,7 +24,8 @@ const getInitialState = () => {
       storageType: type,
       editorStyle: 'modern',
       fontFamily: 'Default',
-      predictiveScoreEnabled: false
+      predictiveScoreEnabled: false,
+      sectionThemingEnabled: true
     };
     
     const parsedData = JSON.parse(savedData);
@@ -32,7 +33,8 @@ const getInitialState = () => {
       ...parsedData, 
       storageType: type, 
       editorStyle: parsedData.editorStyle || 'modern',
-      predictiveScoreEnabled: parsedData.predictiveScoreEnabled ?? false 
+      predictiveScoreEnabled: parsedData.predictiveScoreEnabled ?? false,
+      sectionThemingEnabled: parsedData.sectionThemingEnabled ?? true
     };
   } catch (error) {
     console.error("Error loading saved resume data:", error);
@@ -43,7 +45,8 @@ const getInitialState = () => {
       themeMode: 'light',
       atsMode: false,
       storageType: 'persistent',
-      predictiveScoreEnabled: false
+      predictiveScoreEnabled: false,
+      sectionThemingEnabled: true
     };
   }
 };
@@ -71,6 +74,9 @@ function resumeReducer(state, action) {
     case 'UPDATE_THEME_COLOR':
       newState = { ...state, themeColor: action.color };
       break;
+    case 'TOGGLE_SECTION_THEMING':
+      newState = { ...state, sectionThemingEnabled: !state.sectionThemingEnabled };
+      break;
     case 'TOGGLE_THEME':
       newState = { ...state, themeMode: state.themeMode === 'light' ? 'dark' : 'light' };
       break;
@@ -88,7 +94,8 @@ function resumeReducer(state, action) {
         themeMode: 'light',
         atsMode: false,
         storageType: state.storageType,
-        predictiveScoreEnabled: false
+        predictiveScoreEnabled: false,
+        sectionThemingEnabled: true
       };
       break;
     default:
@@ -140,6 +147,7 @@ export function ResumeProvider({ children }) {
       updateTemplate: (templateId) => dispatch({ type: 'UPDATE_TEMPLATE', templateId }),
       updateThemeColor: (color) => dispatch({ type: 'UPDATE_THEME_COLOR', color }),
       toggleTheme: () => dispatch({ type: 'TOGGLE_THEME' }),
+      toggleSectionTheming: () => dispatch({ type: 'TOGGLE_SECTION_THEMING' }),
       updateStorageType,
       setEditorStyle: (style) => dispatch({ type: 'SET_EDITOR_STYLE', payload: style }),
       resetResume

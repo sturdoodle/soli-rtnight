@@ -1,11 +1,12 @@
 import React from 'react';
 import { FormattedText } from './SharedComponents';
 
-export const ATSTech = ({ data, themeColor, atsMode }) => (
+export const ATSTech = ({ data, themeColor, atsMode, sectionThemingEnabled }) => (
   <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? 'font-sans' : 'font-serif'}`}>
     {/* Header with GitHub */}
+    {/* Header with GitHub */}
     <header className="text-center mb-6">
-      <h1 className="text-3xl font-bold uppercase mb-2 tracking-widest transition-colors" style={atsMode ? {} : { color: themeColor }}>{data.fullName}</h1>
+      <h1 className="text-3xl font-bold uppercase mb-2 tracking-widest transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>{data.fullName}</h1>
       <div className="text-sm font-medium space-x-2">
         <span>{data.phone}</span>
         <span>|</span>
@@ -29,7 +30,7 @@ export const ATSTech = ({ data, themeColor, atsMode }) => (
       {/* Education */}
       {data.education && data.education.length > 0 && (
         <section aria-label="Education">
-          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Education</h2>
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Education</h2>
           <div className="space-y-3">
             {data.education?.map((edu) => (
               <div key={edu.id} className="text-[13px]">
@@ -48,7 +49,7 @@ export const ATSTech = ({ data, themeColor, atsMode }) => (
       {/* Technical Skills */}
       {data.skills && data.skills.length > 0 && (
         <section aria-label="Technical Skills">
-          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Technical Skills</h2>
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Technical Skills</h2>
           <div className="space-y-1 text-[12px]">
             {data.skills?.map((skill) => (
               <div key={skill.id} className="flex gap-2">
@@ -63,7 +64,7 @@ export const ATSTech = ({ data, themeColor, atsMode }) => (
       {/* Projects */}
       {data.projects && data.projects.length > 0 && (
         <section aria-label="Projects">
-          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Projects</h2>
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Projects</h2>
           <div className="space-y-5">
             {data.projects?.map((proj) => (
               <div key={proj.id} className="text-[13px]">
@@ -83,7 +84,7 @@ export const ATSTech = ({ data, themeColor, atsMode }) => (
       {/* Experience */}
       {data.experience && data.experience.length > 0 && (
         <section aria-label="Experience">
-          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Experience</h2>
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Experience</h2>
           <div className="space-y-6">
             {data.experience?.map((exp) => (
               <div key={exp.id}>

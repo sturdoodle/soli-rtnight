@@ -888,3 +888,73 @@ input:focus {
     color-adjust: exact !important;
   }
 }
+/* AI Edge Glow Animation - Google Gemini Style */
+@keyframes ai-glow-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.ai-glow-wrapper {
+  position: relative;
+  z-index: 0;
+  display: inline-flex;
+}
+
+.ai-glow-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  padding: 2px;
+  background: linear-gradient(
+    90deg, 
+    #4285F4, 
+    #9b51e0, 
+    #e91e63, 
+    #fbbc05,
+    #34a853,
+    #4285F4
+  );
+  background-size: 300% 100%;
+  border-radius: 100px;
+  -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  animation: ai-glow-shimmer 4s linear infinite;
+  pointer-events: none;
+}
+
+.ai-glow-wrapper.active::before {
+  opacity: 1;
+}
+
+.ai-glow-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(
+    90deg, 
+    #4285F4, 
+    #9b51e0, 
+    #e91e63, 
+    #fbbc05,
+    #34a853,
+    #4285F4
+  );
+  background-size: 300% 100%;
+  border-radius: 100px;
+  filter: blur(8px);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  animation: ai-glow-shimmer 4s linear infinite;
+  pointer-events: none;
+}
+
+.ai-glow-wrapper.active::after {
+  opacity: 0.4;
+}

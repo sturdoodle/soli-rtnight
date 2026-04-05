@@ -1,11 +1,11 @@
 import React from 'react';
 import { FormattedText } from './SharedComponents';
 
-export const ATSCreative = ({ data, themeColor, atsMode }) => (
+export const ATSCreative = ({ data, themeColor, atsMode, sectionThemingEnabled }) => (
   <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? 'font-sans' : 'font-serif'}`}>
     {/* Right-Aligned Header */}
     <header className="flex flex-col items-end mb-10 text-right">
-      <h1 className="text-4xl font-black mb-2 tracking-tight transition-colors" style={atsMode ? { color: '#111827' } : { color: themeColor }}>{data.fullName}</h1>
+      <h1 className="text-4xl font-black mb-2 tracking-tight transition-colors" style={atsMode ? { color: '#111827' } : { color: sectionThemingEnabled ? themeColor : '#111827' }}>{data.fullName}</h1>
       <div className="flex flex-col items-end text-sm font-medium space-y-0.5">
         <span>{data.phone}</span>
         <span className="text-blue-600 underline decoration-blue-600/30">{data.email}</span>
@@ -17,7 +17,7 @@ export const ATSCreative = ({ data, themeColor, atsMode }) => (
       {/* Education */}
       {data.education && data.education.length > 0 && (
         <section aria-label="Education">
-          <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Education</h2>
+          <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Education</h2>
           <div className="space-y-4">
             {data.education?.map((edu) => (
               <div key={edu.id} className="text-[14px]">
@@ -36,7 +36,7 @@ export const ATSCreative = ({ data, themeColor, atsMode }) => (
       {/* Experience */}
       {data.experience && data.experience.length > 0 && (
         <section aria-label="Experience">
-          <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Experience</h2>
+          <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Experience</h2>
           <div className="space-y-8">
             {data.experience?.map((exp) => (
               <div key={exp.id}>
@@ -47,7 +47,7 @@ export const ATSCreative = ({ data, themeColor, atsMode }) => (
                 <div className="italic text-[13px] text-gray-800 mb-3">{exp.role}</div>
                 {exp.clients?.map((client) => (
                   <div key={client.id} className="mt-1 mb-4">
-                    {client.name && <div className="text-[12px] font-bold text-gray-700 mb-1 transition-colors" style={atsMode ? {} : { color: themeColor }}>Project: {client.name}</div>}
+                    {client.name && <div className="text-[12px] font-bold text-gray-700 mb-1 transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>Project: {client.name}</div>}
                     <ul className="list-disc ml-5 text-[12px] text-gray-700 space-y-1.5">
                       {client.bulletPoints?.map((point, idx) => (
                         <li key={idx}><FormattedText text={point} /></li>
@@ -64,7 +64,7 @@ export const ATSCreative = ({ data, themeColor, atsMode }) => (
       {/* Leadership */}
       {data.projects && data.projects.length > 0 && (
         <section aria-label="Leadership">
-          <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Campus and Community Leadership</h2>
+          <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Campus and Community Leadership</h2>
           <div className="space-y-6">
             {data.projects.map((proj) => (
               <div key={proj.id}>
@@ -84,7 +84,7 @@ export const ATSCreative = ({ data, themeColor, atsMode }) => (
       {/* Skills */}
       {data.skills && data.skills.length > 0 && (
         <section aria-label="Skills">
-          <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Skills</h2>
+          <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Skills</h2>
           <div className="space-y-2 text-[13px] text-gray-800">
             {data.skills?.map((skill) => (
               <div key={skill.id} className="flex gap-2">
