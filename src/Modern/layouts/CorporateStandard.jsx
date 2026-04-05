@@ -25,25 +25,29 @@ export const CorporateStandard = ({ data, themeColor, atsMode }) => (
           </p>
         </section>
 
+        {data.experience && data.experience.length > 0 && (
         <section>
-          <SectionTitle atsMode={atsMode} style={atsMode ? {} : { color: themeColor }}>Professional Experience</SectionTitle>
+          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Experience</SectionTitle>
           <div className="space-y-8">
             {data.experience?.map(exp => (
               <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
             ))}
           </div>
         </section>
+      )}
       </div>
 
       <div className={`${atsMode ? 'space-y-10 mt-10' : 'col-span-4 space-y-10'}`}>
+        {data.skills && data.skills.length > 0 && (
         <section>
-          <SectionTitle atsMode={atsMode} style={atsMode ? {} : { color: themeColor }}>Core Competencies</SectionTitle>
-          <div className="space-y-6">
+          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Skills</SectionTitle>
+          <div className={`grid ${atsMode ? 'grid-cols-1 gap-2' : 'grid-cols-2 lg:grid-cols-3 gap-6'}`}>
             {data.skills?.map(skill => (
               <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
             ))}
           </div>
         </section>
+      )}
 
         {data.projects && data.projects.length > 0 && (
           <section>
@@ -56,14 +60,16 @@ export const CorporateStandard = ({ data, themeColor, atsMode }) => (
           </section>
         )}
 
+        {data.education && data.education.length > 0 && (
         <section>
-          <SectionTitle atsMode={atsMode} style={atsMode ? {} : { color: themeColor }}>Education</SectionTitle>
+          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Education</SectionTitle>
           <div className="space-y-6">
             {data.education?.map(edu => (
               <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
             ))}
           </div>
         </section>
+      )}
 
         {data.certifications && data.certifications.length > 0 && (
           <section>

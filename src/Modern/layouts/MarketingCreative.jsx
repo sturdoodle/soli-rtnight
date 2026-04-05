@@ -31,14 +31,16 @@ export const MarketingCreative = ({ data, themeColor, atsMode }) => (
 
       <div className={`grid ${atsMode ? 'grid-cols-1 gap-12' : 'grid-cols-12 gap-10'}`}>
         <div className={atsMode ? '' : 'col-span-12 md:col-span-7 space-y-10'}>
-          <section aria-label="Career Impact">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.5em] mb-6 opacity-40'}>Impact & Growth</SectionTitle>
-            <div className="space-y-10">
-              {data.experience?.map((exp) => (
-                <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
-              ))}
-            </div>
-          </section>
+          {data.experience && data.experience.length > 0 && (
+            <section aria-label="Career Impact">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.5em] mb-6 opacity-40'}>Impact & Growth</SectionTitle>
+              <div className="space-y-10">
+                {data.experience?.map((exp) => (
+                  <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
+                ))}
+              </div>
+            </section>
+          )}
 
           {data.projects && data.projects.length > 0 && (
             <section className="mt-10" aria-label="Creative Projects">
@@ -53,27 +55,31 @@ export const MarketingCreative = ({ data, themeColor, atsMode }) => (
         </div>
 
         <aside className={atsMode ? 'space-y-10 mt-10' : 'col-span-12 md:col-span-5 space-y-10'}>
-          <section aria-label="Strategic Skills">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.5em] mb-6 opacity-40'}>Expertise</SectionTitle>
-            <div className="space-y-8">
-              {data.skills?.map((skill) => (
-                <div key={skill.id} className={atsMode ? '' : 'relative'}>
-                  {!atsMode && <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2 block">{skill.category}</span>}
-                  {atsMode && <h4 className="text-sm font-bold mb-1">{skill.category}</h4>}
-                  <div className={`${atsMode ? 'text-slate-700 text-sm' : 'text-base font-bold text-slate-800'}`}>{skill.items}</div>
-                </div>
-              ))}
-            </div>
-          </section>
+          {data.skills && data.skills.length > 0 && (
+            <section aria-label="Strategic Skills">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.5em] mb-6 opacity-40'}>Expertise</SectionTitle>
+              <div className="space-y-8">
+                {data.skills?.map((skill) => (
+                  <div key={skill.id} className={atsMode ? '' : 'relative'}>
+                    {!atsMode && <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2 block">{skill.category}</span>}
+                    {atsMode && <h4 className="text-sm font-bold mb-1">{skill.category}</h4>}
+                    <div className={`${atsMode ? 'text-slate-700 text-sm' : 'text-base font-bold text-slate-800'}`}>{skill.items}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section aria-label="Academic Roots">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.5em] mb-6 opacity-40'}>Academic</SectionTitle>
-            <div className="space-y-6">
-              {data.education?.map((edu) => (
-                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-              ))}
-            </div>
-          </section>
+          {data.education && data.education.length > 0 && (
+            <section aria-label="Academic Roots">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.5em] mb-6 opacity-40'}>Academic</SectionTitle>
+              <div className="space-y-6">
+                {data.education?.map((edu) => (
+                  <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+                ))}
+              </div>
+            </section>
+          )}
 
           {data.certifications && data.certifications.length > 0 && (
             <section aria-label="Certifications">

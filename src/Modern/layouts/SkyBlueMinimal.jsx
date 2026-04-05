@@ -31,14 +31,16 @@ export const SkyBlueMinimal = ({ data, themeColor, atsMode }) => (
       )}
  
       <div className={`grid ${atsMode ? 'grid-cols-1 gap-12' : 'grid-cols-1 md:grid-cols-2 gap-16'}`}>
-        <section className="space-y-12" aria-label="Work Experience">
-          <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-center font-black'}>Success Stories</SectionTitle>
-          <div className="space-y-12">
-            {data.experience?.map(exp => (
-              <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.experience && data.experience.length > 0 && (
+          <section className="space-y-12" aria-label="Work Experience">
+            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-center font-black'}>Success Stories</SectionTitle>
+            <div className="space-y-12">
+              {data.experience?.map(exp => (
+                <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
  
         {data.projects && data.projects.length > 0 && (
           <section className="space-y-12" aria-label="Personal Projects">
@@ -52,23 +54,27 @@ export const SkyBlueMinimal = ({ data, themeColor, atsMode }) => (
         )}
  
         <div className={`space-y-16 ${atsMode ? 'col-span-1' : 'md:col-span-2 lg:col-span-1'}`}>
-          <section className={atsMode ? '' : 'bg-white p-10 rounded-[3rem] shadow-sm border border-slate-100'} aria-label="Core Capabilities">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-center font-black'}>Capabilities</SectionTitle>
-            <div className={`space-y-8 mt-8 ${atsMode ? '' : 'text-center'}`}>
-              {data.skills?.map(skill => (
-                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
-              ))}
-            </div>
-          </section>
- 
-          <section className={atsMode ? '' : 'bg-white p-10 rounded-[3rem] shadow-sm border border-slate-100'} aria-label="Educational Credentials">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-center font-black'}>Credentials</SectionTitle>
-            <div className={`space-y-8 mt-8 ${atsMode ? '' : 'text-center text-sm'}`}>
-              {data.education?.map(edu => (
-                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-              ))}
-            </div>
-          </section>
+          {data.skills && data.skills.length > 0 && (
+            <section className={atsMode ? '' : 'bg-white p-10 rounded-[3rem] shadow-sm border border-slate-100'} aria-label="Core Capabilities">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-center font-black'}>Capabilities</SectionTitle>
+              <div className={`space-y-8 mt-8 ${atsMode ? '' : 'text-center'}`}>
+                {data.skills?.map(skill => (
+                  <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {data.education && data.education.length > 0 && (
+            <section className={atsMode ? '' : 'bg-white p-10 rounded-[3rem] shadow-sm border border-slate-100'} aria-label="Educational Credentials">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-center font-black'}>Credentials</SectionTitle>
+              <div className={`space-y-8 mt-8 ${atsMode ? '' : 'text-center text-sm'}`}>
+                {data.education?.map(edu => (
+                  <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+                ))}
+              </div>
+            </section>
+          )}
  
           {data.certifications && data.certifications.length > 0 && (
             <section className={atsMode ? '' : 'bg-white p-10 rounded-[3rem] shadow-sm border border-slate-100'} aria-label="Professional Certifications">

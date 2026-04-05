@@ -20,30 +20,36 @@ export const TechEngineer = ({ data, themeColor, atsMode }) => (
 
     <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-12 gap-10'}`}>
       <div className={`${atsMode ? 'space-y-10' : 'col-span-12 space-y-10'}`}>
-        <section>
-          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Profile</SectionTitle>
-          <p className="text-[15px] leading-relaxed opacity-90">
-            <FormattedText text={data.summary} />
-          </p>
-        </section>
+        {data.summary && (
+          <section>
+            <SectionTitle atsMode={atsMode} themeColor={themeColor}>Profile</SectionTitle>
+            <p className="text-[15px] leading-relaxed opacity-90">
+              <FormattedText text={data.summary} />
+            </p>
+          </section>
+        )}
 
-        <section>
-          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Skills</SectionTitle>
-          <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'} gap-6`}>
-            {data.skills?.map(skill => (
-              <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.skills && data.skills.length > 0 && (
+          <section>
+            <SectionTitle atsMode={atsMode} themeColor={themeColor}>Skills</SectionTitle>
+            <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'} gap-6`}>
+              {data.skills?.map(skill => (
+                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
-        <section>
-          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Work Experience</SectionTitle>
-          <div className="space-y-8">
-            {data.experience?.map(exp => (
-              <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.experience && data.experience.length > 0 && (
+          <section>
+            <SectionTitle atsMode={atsMode} themeColor={themeColor}>Work Experience</SectionTitle>
+            <div className="space-y-8">
+              {data.experience?.map(exp => (
+                <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {data.projects && data.projects.length > 0 && (
           <section>
@@ -57,14 +63,16 @@ export const TechEngineer = ({ data, themeColor, atsMode }) => (
         )}
 
         <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-2'} gap-10`}>
-          <section>
-            <SectionTitle atsMode={atsMode} themeColor={themeColor}>Education</SectionTitle>
-            <div className="space-y-6">
-              {data.education?.map(edu => (
-                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-              ))}
-            </div>
-          </section>
+          {data.education && data.education.length > 0 && (
+            <section>
+              <SectionTitle atsMode={atsMode} themeColor={themeColor}>Education</SectionTitle>
+              <div className="space-y-6">
+                {data.education?.map(edu => (
+                  <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+                ))}
+              </div>
+            </section>
+          )}
 
           {data.certifications && data.certifications.length > 0 && (
             <section>

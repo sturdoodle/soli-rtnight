@@ -48,8 +48,8 @@ export const ExperienceItem = ({ exp, themeColor, atsMode }) => (
     {exp.clients && exp.clients.map(client => (
       <div key={client.id} className="mb-4 print:mb-2 last:mb-0">
         {client.name && (
-          <p className={`text-sm font-bold mb-2 print:mb-1 print:break-after-avoid print:[page-break-after:avoid] flex items-center gap-2 ${atsMode ? 'text-black' : 'opacity-70 print:opacity-100'}`}>
-            {!atsMode && <ChevronRight size={14} style={{ color: themeColor }} />}
+          <p className={`text-sm font-bold mb-2 print:mb-1 print:break-after-avoid print:[page-break-after:avoid] flex items-center gap-2 ${atsMode ? 'text-black' : 'print:opacity-100'}`} style={atsMode ? {} : { color: themeColor }}>
+            {!atsMode && <ChevronRight size={14} />}
             {client.name}
           </p>
         )}

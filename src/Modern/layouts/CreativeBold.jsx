@@ -39,14 +39,16 @@ export const CreativeBold = ({ data, themeColor, atsMode }) => (
       </div>
 
       <div className={atsMode ? 'space-y-10' : 'col-span-7 space-y-12'}>
-        <section aria-label="Professional Experience">
-          <SectionTitle themeColor={themeColor} atsMode={atsMode}>Experience</SectionTitle>
-          <div className="space-y-10">
-            {data.experience?.map(exp => (
-              <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.experience && data.experience.length > 0 && (
+          <section aria-label="Professional Experience">
+            <SectionTitle themeColor={themeColor} atsMode={atsMode}>Experience</SectionTitle>
+            <div className="space-y-10">
+              {data.experience?.map(exp => (
+                <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {data.projects && data.projects.length > 0 && (
           <section aria-label="Personal Projects">

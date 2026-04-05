@@ -37,17 +37,19 @@ export const DevOpsEngineer = ({ data, themeColor, atsMode }) => (
 
       <div className={`grid ${atsMode ? 'grid-cols-1 gap-12' : 'grid-cols-12 gap-16 ml-4'}`}>
         <div className={atsMode ? '' : 'col-span-8 space-y-12'}>
-          <section aria-label="Deployment History">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-cyan-400 mb-10 font-black uppercase text-xs tracking-[0.4em]'}>02. Experience</SectionTitle>
-            <div className={`space-y-10 ${atsMode ? '' : 'border-l border-slate-800 pl-8'}`}>
-              {data.experience?.map((exp) => (
-                <div key={exp.id} className="relative">
-                  {!atsMode && <span className="absolute -left-[37px] top-2 w-4 h-4 rounded-full bg-slate-900 border-2 border-cyan-500 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></span>}
-                  <ExperienceItem exp={exp} themeColor={themeColor} atsMode={atsMode} />
-                </div>
-              ))}
-            </div>
-          </section>
+          {data.experience && data.experience.length > 0 && (
+            <section aria-label="Deployment History">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-cyan-400 mb-10 font-black uppercase text-xs tracking-[0.4em]'}>02. Experience</SectionTitle>
+              <div className={`space-y-10 ${atsMode ? '' : 'border-l border-slate-800 pl-8'}`}>
+                {data.experience?.map((exp) => (
+                  <div key={exp.id} className="relative">
+                    {!atsMode && <span className="absolute -left-[37px] top-2 w-4 h-4 rounded-full bg-slate-900 border-2 border-cyan-500 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></span>}
+                    <ExperienceItem exp={exp} themeColor={themeColor} atsMode={atsMode} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           {data.projects && data.projects.length > 0 && (
             <section aria-label="Key Infrastructure">
@@ -62,26 +64,30 @@ export const DevOpsEngineer = ({ data, themeColor, atsMode }) => (
         </div>
 
         <aside className={atsMode ? 'space-y-10 mt-10' : 'col-span-4 space-y-12'}>
-          <section aria-label="Technical Stack">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-cyan-400 mb-8 font-black uppercase text-xs tracking-[0.4em]'}>04. Stack</SectionTitle>
-            <div className="space-y-6">
-              {data.skills?.map((skill) => (
-                <div key={skill.id} className={atsMode ? '' : 'bg-slate-800/30 p-4 rounded-xl border border-slate-700/30'}>
-                  <h4 className={`text-[10px] font-black uppercase tracking-widest mb-2 ${atsMode ? 'text-xs text-black' : 'text-cyan-500 opacity-60'}`}>{skill.category}</h4>
-                  <p className={`text-xs leading-relaxed ${atsMode ? 'text-slate-700' : 'text-slate-400 text-[11px] font-mono'}`}>{skill.items}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          {data.skills && data.skills.length > 0 && (
+            <section aria-label="Technical Stack">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-cyan-400 mb-8 font-black uppercase text-xs tracking-[0.4em]'}>04. Stack</SectionTitle>
+              <div className="space-y-6">
+                {data.skills?.map((skill) => (
+                  <div key={skill.id} className={atsMode ? '' : 'bg-slate-800/30 p-4 rounded-xl border border-slate-700/30'}>
+                    <h4 className={`text-[10px] font-black uppercase tracking-widest mb-2 ${atsMode ? 'text-xs text-black' : 'text-cyan-500 opacity-60'}`}>{skill.category}</h4>
+                    <p className={`text-xs leading-relaxed ${atsMode ? 'text-slate-700' : 'text-slate-400 text-[11px] font-mono'}`}>{skill.items}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section aria-label="Academic Roots">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-cyan-400 mb-8 font-black uppercase text-xs tracking-[0.4em]'}>05. Academy</SectionTitle>
-            <div className="space-y-6 text-sm">
-              {data.education?.map((edu) => (
-                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-              ))}
-            </div>
-          </section>
+          {data.education && data.education.length > 0 && (
+            <section aria-label="Academic Roots">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-cyan-400 mb-8 font-black uppercase text-xs tracking-[0.4em]'}>05. Academy</SectionTitle>
+              <div className="space-y-6 text-sm">
+                {data.education?.map((edu) => (
+                  <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+                ))}
+              </div>
+            </section>
+          )}
 
           {data.certifications && data.certifications.length > 0 && (
             <section aria-label="System Validation">

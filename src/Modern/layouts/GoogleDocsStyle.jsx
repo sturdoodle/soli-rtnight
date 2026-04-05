@@ -30,32 +30,34 @@ export const GoogleDocsStyle = ({ data, themeColor, atsMode }) => (
         </section>
       )}
 
-      <section aria-label="Experience">
-        <SectionTitle className="text-[13px] font-bold uppercase border-b border-black mb-2" themeColor="black" atsMode={atsMode}>Experience</SectionTitle>
-        <div className="space-y-4">
-          {data.experience?.map((exp) => (
-            <div key={exp.id}>
-              <div className="flex justify-between font-bold text-[12px]">
-                <span>{exp.company}</span>
-                <span>{exp.duration}</span>
-              </div>
-              <div className="flex justify-between italic text-[12px] mb-1">
-                <span>{exp.role}</span>
-                <span>{exp.location}</span>
-              </div>
-              {exp.clients?.map((client) => (
-                <div key={client.id} className="mb-2">
-                  <ul className="list-disc ml-4 text-[11px] space-y-1">
-                    {client.bulletPoints?.map((point, idx) => (
-                      <li key={idx}><FormattedText text={point} /></li>
-                    ))}
-                  </ul>
+      {data.experience && data.experience.length > 0 && (
+        <section aria-label="Experience">
+          <SectionTitle className="text-[13px] font-bold uppercase border-b border-black mb-2" themeColor="black" atsMode={atsMode}>Experience</SectionTitle>
+          <div className="space-y-4">
+            {data.experience?.map((exp) => (
+              <div key={exp.id}>
+                <div className="flex justify-between font-bold text-[12px]">
+                  <span>{exp.company}</span>
+                  <span>{exp.duration}</span>
                 </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
+                <div className="flex justify-between italic text-[12px] mb-1">
+                  <span>{exp.role}</span>
+                  <span>{exp.location}</span>
+                </div>
+                {exp.clients?.map((client) => (
+                  <div key={client.id} className="mb-2">
+                    <ul className="list-disc ml-4 text-[11px] space-y-1">
+                      {client.bulletPoints?.map((point, idx) => (
+                        <li key={idx}><FormattedText text={point} /></li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {data.projects && data.projects.length > 0 && (
         <section aria-label="Projects">
@@ -76,31 +78,35 @@ export const GoogleDocsStyle = ({ data, themeColor, atsMode }) => (
         </section>
       )}
 
-      <section aria-label="Education">
-        <SectionTitle className="text-[13px] font-bold uppercase border-b border-black mb-2" themeColor="black" atsMode={atsMode}>Education</SectionTitle>
-        <div className="space-y-2">
-          {data.education?.map((edu) => (
-            <div key={edu.id} className="flex justify-between items-start text-[12px]">
-              <div>
-                <span className="font-bold">{edu.institution}</span>
-                <span className="italic"> — {edu.degree}</span>
+      {data.education && data.education.length > 0 && (
+        <section aria-label="Education">
+          <SectionTitle className="text-[13px] font-bold uppercase border-b border-black mb-2" themeColor="black" atsMode={atsMode}>Education</SectionTitle>
+          <div className="space-y-2">
+            {data.education?.map((edu) => (
+              <div key={edu.id} className="flex justify-between items-start text-[12px]">
+                <div>
+                  <span className="font-bold">{edu.institution}</span>
+                  <span className="italic"> — {edu.degree}</span>
+                </div>
+                <span>{edu.duration}</span>
               </div>
-              <span>{edu.duration}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
 
-      <section aria-label="Skills">
-        <SectionTitle className="text-[13px] font-bold uppercase border-b border-black mb-2" themeColor="black" atsMode={atsMode}>Skills</SectionTitle>
-        <div className="space-y-1">
-          {data.skills?.map((skill) => (
-            <div key={skill.id} className="text-[11px]">
-              <span className="font-bold">{skill.category}:</span> {skill.items}
-            </div>
-          ))}
-        </div>
-      </section>
+      {data.skills && data.skills.length > 0 && (
+        <section aria-label="Skills">
+          <SectionTitle className="text-[13px] font-bold uppercase border-b border-black mb-2" themeColor="black" atsMode={atsMode}>Skills</SectionTitle>
+          <div className="space-y-1">
+            {data.skills?.map((skill) => (
+              <div key={skill.id} className="text-[11px]">
+                <span className="font-bold">{skill.category}:</span> {skill.items}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {data.certifications && data.certifications.length > 0 && (
         <section aria-label="Certifications">

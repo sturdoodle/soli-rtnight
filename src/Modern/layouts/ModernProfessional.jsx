@@ -26,14 +26,16 @@ export const ModernProfessional = ({ data, themeColor, atsMode }) => (
           </p>
         </section>
 
-        <section>
-          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Work Experience</SectionTitle>
-          <div className="space-y-8">
-            {data.experience?.map(exp => (
-              <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.experience && data.experience.length > 0 && (
+          <section>
+            <SectionTitle atsMode={atsMode} themeColor={themeColor}>Work Experience</SectionTitle>
+            <div className="space-y-8">
+              {data.experience?.map(exp => (
+                <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {data.projects && data.projects.length > 0 && (
           <section>
@@ -48,23 +50,27 @@ export const ModernProfessional = ({ data, themeColor, atsMode }) => (
       </div>
 
       <div className={`${atsMode ? 'space-y-10 mt-10' : 'col-span-4 space-y-10'}`}>
-        <section>
-          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Core Expertise</SectionTitle>
-          <div className="space-y-6">
-            {data.skills?.map(skill => (
-              <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.skills && data.skills.length > 0 && (
+          <section>
+            <SectionTitle atsMode={atsMode} themeColor={themeColor}>Core Expertise</SectionTitle>
+            <div className="space-y-6">
+              {data.skills?.map(skill => (
+                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
-        <section>
-          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Academic Background</SectionTitle>
-          <div className="space-y-6">
-            {data.education?.map(edu => (
-              <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.education && data.education.length > 0 && (
+          <section>
+            <SectionTitle atsMode={atsMode} themeColor={themeColor}>Academic Background</SectionTitle>
+            <div className="space-y-6">
+              {data.education?.map(edu => (
+                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {data.certifications && data.certifications.length > 0 && (
           <section>

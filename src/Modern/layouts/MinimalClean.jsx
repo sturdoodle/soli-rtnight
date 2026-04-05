@@ -45,23 +45,27 @@ export const MinimalClean = ({ data, themeColor, atsMode }) => (
       )}
 
       <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-2'} gap-16`}>
+        {data.skills && data.skills.length > 0 && (
         <section>
-          <SectionTitle atsMode={atsMode} style={atsMode ? {} : { color: themeColor }} className="text-zinc-300">Expertise</SectionTitle>
-          <div className="space-y-6 text-sm">
+          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Skills</SectionTitle>
+          <div className={`grid ${atsMode ? 'grid-cols-1 gap-2' : 'grid-cols-2 lg:grid-cols-3 gap-6'}`}>
             {data.skills?.map(skill => (
               <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
             ))}
           </div>
         </section>
+      )}
 
+      {data.experience && data.experience.length > 0 && (
         <section>
-          <SectionTitle atsMode={atsMode} style={atsMode ? {} : { color: themeColor }} className="text-zinc-300">Education</SectionTitle>
-          <div className="space-y-6">
-            {data.education?.map(edu => (
-              <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+          <SectionTitle atsMode={atsMode} themeColor={themeColor}>Experience</SectionTitle>
+          <div className="space-y-8">
+            {data.experience?.map(exp => (
+              <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
             ))}
           </div>
         </section>
+      )}
       </div>
 
       {data.certifications && data.certifications.length > 0 && (

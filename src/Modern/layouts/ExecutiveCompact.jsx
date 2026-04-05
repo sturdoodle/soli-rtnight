@@ -29,60 +29,66 @@ export const ExecutiveCompact = ({ data, themeColor, atsMode }) => (
  
       <div className={`grid ${atsMode ? 'grid-cols-1 gap-12' : 'grid-cols-12 gap-10'}`}>
         <div className={atsMode ? '' : 'col-span-8 space-y-8'}>
-          <section aria-label="Professional Experience">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-sm font-black uppercase tracking-widest mb-6 opacity-40 border-b pb-2'}>Professional Experience</SectionTitle>
-            <div className="space-y-8">
-              {data.experience?.map((exp) => (
-                <div key={exp.id} className="group">
-                  <div className={`flex justify-between items-baseline mb-1 ${atsMode ? 'mb-2' : ''}`}>
-                    <h3 className="font-bold text-lg" style={atsMode ? { color: 'black' } : { color: themeColor }}>{exp.role}</h3>
-                    <span className={atsMode ? 'text-sm font-bold' : 'text-xs font-bold opacity-40 uppercase'}>{exp.duration}</span>
-                  </div>
-                  <div className="flex justify-between items-center mb-3">
-                    <span className={atsMode ? 'text-base font-bold' : 'text-sm font-bold opacity-70 uppercase tracking-wider'}>{exp.company}</span>
-                  </div>
-                  {exp.clients?.map((client) => (
-                    <div key={client.id} className="mb-4 pl-0">
-                      {!atsMode && client.name && <div className="text-xs font-black mb-2 opacity-50 uppercase tracking-widest underline decoration-2 underline-offset-4" style={{ textDecorationColor: themeColor }}>Project: {client.name}</div>}
-                      {atsMode && client.name && <div className="text-sm font-bold mb-1">Project: {client.name}</div>}
-                      <ul className={`list-disc ml-5 space-y-1 ${atsMode ? 'text-sm' : 'text-sm opacity-90'}`}>
-                        {client.bulletPoints?.map((point, idx) => (
-                          <li key={idx}><FormattedText text={point} /></li>
-                        ))}
-                      </ul>
+          {data.experience && data.experience.length > 0 && (
+            <section aria-label="Professional Experience">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-sm font-black uppercase tracking-widest mb-6 opacity-40 border-b pb-2'}>Professional Experience</SectionTitle>
+              <div className="space-y-8">
+                {data.experience?.map((exp) => (
+                  <div key={exp.id} className="group">
+                    <div className={`flex justify-between items-baseline mb-1 ${atsMode ? 'mb-2' : ''}`}>
+                      <h3 className="font-bold text-lg" style={atsMode ? { color: 'black' } : { color: themeColor }}>{exp.role}</h3>
+                      <span className={atsMode ? 'text-sm font-bold' : 'text-xs font-bold opacity-40 uppercase'}>{exp.duration}</span>
                     </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </section>
+                    <div className="flex justify-between items-center mb-3">
+                      <span className={atsMode ? 'text-base font-bold' : 'text-sm font-bold opacity-70 uppercase tracking-wider'}>{exp.company}</span>
+                    </div>
+                    {exp.clients?.map((client) => (
+                      <div key={client.id} className="mb-4 pl-0">
+                        {!atsMode && client.name && <div className="text-xs font-black mb-2 opacity-100 uppercase tracking-widest underline decoration-2 underline-offset-4 transition-colors" style={{ color: themeColor, textDecorationColor: themeColor }}>Project: {client.name}</div>}
+                        {atsMode && client.name && <div className="text-sm font-bold mb-1">Project: {client.name}</div>}
+                        <ul className={`list-disc ml-5 space-y-1 ${atsMode ? 'text-sm' : 'text-sm opacity-90'}`}>
+                          {client.bulletPoints?.map((point, idx) => (
+                            <li key={idx}><FormattedText text={point} /></li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
  
         <aside className={atsMode ? 'space-y-10 mt-10' : 'col-span-4 space-y-8'}>
-          <section aria-label="Core Skills">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-sm font-black uppercase tracking-widest mb-6 opacity-40 border-b pb-2'}>Expertise</SectionTitle>
-            <div className={`grid ${atsMode ? 'grid-cols-1 gap-2' : 'grid-cols-1 gap-4'}`}>
-              {data.skills?.map((skill) => (
-                <div key={skill.id} className={atsMode ? '' : 'bg-slate-50 p-4 rounded-xl border border-slate-100'}>
-                  <h4 className={`text-[10px] font-black uppercase tracking-widest mb-1 ${atsMode ? 'text-xs text-black opacity-100' : 'opacity-40 transition-opacity'}`} style={atsMode ? {} : { color: themeColor }}>{skill.category}</h4>
-                  <p className={`text-xs leading-relaxed font-medium ${atsMode ? 'opacity-100' : 'opacity-80'}`}>{skill.items}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          {data.skills && data.skills.length > 0 && (
+            <section aria-label="Core Skills">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-sm font-black uppercase tracking-widest mb-6 opacity-40 border-b pb-2'}>Expertise</SectionTitle>
+              <div className={`grid ${atsMode ? 'grid-cols-1 gap-2' : 'grid-cols-1 gap-4'}`}>
+                {data.skills?.map((skill) => (
+                  <div key={skill.id} className={atsMode ? '' : 'bg-slate-50 p-4 rounded-xl border border-slate-100'}>
+                    <h4 className={`text-[10px] font-black uppercase tracking-widest mb-1 ${atsMode ? 'text-xs text-black opacity-100' : 'opacity-40 transition-opacity'}`} style={atsMode ? {} : { color: themeColor }}>{skill.category}</h4>
+                    <p className={`text-xs leading-relaxed font-medium ${atsMode ? 'opacity-100' : 'opacity-80'}`}>{skill.items}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
  
-          <section aria-label="Educational Background">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-sm font-black uppercase tracking-widest mb-6 opacity-40 border-b pb-2'}>Academic</SectionTitle>
-            <div className="space-y-6">
-              {data.education?.map((edu) => (
-                <div key={edu.id}>
-                  <div className={`font-bold leading-tight mb-1 ${atsMode ? 'text-sm' : 'opacity-90'}`}>{edu.degree}</div>
-                  <div className={atsMode ? 'text-sm' : 'text-xs font-bold opacity-40 uppercase leading-tight'}>{edu.institution}</div>
-                  <div className={atsMode ? 'text-sm italic mt-1' : 'text-[10px] opacity-40 italic mt-1'}>{edu.duration}</div>
-                </div>
-              ))}
-            </div>
-          </section>
+          {data.education && data.education.length > 0 && (
+            <section aria-label="Educational Background">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'text-sm font-black uppercase tracking-widest mb-6 opacity-40 border-b pb-2'}>Academic</SectionTitle>
+              <div className="space-y-6">
+                {data.education?.map((edu) => (
+                  <div key={edu.id}>
+                    <div className={`font-bold leading-tight mb-1 ${atsMode ? 'text-sm' : 'opacity-90'}`}>{edu.degree}</div>
+                    <div className={atsMode ? 'text-sm' : 'text-xs font-bold opacity-40 uppercase leading-tight'}>{edu.institution}</div>
+                    <div className={atsMode ? 'text-sm italic mt-1' : 'text-[10px] opacity-40 italic mt-1'}>{edu.duration}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
  
           {data.projects && data.projects.length > 0 && (
             <section aria-label="Notable Projects">

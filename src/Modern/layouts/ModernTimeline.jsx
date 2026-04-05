@@ -27,16 +27,18 @@ export const ModernTimeline = ({ data, themeColor, atsMode }) => (
           </section>
         )}
  
-        <section aria-label="Experience Timeline">
-          <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'mb-12 opacity-40'}>Timeline</SectionTitle>
-          <div className={`space-y-12 ${atsMode ? '' : 'relative before:absolute before:left-[1px] before:top-2 before:bottom-0 before:w-px before:bg-slate-100'}`}>
-            {data.experience?.map(exp => (
-              <div key={exp.id} className={atsMode ? '' : 'relative pl-10 before:absolute before:left-[-4px] before:top-2 before:w-2 before:h-2 before:bg-white before:border-2 before:rounded-full'} style={atsMode ? {} : { borderColor: themeColor }}>
-                <ExperienceItem exp={exp} themeColor={themeColor} atsMode={atsMode} />
-              </div>
-            ))}
-          </div>
-        </section>
+        {data.experience && data.experience.length > 0 && (
+          <section aria-label="Experience Timeline">
+            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'mb-12 opacity-40'}>Timeline</SectionTitle>
+            <div className={`space-y-12 ${atsMode ? '' : 'relative before:absolute before:left-[1px] before:top-2 before:bottom-0 before:w-px before:bg-slate-100'}`}>
+              {data.experience?.map(exp => (
+                <div key={exp.id} className={atsMode ? '' : 'relative pl-10 before:absolute before:left-[-4px] before:top-2 before:w-2 before:h-2 before:bg-white before:border-2 before:rounded-full'} style={atsMode ? {} : { borderColor: themeColor }}>
+                  <ExperienceItem exp={exp} themeColor={themeColor} atsMode={atsMode} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
  
         {data.projects && data.projects.length > 0 && (
           <section className="mt-20" aria-label="Personal Projects">
@@ -51,23 +53,27 @@ export const ModernTimeline = ({ data, themeColor, atsMode }) => (
       </div>
  
       <aside className={atsMode ? 'space-y-10 mt-10' : 'col-span-4 space-y-16'}>
-        <section aria-label="Skills & Expertise">
-          <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'mb-8 opacity-40'}>Expertise</SectionTitle>
-          <div className="space-y-8">
-            {data.skills?.map(skill => (
-              <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.skills && data.skills.length > 0 && (
+          <section aria-label="Skills & Expertise">
+            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'mb-8 opacity-40'}>Expertise</SectionTitle>
+            <div className="space-y-8">
+              {data.skills?.map(skill => (
+                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
  
-        <section aria-label="Academic Background">
-          <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'mb-8 opacity-40'}>Academic</SectionTitle>
-          <div className="space-y-10">
-            {data.education?.map(edu => (
-              <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.education && data.education.length > 0 && (
+          <section aria-label="Academic Background">
+            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'mb-8 opacity-40'}>Academic</SectionTitle>
+            <div className="space-y-10">
+              {data.education?.map(edu => (
+                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
  
         {data.certifications && data.certifications.length > 0 && (
           <section aria-label="Certifications & Awards">

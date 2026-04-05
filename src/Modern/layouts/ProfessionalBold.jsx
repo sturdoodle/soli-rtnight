@@ -33,14 +33,16 @@ export const ProfessionalBold = ({ data, themeColor, atsMode }) => (
  
       <div className={`grid ${atsMode ? 'grid-cols-1 gap-12' : 'grid-cols-12 gap-16'}`}>
         <div className={atsMode ? '' : 'col-span-7 space-y-16'}>
-          <section aria-label="Work Experience">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'bg-slate-900 text-white px-6 py-2 inline-block rounded-full mb-10'}>Career History</SectionTitle>
-            <div className="space-y-12">
-              {data.experience?.map(exp => (
-                <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
-              ))}
-            </div>
-          </section>
+          {data.experience && data.experience.length > 0 && (
+            <section aria-label="Work Experience">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'bg-slate-900 text-white px-6 py-2 inline-block rounded-full mb-10'}>Career History</SectionTitle>
+              <div className="space-y-12">
+                {data.experience?.map(exp => (
+                  <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
+                ))}
+              </div>
+            </section>
+          )}
  
           {data.projects && data.projects.length > 0 && (
             <section className="mt-16" aria-label="Major Projects">
@@ -55,23 +57,27 @@ export const ProfessionalBold = ({ data, themeColor, atsMode }) => (
         </div>
  
         <aside className={atsMode ? 'space-y-10 mt-10' : 'col-span-5 space-y-16'}>
-          <section aria-label="Core Skills">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'bg-slate-900 text-white px-6 py-2 inline-block rounded-full mb-10'}>Skills</SectionTitle>
-            <div className="space-y-8">
-              {data.skills?.map(skill => (
-                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
-              ))}
-            </div>
-          </section>
+          {data.skills && data.skills.length > 0 && (
+            <section aria-label="Core Skills">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'bg-slate-900 text-white px-6 py-2 inline-block rounded-full mb-10'}>Skills</SectionTitle>
+              <div className="space-y-8">
+                {data.skills?.map(skill => (
+                  <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+                ))}
+              </div>
+            </section>
+          )}
  
-          <section aria-label="Educational Background">
-            <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'bg-slate-900 text-white px-6 py-2 inline-block rounded-full mb-10'}>Education</SectionTitle>
-            <div className="space-y-8">
-              {data.education?.map(edu => (
-                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-              ))}
-            </div>
-          </section>
+          {data.education && data.education.length > 0 && (
+            <section aria-label="Educational Background">
+              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'bg-slate-900 text-white px-6 py-2 inline-block rounded-full mb-10'}>Education</SectionTitle>
+              <div className="space-y-8">
+                {data.education?.map(edu => (
+                  <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+                ))}
+              </div>
+            </section>
+          )}
  
           {data.certifications && data.certifications.length > 0 && (
             <section aria-label="Professional Credentials">

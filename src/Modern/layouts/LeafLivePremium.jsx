@@ -26,26 +26,30 @@ export const LeafLivePremium = ({ data, themeColor, atsMode }) => (
         </section>
       )}
 
-      <section aria-label="Skills">
-        <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Skills</SectionTitle>
-        <div className={`grid ${atsMode ? 'grid-cols-1 gap-1' : 'md:grid-cols-2 print:grid-cols-2 gap-4 print:gap-2'}`}>
-          {data.skills?.map((skill) => (
-            <div key={skill.id} className={atsMode ? 'text-base' : 'text-sm'}>
-              <span className={`font-bold text-slate-800 mr-2 ${atsMode ? '' : ''}`}>{skill.category}:</span>
-              <span className="text-slate-700">{skill.items}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+      {data.skills && data.skills.length > 0 && (
+        <section aria-label="Skills">
+          <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Skills</SectionTitle>
+          <div className={`grid ${atsMode ? 'grid-cols-1 gap-1' : 'md:grid-cols-2 print:grid-cols-2 gap-4 print:gap-2'}`}>
+            {data.skills?.map((skill) => (
+              <div key={skill.id} className={atsMode ? 'text-base' : 'text-sm'}>
+                <span className={`font-bold text-slate-800 mr-2 ${atsMode ? '' : ''}`}>{skill.category}:</span>
+                <span className="text-slate-700">{skill.items}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
-      <section aria-label="Work Experience">
-        <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Experience</SectionTitle>
-        <div className="space-y-8 print:space-y-4">
-          {data.experience?.map((exp) => (
-            <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
-          ))}
-        </div>
-      </section>
+      {data.experience && data.experience.length > 0 && (
+        <section aria-label="Work Experience">
+          <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Experience</SectionTitle>
+          <div className="space-y-8 print:space-y-4">
+            {data.experience?.map((exp) => (
+              <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {data.projects && data.projects.length > 0 && (
         <section aria-label="Key Projects">
@@ -69,14 +73,16 @@ export const LeafLivePremium = ({ data, themeColor, atsMode }) => (
         </section>
       )}
 
-      <section aria-label="Education">
-        <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Education</SectionTitle>
-        <div className="space-y-6 print:space-y-3">
-          {data.education?.map((edu) => (
-            <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-          ))}
-        </div>
-      </section>
+      {data.education && data.education.length > 0 && (
+        <section aria-label="Education">
+          <SectionTitle className={atsMode ? '' : 'text-lg font-bold text-slate-900 tracking-wider mb-4 pb-1 border-b border-slate-200'} themeColor={themeColor} atsMode={atsMode}>Education</SectionTitle>
+          <div className="space-y-6 print:space-y-3">
+            {data.education?.map((edu) => (
+              <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   </main>
 );

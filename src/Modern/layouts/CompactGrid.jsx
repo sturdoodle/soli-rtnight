@@ -33,14 +33,16 @@ export const CompactGrid = ({ data, themeColor, atsMode }) => (
  
         <div className={`grid ${atsMode ? 'grid-cols-1 gap-10' : 'grid-cols-12 gap-12'}`}>
           <div className={atsMode ? 'space-y-10' : 'col-span-12 space-y-12'}>
-            <section className={atsMode ? '' : 'bg-white p-8 rounded-[1.5rem] border border-slate-100'} aria-label="Work History">
-              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'border-b border-slate-100 pb-4 mb-8'}>Professional History</SectionTitle>
-              <div className={`grid ${atsMode ? 'grid-cols-1 gap-10' : 'grid-cols-1 md:grid-cols-2 gap-12'}`}>
-                {data.experience?.map(exp => (
-                  <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
-                ))}
-              </div>
-            </section>
+            {data.experience && data.experience.length > 0 && (
+              <section className={atsMode ? '' : 'bg-white p-8 rounded-[1.5rem] border border-slate-100'} aria-label="Work History">
+                <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'border-b border-slate-100 pb-4 mb-8'}>Professional History</SectionTitle>
+                <div className={`grid ${atsMode ? 'grid-cols-1 gap-10' : 'grid-cols-1 md:grid-cols-2 gap-12'}`}>
+                  {data.experience?.map(exp => (
+                    <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
+                  ))}
+                </div>
+              </section>
+            )}
  
             {data.projects && data.projects.length > 0 && (
               <section className={atsMode ? '' : 'bg-white p-8 rounded-[1.5rem] border border-slate-100'} aria-label="Personal Projects">
@@ -54,27 +56,31 @@ export const CompactGrid = ({ data, themeColor, atsMode }) => (
             )}
           </div>
  
-          <aside className={atsMode ? 'col-span-1' : 'col-span-6'}>
-            <section className={atsMode ? '' : 'bg-white p-8 rounded-[1.5rem] border border-slate-100 h-full'} aria-label="Core Skills">
-              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'border-b border-slate-100 pb-4 mb-8'}>Specialized Skills</SectionTitle>
-              <div className="space-y-6">
-                {data.skills?.map(skill => (
-                  <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
-                ))}
-              </div>
-            </section>
-          </aside>
+          {data.skills && data.skills.length > 0 && (
+            <aside className={atsMode ? 'col-span-1' : 'col-span-6'}>
+              <section className={atsMode ? '' : 'bg-white p-8 rounded-[1.5rem] border border-slate-100 h-full'} aria-label="Core Skills">
+                <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'border-b border-slate-100 pb-4 mb-8'}>Specialized Skills</SectionTitle>
+                <div className="space-y-6">
+                  {data.skills?.map(skill => (
+                    <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+                  ))}
+                </div>
+              </section>
+            </aside>
+          )}
  
-          <aside className={atsMode ? 'col-span-1' : 'col-span-6'}>
-            <section className={atsMode ? '' : 'bg-white p-8 rounded-[1.5rem] border border-slate-100 h-full'} aria-label="Education">
-              <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'border-b border-slate-100 pb-4 mb-8'}>Education</SectionTitle>
-              <div className="space-y-8">
-                {data.education?.map(edu => (
-                  <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-                ))}
-              </div>
-            </section>
-          </aside>
+          {data.education && data.education.length > 0 && (
+            <aside className={atsMode ? 'col-span-1' : 'col-span-6'}>
+              <section className={atsMode ? '' : 'bg-white p-8 rounded-[1.5rem] border border-slate-100 h-full'} aria-label="Education">
+                <SectionTitle themeColor={themeColor} atsMode={atsMode} className={atsMode ? '' : 'border-b border-slate-100 pb-4 mb-8'}>Education</SectionTitle>
+                <div className="space-y-8">
+                  {data.education?.map(edu => (
+                    <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+                  ))}
+                </div>
+              </section>
+            </aside>
+          )}
  
           {data.certifications && data.certifications.length > 0 && (
             <div className={atsMode ? 'col-span-1' : 'col-span-12'}>

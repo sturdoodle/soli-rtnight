@@ -31,6 +31,7 @@ export const ExecutiveSerif = ({ data, themeColor, atsMode }) => (
  
     <div className={`grid ${atsMode ? 'grid-cols-1 gap-12' : 'grid-cols-12 gap-16'}`}>
       <div className={atsMode ? '' : 'col-span-8'}>
+      {data.experience && data.experience.length > 0 && (
         <section className={atsMode ? 'space-y-10' : 'space-y-12'} aria-label="Professional Experience">
           <SectionTitle className={atsMode ? '' : 'border-b border-zinc-100 pb-2 mb-8 font-sans'} themeColor={themeColor} atsMode={atsMode}>Experience</SectionTitle>
           <div className="space-y-12">
@@ -39,6 +40,7 @@ export const ExecutiveSerif = ({ data, themeColor, atsMode }) => (
             ))}
           </div>
         </section>
+      )}
 
         {data.projects && data.projects.length > 0 && (
           <section className="mt-16" aria-label="Personal Projects">
@@ -53,14 +55,16 @@ export const ExecutiveSerif = ({ data, themeColor, atsMode }) => (
       </div>
 
       <aside className={`${atsMode ? 'space-y-10 mt-10' : 'col-span-4 space-y-16'}`}>
-        <section aria-label="Education">
-          <SectionTitle className={atsMode ? '' : 'border-b border-zinc-100 pb-2 mb-8 font-sans'} themeColor={themeColor} atsMode={atsMode}>Education</SectionTitle>
-          <div className="space-y-8">
-            {data.education?.map(edu => (
-              <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.education && data.education.length > 0 && (
+          <section aria-label="Education">
+            <SectionTitle className={atsMode ? '' : 'border-b border-zinc-100 pb-2 mb-8 font-sans'} themeColor={themeColor} atsMode={atsMode}>Education</SectionTitle>
+            <div className="space-y-8">
+              {data.education?.map(edu => (
+                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {data.certifications && data.certifications.length > 0 && (
           <section aria-label="Certifications">
@@ -73,14 +77,16 @@ export const ExecutiveSerif = ({ data, themeColor, atsMode }) => (
           </section>
         )}
 
-        <section aria-label="Professional Skills">
-          <SectionTitle className={atsMode ? '' : 'border-b border-zinc-100 pb-2 mb-8 font-sans'} themeColor={themeColor} atsMode={atsMode}>Skills</SectionTitle>
-          <div className={`space-y-8 ${atsMode ? '' : 'font-sans'}`}>
-            {data.skills?.map(skill => (
-              <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.skills && data.skills.length > 0 && (
+          <section aria-label="Professional Skills">
+            <SectionTitle className={atsMode ? '' : 'border-b border-zinc-100 pb-2 mb-8 font-sans'} themeColor={themeColor} atsMode={atsMode}>Skills</SectionTitle>
+            <div className={`space-y-8 ${atsMode ? '' : 'font-sans'}`}>
+              {data.skills?.map(skill => (
+                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
       </aside>
     </div>
   </main>

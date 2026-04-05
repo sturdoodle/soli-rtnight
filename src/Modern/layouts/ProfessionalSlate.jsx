@@ -34,14 +34,16 @@ export const ProfessionalSlate = ({ data, themeColor, atsMode }) => (
           </section>
         )}
 
-        <section aria-label="Core Expertise">
-          <SectionTitle themeColor={themeColor} atsMode={atsMode}>Core Expertise</SectionTitle>
-          <div className="space-y-6">
-            {data.skills?.map(skill => (
-              <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.skills && data.skills.length > 0 && (
+          <section aria-label="Core Expertise">
+            <SectionTitle themeColor={themeColor} atsMode={atsMode}>Core Expertise</SectionTitle>
+            <div className="space-y-6">
+              {data.skills?.map(skill => (
+                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {data.certifications && data.certifications.length > 0 && (
           <section aria-label="Certifications">
@@ -72,14 +74,16 @@ export const ProfessionalSlate = ({ data, themeColor, atsMode }) => (
         </section>
         )}
 
-        <section aria-label="Work Experience">
-          <SectionTitle themeColor={themeColor} atsMode={atsMode}>Experience</SectionTitle>
-          <div className="space-y-10">
-            {data.experience?.map(exp => (
-              <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.experience && data.experience.length > 0 && (
+          <section aria-label="Work Experience">
+            <SectionTitle themeColor={themeColor} atsMode={atsMode}>Experience</SectionTitle>
+            <div className="space-y-10">
+              {data.experience?.map(exp => (
+                <ExperienceItem key={exp.id} exp={exp} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {data.projects && data.projects.length > 0 && (
           <section aria-label="Personal Projects">
@@ -92,14 +96,16 @@ export const ProfessionalSlate = ({ data, themeColor, atsMode }) => (
           </section>
         )}
 
-        <section aria-label="Education">
-          <SectionTitle themeColor={themeColor} atsMode={atsMode}>Education</SectionTitle>
-          <div className="space-y-6">
-            {data.education?.map(edu => (
-              <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.education && data.education.length > 0 && (
+          <section aria-label="Education">
+            <SectionTitle themeColor={themeColor} atsMode={atsMode}>Education</SectionTitle>
+            <div className="space-y-6">
+              {data.education?.map(edu => (
+                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   </main>

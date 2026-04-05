@@ -3,8 +3,8 @@ import { SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedTe
 
 export const StandardATS = ({ data, themeColor, atsMode }) => (
   <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? 'font-sans' : 'font-serif'}`}>
-    <header className="border-b-2 border-black pb-4 mb-8">
-      <h1 className="text-3xl font-bold uppercase mb-2 tracking-wide">{data.fullName}</h1>
+    <header className="border-b-2 border-black pb-4 mb-8 transition-colors" style={atsMode ? {} : { borderColor: themeColor }}>
+      <h1 className="text-3xl font-bold uppercase mb-2 tracking-wide transition-colors" style={atsMode ? {} : { color: themeColor }}>{data.fullName}</h1>
       <div className="text-sm font-medium space-x-2">
         <span>{data.email}</span>
         <span>|</span>
@@ -23,48 +23,52 @@ export const StandardATS = ({ data, themeColor, atsMode }) => (
     <div className="space-y-8">
       {data.summary && (
         <section aria-label="Summary">
-          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1">Professional Summary</h2>
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1 transition-colors" style={atsMode ? {} : { color: themeColor, borderColor: themeColor }}>Professional Summary</h2>
           <div className="text-[13px] leading-relaxed">
             <FormattedText text={data.summary} />
           </div>
         </section>
       )}
 
-      <section aria-label="Skills">
-        <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1">Skills</h2>
-        <div className="space-y-2">
-          {data.skills?.map((skill) => (
-            <div key={skill.id} className="text-[13px]">
-              <span className="font-bold">{skill.category}:</span> {skill.items}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section aria-label="Experience">
-        <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1">Professional Experience</h2>
-        <div className="space-y-6">
-          {data.experience?.map((exp) => (
-            <div key={exp.id}>
-              <div className="flex justify-between font-bold text-[13px] mb-1">
-                <span>{exp.company}</span>
-                <span>{exp.duration}</span>
+      {data.skills && data.skills.length > 0 && (
+        <section aria-label="Skills">
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1">Skills</h2>
+          <div className="space-y-2">
+            {data.skills?.map((skill) => (
+              <div key={skill.id} className="text-[13px]">
+                <span className="font-bold">{skill.category}:</span> {skill.items}
               </div>
-              <div className="italic text-[12px] mb-2">{exp.role}</div>
-              {exp.clients?.map((client) => (
-                <div key={client.id} className="mb-4">
-                  {client.name && <div className="text-[12px] font-bold mb-1 opacity-70 underline decoration-black/20">Project: {client.name}</div>}
-                  <ul className="list-disc ml-5 text-[12px] space-y-1">
-                    {client.bulletPoints?.map((point, idx) => (
-                      <li key={idx}><FormattedText text={point} /></li>
-                    ))}
-                  </ul>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {data.experience && data.experience.length > 0 && (
+        <section aria-label="Experience">
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1">Professional Experience</h2>
+          <div className="space-y-6">
+            {data.experience?.map((exp) => (
+              <div key={exp.id}>
+                <div className="flex justify-between font-bold text-[13px] mb-1">
+                  <span>{exp.company}</span>
+                  <span>{exp.duration}</span>
                 </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
+                <div className="italic text-[12px] mb-2">{exp.role}</div>
+                {exp.clients?.map((client) => (
+                  <div key={client.id} className="mb-4">
+                    {client.name && <div className="text-[12px] font-bold mb-1 opacity-70 underline transition-colors" style={atsMode ? { textDecorationColor: 'rgba(0,0,0,0.2)' } : { color: themeColor, textDecorationColor: themeColor + '33' }}>Project: {client.name}</div>}
+                    <ul className="list-disc ml-5 text-[12px] space-y-1">
+                      {client.bulletPoints?.map((point, idx) => (
+                        <li key={idx}><FormattedText text={point} /></li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {data.projects && data.projects.length > 0 && (
         <section aria-label="Projects">
@@ -85,20 +89,22 @@ export const StandardATS = ({ data, themeColor, atsMode }) => (
         </section>
       )}
 
-      <section aria-label="Education">
-        <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1">Education</h2>
-        <div className="space-y-4">
-          {data.education?.map((edu) => (
-            <div key={edu.id} className="flex justify-between items-start text-[13px]">
-              <div>
-                <div className="font-bold">{edu.degree}</div>
-                <div className="text-[12px] opacity-70">{edu.institution}</div>
+      {data.education && data.education.length > 0 && (
+        <section aria-label="Education">
+          <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1">Education</h2>
+          <div className="space-y-4">
+            {data.education?.map((edu) => (
+              <div key={edu.id} className="flex justify-between items-start text-[13px]">
+                <div>
+                  <div className="font-bold">{edu.degree}</div>
+                  <div className="text-[12px] opacity-70">{edu.institution}</div>
+                </div>
+                <div className="text-[12px]">{edu.duration}</div>
               </div>
-              <div className="text-[12px]">{edu.duration}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
 
       {data.certifications && data.certifications.length > 0 && (
         <section aria-label="Certifications">

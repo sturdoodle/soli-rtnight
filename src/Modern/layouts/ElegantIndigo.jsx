@@ -52,23 +52,27 @@ export const ElegantIndigo = ({ data, themeColor, atsMode }) => (
       </div>
 
       <aside className={atsMode ? 'space-y-10 mt-10' : 'col-span-5 space-y-10'}>
-        <section aria-label="Core Skills">
-          <SectionTitle className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.4em] mb-8 opacity-30'} themeColor={themeColor} atsMode={atsMode}>Core Skills</SectionTitle>
-          <div className="grid grid-cols-1 gap-8">
-            {data.skills?.map(skill => (
-              <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.skills && data.skills.length > 0 && (
+          <section aria-label="Core Skills">
+            <SectionTitle className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.4em] mb-8 opacity-30'} themeColor={themeColor} atsMode={atsMode}>Core Skills</SectionTitle>
+            <div className="grid grid-cols-1 gap-8">
+              {data.skills.map(skill => (
+                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
-        <section aria-label="Educational Background">
-          <SectionTitle className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.4em] mb-8 opacity-30'} themeColor={themeColor} atsMode={atsMode}>Academic Background</SectionTitle>
-          <div className="space-y-10">
-            {data.education?.map(edu => (
-              <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
-            ))}
-          </div>
-        </section>
+        {data.education && data.education.length > 0 && (
+          <section aria-label="Educational Background">
+            <SectionTitle className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.4em] mb-8 opacity-30'} themeColor={themeColor} atsMode={atsMode}>Academic Background</SectionTitle>
+            <div className="space-y-10">
+              {data.education.map(edu => (
+                <EducationItem key={edu.id} edu={edu} atsMode={atsMode} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {data.certifications && data.certifications.length > 0 && (
           <section aria-label="Certifications">
