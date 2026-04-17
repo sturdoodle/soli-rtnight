@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import {
   Plus, Edit3, Layout, Palette, Type, History,
   Sparkles, ShieldCheck, Moon, Sun, Download, Upload,
-  Trash2, Search, Maximize2, Zap, BarChart3, User, Briefcase, GraduationCap, Award, FileText, FolderCode, Mail, Phone, MapPin, Github, ArrowLeft, X, Rocket, ExternalLink, Menu, ChevronLeft, ChevronRight, Printer, Settings, Timer, BookOpen, Code
+  Trash2, Search, Maximize2, Zap, BarChart3, User, Briefcase, GraduationCap, Award, FileText, FolderCode, Mail, Phone, MapPin, Github, ArrowLeft, X, Rocket, ExternalLink, Menu, ChevronLeft, ChevronRight, Printer, Settings, Timer, BookOpen, Code, Braces
 } from 'lucide-react';
 import { useResume, ResumeProvider } from '../Modern/context/ResumeContext';
 import { useNavigate } from 'react-router-dom';
@@ -276,35 +276,35 @@ const V5EditorContent = () => {
             </div>
             <h1 className="text-lg sm:text-xl font-black tracking-[-0.05em] text-[var(--v5-heading)] flex items-center gap-2 cursor-pointer">
               <span className="hidden xs:inline">Resume Builder</span>
-              <span className="hidden lg:inline text-slate-300 dark:text-slate-700 font-light">| QPkendra</span>
+              <span className="hidden lg:inline font-light opacity-90">| QPkendra</span>
             </h1>
           </div>
           <div className="hidden lg:flex items-center gap-8 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">
             <button
               onClick={() => setActiveTab('content')}
-              className={`pb-5 pt-5 border-b-2 transition-all`}
-              style={activeTab === 'content' ? { borderColor: activeColor, color: activeColor } : { borderColor: 'transparent' }}
+              className={`pb-5 pt-5 border-b-2 transition-all ${activeTab === 'content' ? 'text-[var(--v5-heading)]' : 'text-slate-500 hover:text-[var(--v5-heading)]'}`}
+              style={{ borderColor: activeTab === 'content' ? activeColor : 'transparent' }}
             >
               Editor
             </button>
             <button
               onClick={() => setActiveTab('layout')}
-              className={`pb-5 pt-5 border-b-2 transition-all`}
-              style={activeTab === 'layout' ? { borderColor: activeColor, color: activeColor } : { borderColor: 'transparent' }}
+              className={`pb-5 pt-5 border-b-2 transition-all ${activeTab === 'layout' ? 'text-[var(--v5-heading)]' : 'text-slate-500 hover:text-[var(--v5-heading)]'}`}
+              style={{ borderColor: activeTab === 'layout' ? activeColor : 'transparent' }}
             >
               Structure
             </button>
             <button
               onClick={() => setActiveTab('help')}
-              className={`pb-5 pt-5 border-b-2 transition-all`}
-              style={activeTab === 'help' ? { borderColor: activeColor, color: activeColor } : { borderColor: 'transparent' }}
+              className={`pb-5 pt-5 border-b-2 transition-all ${activeTab === 'help' ? 'text-[var(--v5-heading)]' : 'text-slate-500 hover:text-[var(--v5-heading)]'}`}
+              style={{ borderColor: activeTab === 'help' ? activeColor : 'transparent' }}
             >
               Help
             </button>
             <button
               onClick={() => setActiveTab('about')}
-              className={`pb-5 pt-5 border-b-2 transition-all`}
-              style={activeTab === 'about' ? { borderColor: activeColor, color: activeColor } : { borderColor: 'transparent' }}
+              className={`pb-5 pt-5 border-b-2 transition-all ${activeTab === 'about' ? 'text-[var(--v5-heading)]' : 'text-slate-500 hover:text-[var(--v5-heading)]'}`}
+              style={{ borderColor: activeTab === 'about' ? activeColor : 'transparent' }}
             >
               About Us
             </button>
@@ -389,40 +389,40 @@ const V5EditorContent = () => {
             <button
               onClick={() => { setActiveTab('content'); setIsMobileMenuOpen(false); }}
               aria-label="Identity Editor"
-              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'content' ? 'bg-black/5 dark:bg-white/5' : ''}`}
-              style={{ color: activeTab === 'content' ? activeColor : 'var(--v5-text)' }}
+              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'content' ? 'bg-black/5 dark:bg-white/5 font-bold shadow-sm' : ''}`}
+              style={{ color: activeTab === 'content' ? 'var(--v5-heading)' : 'var(--v5-text)' }}
             >
               Editor
             </button>
             <button
               onClick={() => { setActiveTab('typography'); setIsMobileMenuOpen(false); }}
               aria-label="Typography Settings"
-              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'typography' ? 'bg-black/5 dark:bg-white/5' : ''}`}
-              style={{ color: activeTab === 'typography' ? activeColor : 'var(--v5-text)' }}
+              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'typography' ? 'bg-black/5 dark:bg-white/5 font-bold shadow-sm' : ''}`}
+              style={{ color: activeTab === 'typography' ? 'var(--v5-heading)' : 'var(--v5-text)' }}
             >
               Typeface
             </button>
             <button
               onClick={() => { setActiveTab('layout'); setIsMobileMenuOpen(false); }}
               aria-label="Structure Layout"
-              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'layout' ? 'bg-black/5 dark:bg-white/5' : ''}`}
-              style={{ color: activeTab === 'layout' ? activeColor : 'var(--v5-text)' }}
+              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'layout' ? 'bg-black/5 dark:bg-white/5 font-bold shadow-sm' : ''}`}
+              style={{ color: activeTab === 'layout' ? 'var(--v5-heading)' : 'var(--v5-text)' }}
             >
               Structure
             </button>
             <button
               onClick={() => { setActiveTab('help'); setIsMobileMenuOpen(false); }}
               aria-label="Help and Guidance"
-              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'help' ? 'bg-black/5 dark:bg-white/5' : ''}`}
-              style={{ color: activeTab === 'help' ? activeColor : 'var(--v5-text)' }}
+              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'help' ? 'bg-black/5 dark:bg-white/5 font-bold shadow-sm' : ''}`}
+              style={{ color: activeTab === 'help' ? 'var(--v5-heading)' : 'var(--v5-text)' }}
             >
               Help
             </button>
             <button
               onClick={() => { setActiveTab('about'); setIsMobileMenuOpen(false); }}
               aria-label="About the App"
-              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'about' ? 'bg-black/5 dark:bg-white/5' : ''}`}
-              style={{ color: activeTab === 'about' ? activeColor : 'var(--v5-text)' }}
+              className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === 'about' ? 'bg-black/5 dark:bg-white/5 font-bold shadow-sm' : ''}`}
+              style={{ color: activeTab === 'about' ? 'var(--v5-heading)' : 'var(--v5-text)' }}
             >
               About Us
             </button>
@@ -593,14 +593,14 @@ const V5EditorContent = () => {
 
         {/* Editor Canvas - Balanced 50:50 Split (Now Dynamic) */}
         <main
-          className="overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/20 p-4 lg:p-8 pb-36 lg:pb-12 custom-scrollbar print:hidden will-change-transform lg:m-4 lg:rounded-[2.5rem] lg:border lg:border-black/5 dark:lg:border-white/5 transition-all duration-500 shadow-sm"
+          className="overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-8 pb-48 lg:pt-14 lg:pb-16 px-0 custom-scrollbar print:hidden will-change-transform lg:m-4 lg:rounded-[2.5rem] lg:border lg:border-black/5 dark:lg:border-white/5 transition-all duration-500 shadow-sm"
           style={isDesktop ? { width: `${splitWidth}%` } : { width: '100%' }}
         >
           {/* Hidden H1 for SEO Authority & AI Summary agents */}
           <h1 className="sr-only">QPkendra AI Resume Builder & CV Maker 2026 - Free ATS Friendly Resume Templates</h1>
 
           <div className="max-w-[1400px] mx-auto h-full">
-            <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] pt-6 pb-20 lg:pb-12 px-1.5 sm:px-6 lg:px-8 py-6 relative overflow-hidden">
+            <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] pt-6 pb-2 lg:pb-4 px-1.5 sm:px-6 lg:px-8 py-6 relative overflow-hidden">
               <V5WipeModal
                 isOpen={showWipeConfirm}
                 onClose={() => setShowWipeConfirm(false)}
@@ -638,6 +638,8 @@ const V5EditorContent = () => {
                       Crafted with <span className="text-blue-500 text-sm inline-block animate-pulse mx-1">💙</span> in India
                     </p>
                   </div>
+
+                  <div className="h-32 lg:hidden" />
                 </div>
               )}
 
@@ -1182,7 +1184,7 @@ const V5EditorContent = () => {
             { id: 'content', icon: FileText, label: 'Content' },
             { id: 'layout', icon: Layout, label: 'Layout' },
             { id: 'typography', icon: Type, label: 'Fonts' },
-            { id: 'json', icon: Code, label: 'JSON' },
+            { id: 'json', icon: Braces, label: 'JSON' },
             { id: 'snapshots', icon: Settings, label: 'Settings' }
           ].map((item) => (
             <button
