@@ -412,6 +412,13 @@ input:focus {
   /* Typography */
   --font-serif: "Lora", "Frank Ruhl Libre", "Georgia", serif;
   --font-sans: "Inter", "system-ui", sans-serif;
+
+  /* V5 Theme System (Strictly Solid) */
+  --v5-bg: #f8fafc;
+  --v5-card: #ffffff;
+  --v5-border: rgba(0, 0, 0, 0.1);
+  --v5-heading: #0f172a;
+  --v5-text: #334155;
 }
 
 .dark {
@@ -428,6 +435,13 @@ input:focus {
   --color-sage-50: #0a0f0d;
   --color-sage-100: #111815;
   --color-sage-900: #f8fafc;
+
+  /* V5 Dark Theme System (Strictly Solid) */
+  --v5-bg: #050a0f;
+  --v5-card: #0d151c;
+  --v5-border: rgba(255, 255, 255, 0.1);
+  --v5-heading: #f8fafc;
+  --v5-text: #94a3b8;
 }
 
 /* Global Container Respect & Stability */

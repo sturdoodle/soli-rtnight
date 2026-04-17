@@ -983,8 +983,8 @@ const V5EditorContent = () => {
 
       {/* Onboarding Modal */}
       {showOnboarding && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-4 bg-[var(--v5-bg)]">
-          <div className="max-w-2xl w-full bg-[var(--v5-card)] rounded-[2rem] sm:rounded-[3rem] p-4 sm:p-10 relative overflow-y-auto max-h-[min(95vh,850px)] custom-scrollbar animate-in zoom-in-95 duration-500 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-[var(--v5-border)]">
+        <div className="v5-modal-overlay fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-4">
+          <div className="v5-modal max-w-2xl w-full rounded-[2rem] sm:rounded-[3rem] p-4 sm:p-10 relative overflow-y-auto max-h-[min(95vh,850px)] custom-scrollbar relative z-10">
             {/* Background Glows removed for solid look */}
 
             <div className="relative z-10 flex flex-col items-center">
@@ -1008,10 +1008,10 @@ const V5EditorContent = () => {
               </div>
 
               {/* Storage Selection Toggle */}
-              <div className="w-full mb-8 sm:mb-10 p-4 sm:p-5 bg-slate-100 dark:bg-slate-800/50 rounded-2xl sm:rounded-3xl border border-black/5 dark:border-white/5">
+              <div className="w-full mb-8 sm:mb-10 p-4 sm:p-5 bg-[var(--v5-bg)] rounded-2xl sm:rounded-3xl border border-[var(--v5-border)]">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                   <h4 className="text-[10px] sm:text-[11px] font-black text-[var(--v5-heading)] uppercase tracking-widest">Storage Preference</h4>
-                  <div className="flex bg-black/10 dark:bg-black/20 p-1 rounded-xl border border-black/5 dark:border-white/10 w-fit">
+                  <div className="flex bg-slate-200 dark:bg-black/40 p-1 rounded-xl border border-[var(--v5-border)] w-fit">
                     {['persistent', 'session'].map((mode) => {
                       const isActive = resumeData.storageType === mode;
                       return (
@@ -1027,13 +1027,13 @@ const V5EditorContent = () => {
                     })}
                   </div>
                 </div>
-                <p className="text-[10px] text-slate-500 leading-relaxed font-medium bg-white dark:bg-black/40 p-3 rounded-xl border border-black/5 dark:border-white/5 mb-3">
+                <p className="text-[10px] text-slate-500 leading-relaxed font-medium bg-[var(--v5-card)] p-3 rounded-xl border border-[var(--v5-border)] mb-3">
                   {resumeData.storageType === 'persistent'
                     ? "🚀 Permanent Mode: Your work is saved automatically."
                     : "🔒 Temporary Mode: Your work is deleted on tab close."
                   }
                 </p>
-                <p className="text-[9px] sm:text-[10px] font-black text-slate-700 dark:text-slate-200 text-center flex items-center justify-center gap-2">
+                <p className="text-[9px] sm:text-[10px] font-black text-[var(--v5-text)] text-center flex items-center justify-center gap-2">
                   <span className="text-amber-500">💡</span> Change this in Settings later.
                 </p>
               </div>
@@ -1041,7 +1041,7 @@ const V5EditorContent = () => {
               {/* Workflow Steps */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 w-full mb-8 sm:mb-10">
                 {ONBOARDING_STEPS.map((step, i) => (
-                  <div key={i} className="flex flex-col items-center text-center p-4 sm:p-5 bg-slate-100 dark:bg-slate-800/40 rounded-2xl border border-black/5 dark:border-white/5 group hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+                  <div key={i} className="flex flex-col items-center text-center p-4 sm:p-5 bg-[var(--v5-bg)] rounded-2xl border border-[var(--v5-border)] group hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
                     <div className={`p-3 rounded-xl mb-3 bg-${step.color}-500/20 text-${step.color}-500 group-hover:scale-110 transition-transform`}>
                       <step.icon size={20} />
                     </div>
