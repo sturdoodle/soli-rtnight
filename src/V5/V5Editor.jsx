@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import {
   Plus, Edit3, Layout, Palette, Type, History,
   Sparkles, ShieldCheck, Moon, Sun, Download, Upload,
-  Trash2, Search, Maximize2, Zap, BarChart3, User, Briefcase, GraduationCap, Award, FileText, FolderCode, Mail, Phone, MapPin, Github, ArrowLeft, X, Rocket, ExternalLink, Menu, ChevronLeft, ChevronRight, Printer, Settings, Timer, BookOpen
+  Trash2, Search, Maximize2, Zap, BarChart3, User, Briefcase, GraduationCap, Award, FileText, FolderCode, Mail, Phone, MapPin, Github, ArrowLeft, X, Rocket, ExternalLink, Menu, ChevronLeft, ChevronRight, Printer, Settings, Timer, BookOpen, Code
 } from 'lucide-react';
 import { useResume, ResumeProvider } from '../Modern/context/ResumeContext';
 import { useNavigate } from 'react-router-dom';
@@ -22,6 +22,8 @@ import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../MainConstant.js
 import { isDevelopmentMode, TAB_META, ONBOARDING_STEPS } from './V5Constants';
 import SidebarItem from './components/SidebarItem';
 import PrintAdModal from './components/PrintAdModal';
+import V5JsonEditor from './components/V5JsonEditor';
+import V5WipeModal from './components/V5WipeModal';
 
 
 const V5EditorContent = () => {
@@ -43,8 +45,12 @@ const V5EditorContent = () => {
   const [showPrintAd, setShowPrintAd] = useState(false);
   const [adCountdown, setAdCountdown] = useState(7);
 
+  // Toggle Preview vs JSON Inspector
+  const [previewMode, setPreviewMode] = useState('preview'); // 'preview' | 'json'
+
   const navbarFileInputRef = React.useRef(null);
   const mobileFileInputRef = React.useRef(null);
+  const settingsFileInputRef = React.useRef(null);
 
   // Draggable Split Logic
   const [splitWidth, setSplitWidth] = useState(50); // percentage
@@ -168,7 +174,7 @@ const V5EditorContent = () => {
   // --------------------------------------------------------------------------
   // Interactions & Actions
   // --------------------------------------------------------------------------
-  
+
   const handleDownload = () => {
     if (isDevelopmentMode) {
       window.print();
@@ -354,10 +360,10 @@ const V5EditorContent = () => {
                   <Moon size={18} className="text-indigo-400 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]" />
                 )}
               </div>
-              
+
               {/* Dynamic Aura Animation */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity duration-500 blur-xl scale-150"
-                  style={{ backgroundColor: resumeData.themeMode === 'dark' ? '#f59e0b' : '#818cf8' }}
+                style={{ backgroundColor: resumeData.themeMode === 'dark' ? '#f59e0b' : '#818cf8' }}
               />
             </button>
           </div>
@@ -585,14 +591,21 @@ const V5EditorContent = () => {
 
         {/* Editor Canvas - Balanced 50:50 Split (Now Dynamic) */}
         <main
-          className="overflow-y-auto bg-[var(--v5-canvas)]/10 p-4 lg:p-8 pb-24 lg:pb-12 custom-scrollbar print:hidden will-change-transform"
+          className="overflow-y-auto bg-[var(--v5-canvas)]/10 p-4 lg:p-8 pb-36 lg:pb-12 custom-scrollbar print:hidden will-change-transform"
           style={isDesktop ? { width: `${splitWidth}%` } : { width: '100%' }}
         >
           {/* Hidden H1 for SEO Authority & AI Summary agents */}
           <h1 className="sr-only">QPkendra AI Resume Builder & CV Maker 2026 - Free ATS Friendly Resume Templates</h1>
 
           <div className="max-w-[1400px] mx-auto h-full">
-            <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] pt-6 pb-12 px-1.5 sm:px-6 lg:px-8 py-6">
+            <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] pt-6 pb-20 lg:pb-12 px-1.5 sm:px-6 lg:px-8 py-6 relative overflow-hidden">
+              <V5WipeModal
+                isOpen={showWipeConfirm}
+                onClose={() => setShowWipeConfirm(false)}
+                onConfirm={resetResume}
+                title="Wipe Engine Cache?"
+                description="This will erase all your resume data and reset the structural blueprint to factory defaults. This action cannot be undone."
+              />
               {activeTab === 'content' && (
                 <div className="mb-4 p-4 sm:p-6 rounded-[2.5rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-700">
                   <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
@@ -633,53 +646,69 @@ const V5EditorContent = () => {
               ) : null}
 
               {activeTab === 'typography' && (
-                <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-8 px-1 sm:px-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                  <div className="p-6 bg-black/5 dark:bg-white/5 rounded-3xl border border-dashed border-black/10 dark:border-white/10">
+                    <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Architectural Typeface</h3>
+                    <p className="text-[10px] text-slate-500 font-medium leading-relaxed">
+                      Global document font replacement. Selecting a new typeface will re-index all headers, body text, and semantic metadata across your resume to maintain a unified visual hierarchy and aesthetic intent.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <button
                       onClick={() => updateField('fontFamily', 'Default')}
-                      className={`p-10 rounded-[2.5rem] bg-[var(--v5-card)]/30 border transition-all group relative overflow-hidden text-left ${resumeData.fontFamily === 'Default' || !resumeData.fontFamily ? 'border-[var(--v5-accent)] shadow-[0_0_25px_-5px_var(--v5-accent)] scale-[1.02]' : 'border-black/5 dark:border-white/5 hover:scale-105'}`}
+                      className={`py-4 px-5 rounded-[1.25rem] bg-[var(--v5-card)]/30 border transition-all group relative overflow-hidden text-left ${resumeData.fontFamily === 'Default' || !resumeData.fontFamily ? 'border-[var(--v5-accent)] shadow-[0_4px_15px_-5px_var(--v5-accent)] scale-[1.01]' : 'border-black/5 dark:border-white/5 hover:scale-[1.02]'}`}
                       style={(resumeData.fontFamily === 'Default' || !resumeData.fontFamily) ? { borderColor: activeColor } : {}}
                     >
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="p-2 bg-slate-500/10 rounded-xl"><Layout size={18} className="text-slate-500" /></div>
-                        <h4 className="text-xl font-black text-[var(--v5-heading)]">System Default</h4>
-                      </div>
-                      <p className="text-xs text-slate-500 font-medium">Revert to the layout's original architectural typeface intent.</p>
-                      <div className="mt-8 flex justify-end">
-                        <div className={`text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full transition-all ${(resumeData.fontFamily === 'Default' || !resumeData.fontFamily) ? 'text-white' : 'text-slate-400'}`}
-                          style={(resumeData.fontFamily === 'Default' || !resumeData.fontFamily) ? { backgroundColor: activeColor } : {}}>
-                          {(resumeData.fontFamily === 'Default' || !resumeData.fontFamily) ? 'Engine Reset' : 'Restore Native'}
+                      <div className="flex items-center justify-between gap-3 mb-1.5">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1.5 bg-slate-500/10 rounded-lg"><Layout size={14} className="text-slate-500" /></div>
+                          <h4 className="text-sm font-black text-[var(--v5-heading)]">System Default</h4>
                         </div>
+                        <div className={`text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg transition-all ${(resumeData.fontFamily === 'Default' || !resumeData.fontFamily) ? 'text-white' : 'text-slate-400'}`}
+                          style={(resumeData.fontFamily === 'Default' || !resumeData.fontFamily) ? { backgroundColor: activeColor } : {}}>
+                          {(resumeData.fontFamily === 'Default' || !resumeData.fontFamily) ? 'Active' : 'Restore'}
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between gap-4">
+                        <p className="text-[9px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed opacity-80 flex-1">Revert to the original architectural intent.</p>
+                        <span className="text-xs font-medium text-slate-400/50 select-none">AaBbCc 123</span>
                       </div>
                     </button>
 
                     {[
-                      { name: 'Inter Architecture', desc: 'Modern, high-velocity technical sans.', font: 'Inter' },
-                      { name: 'Satoshi Signature', desc: 'Modern & Minimal professional sans.', font: 'Satoshi' },
-                      { name: 'Geist Technical', desc: 'Clean & Tech industrial aesthetic.', font: 'Geist' },
-                      { name: 'Plus Jakarta Sans', desc: 'Friendly & Geometric accessibility.', font: 'PlusJakartaSans' },
-                      { name: 'Figtree Minimal', desc: 'Minimalist & Functional clarity.', font: 'Figtree' },
-                      { name: 'DM Sans Balanced', desc: 'Clear & Balanced editorial tone.', font: 'DMSans' },
-                      { name: 'Mona Sans Stylish', desc: 'Versatile & Stylish editorial presence.', font: 'MonaSans' },
-                      { name: 'Lora Elegant', desc: 'Sophisticated professional serif architecture.', font: 'Lora' },
-                      { name: 'Roboto Technical', desc: 'Precise engineering-grade monospace.', font: 'Roboto Mono' },
-                      { name: 'Outfit Modern', desc: 'Clean, approachable geometric typeface.', font: 'Outfit' }
+                      { name: 'Inter Architecture', desc: 'Modern, high-velocity technical sans.', font: 'Inter', type: 'Sans' },
+                      { name: 'Satoshi Signature', desc: 'Modern & Minimal professional sans.', font: 'Satoshi', type: 'Sans' },
+                      { name: 'Geist Technical', desc: 'Clean & Tech industrial aesthetic.', font: 'Geist', type: 'Sans' },
+                      { name: 'Plus Jakarta Sans', desc: 'Friendly & Geometric accessibility.', font: 'PlusJakartaSans', type: 'Sans' },
+                      { name: 'Figtree Minimal', desc: 'Minimalist & Functional clarity.', font: 'Figtree', type: 'Sans' },
+                      { name: 'DM Sans Balanced', desc: 'Clear & Balanced editorial tone.', font: 'DMSans', type: 'Sans' },
+                      { name: 'Mona Sans Stylish', desc: 'Versatile & Stylish editorial presence.', font: 'MonaSans', type: 'Sans' },
+                      { name: 'Lora Elegant', desc: 'Sophisticated professional serif architecture.', font: 'Lora', type: 'Serif' },
+                      { name: 'Roboto Technical', desc: 'Precise engineering-grade monospace.', font: 'Roboto Mono', type: 'Mono' },
+                      { name: 'Outfit Modern', desc: 'Clean, approachable geometric typeface.', font: 'Outfit', type: 'Sans' }
                     ].map((f) => {
                       const isActive = resumeData.fontFamily === f.font;
                       return (
                         <button
                           key={f.name}
                           onClick={() => updateField('fontFamily', f.font)}
-                          className={`p-10 rounded-[2.5rem] bg-[var(--v5-card)]/30 border transition-all group relative overflow-hidden text-left ${isActive ? 'border-[var(--v5-accent)] shadow-[0_0_25px_-5px_var(--v5-accent)] scale-[1.02]' : 'border-black/5 dark:border-white/5 hover:scale-105'}`}
+                          className={`py-4 px-5 rounded-[1.25rem] bg-[var(--v5-card)]/30 border transition-all group relative overflow-hidden text-left ${isActive ? 'border-[var(--v5-accent)] shadow-[0_4px_15px_-5px_var(--v5-accent)] scale-[1.01]' : 'border-black/5 dark:border-white/5 hover:scale-[1.02]'}`}
                           style={isActive ? { borderColor: activeColor } : {}}
                         >
-                          <h4 className="text-xl font-black text-[var(--v5-heading)] mb-2" style={{ fontFamily: f.font }}>{f.name}</h4>
-                          <p className="text-xs text-slate-500 font-medium">{f.desc}</p>
-                          <div className="mt-8 flex justify-end">
-                            <div className={`text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full transition-all ${isActive ? 'text-white' : 'text-[#0ea5e9]'}`}
-                              style={isActive ? { backgroundColor: activeColor } : {}}>
-                              {isActive ? 'Engine Active' : 'Activate Engine'}
+                          <div className="flex items-center justify-between gap-3 mb-1.5">
+                            <div className="flex items-center gap-2">
+                              <h4 className="text-sm font-black text-[var(--v5-heading)]" style={{ fontFamily: f.font }}>{f.name}</h4>
+                              <span className="text-[7px] font-bold px-1.5 py-0.5 rounded-md bg-slate-500/5 text-slate-400 uppercase tracking-tighter border border-slate-500/10">{f.type}</span>
                             </div>
+                            <div className={`text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg transition-all ${isActive ? 'text-white' : 'text-[#0ea5e9]'}`}
+                              style={isActive ? { backgroundColor: activeColor } : {}}>
+                              {isActive ? 'Applied' : 'Select'}
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between gap-4">
+                            <p className="text-[9px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed opacity-80 flex-1">{f.desc}</p>
+                            <span className="text-xs font-medium text-slate-400/50 select-none" style={{ fontFamily: f.font }}>AaBbCc 123</span>
                           </div>
                         </button>
                       );
@@ -688,29 +717,64 @@ const V5EditorContent = () => {
                 </div>
               )}
 
+              {activeTab === 'json' && (
+                <div className="space-y-4 px-1 sm:px-6 animate-in fade-in slide-in-from-bottom-4 duration-700 h-full flex flex-col">
+                  <div className="p-4 sm:p-6 bg-blue-500/5 dark:bg-blue-500/10 rounded-3xl border border-dashed border-blue-500/20 mb-2 sm:mb-6 font-medium">
+                    <div className="flex items-center gap-3 mb-1 sm:mb-2">
+                      <div className="p-1 sm:p-1.5 bg-blue-500/20 rounded-lg"><Code size={14} className="text-blue-500" /></div>
+                      <h3 className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">Direct JSON Inspector</h3>
+                    </div>
+                    <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                      Advanced architectural access. Edit raw data directly. Syncing is live.
+                    </p>
+                  </div>
+                  <div className="flex-1 min-h-[600px] sm:min-h-[500px] rounded-3xl overflow-hidden border border-black/10 dark:border-white/10 shadow-2xl">
+                    <V5JsonEditor
+                      data={resumeData}
+                      onUpdate={setResumeData}
+                      activeColor={activeColor}
+                    />
+                  </div>
+                </div>
+              )}
+
               {activeTab === 'snapshots' && (
                 <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <button onClick={handleExportJSON} className="group p-10 rounded-[2.5rem] bg-emerald-500/5 border border-emerald-500/10 text-center hover:bg-emerald-500/10 transition-all hover:scale-105">
-                      <div className="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                        <Download className="text-emerald-500" size={28} />
+                  <div className="grid grid-cols-3 gap-2 sm:gap-6">
+                    {/* Export Section */}
+                    <button onClick={handleExportJSON} className="group p-3 sm:p-8 rounded-2xl sm:rounded-[2.5rem] bg-emerald-500/5 border border-emerald-500/10 text-center hover:bg-emerald-500/10 transition-all hover:scale-[1.02] flex flex-col items-center justify-center min-h-[140px] sm:min-h-[200px] shadow-sm">
+                      <div className="w-10 h-10 sm:w-14 sm:h-14 bg-emerald-500/20 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2 sm:mb-5 group-hover:scale-110 transition-transform">
+                        <Download className="text-emerald-500 w-5 h-5 sm:w-7 sm:h-7" />
                       </div>
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">Export Snapshot</span>
+                      <h4 className="text-[8px] sm:text-[11px] font-black uppercase tracking-wider sm:tracking-[0.2em] text-emerald-600 dark:text-emerald-400 mb-1 sm:mb-2.5">Export</h4>
+                      <p className="text-[7px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-tight sm:leading-relaxed max-w-[140px] mx-auto opacity-70">Save your draft as a snapshot.</p>
                     </button>
 
-                    <label className="group p-10 rounded-[2.5rem] bg-blue-500/5 border border-blue-500/10 text-center hover:bg-blue-500/10 transition-all hover:scale-105 cursor-pointer">
-                      <input type="file" className="hidden" accept=".json" onChange={handleImportJSON} />
-                      <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                        <Plus className="text-blue-500" size={28} />
+                    {/* Import Section */}
+                    <button
+                      onClick={() => settingsFileInputRef.current?.click()}
+                      className="group p-3 sm:p-8 rounded-2xl sm:rounded-[2.5rem] bg-blue-500/5 border border-blue-500/10 text-center hover:bg-blue-500/10 transition-all hover:scale-[1.02] flex flex-col items-center justify-center min-h-[140px] sm:min-h-[200px] shadow-sm relative"
+                    >
+                      <input
+                        ref={settingsFileInputRef}
+                        type="file"
+                        className="hidden"
+                        accept=".json"
+                        onChange={handleImportJSON}
+                      />
+                      <div className="w-10 h-10 sm:w-14 sm:h-14 bg-blue-500/20 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2 sm:mb-5 group-hover:scale-110 transition-transform mx-auto">
+                        <Plus className="text-blue-500 w-5 h-5 sm:w-7 sm:h-7" />
                       </div>
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">Import Snapshot</span>
-                    </label>
+                      <h4 className="text-[8px] sm:text-[11px] font-black uppercase tracking-wider sm:tracking-[0.2em] text-blue-600 dark:text-blue-400 mb-1 sm:mb-2.5">Import</h4>
+                      <p className="text-[7px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-tight sm:leading-relaxed max-w-[140px] mx-auto opacity-70">Restore a career version file.</p>
+                    </button>
 
-                    <button onClick={() => setShowWipeConfirm(true)} className="group p-10 rounded-[2.5rem] bg-rose-500/5 border border-rose-500/10 text-center hover:bg-rose-500/10 transition-all hover:scale-105">
-                      <div className="w-16 h-16 bg-rose-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                        <Trash2 className="text-rose-500" size={28} />
+                    <button onClick={() => setShowWipeConfirm(true)} className="group p-3 sm:p-8 rounded-2xl sm:rounded-[2.5rem] bg-rose-500/5 border border-rose-500/10 text-center hover:bg-rose-500/10 transition-all hover:scale-[1.02] flex flex-col items-center justify-center min-h-[140px] sm:min-h-[200px] shadow-sm">
+                      <div className="w-10 h-10 sm:w-14 sm:h-14 bg-rose-500/20 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2 sm:mb-5 group-hover:scale-110 transition-transform">
+                        <Trash2 className="text-rose-500 w-5 h-5 sm:w-7 sm:h-7" />
                       </div>
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-600 dark:text-rose-400">Wipe Engine</span>
+                      <h4 className="text-[8px] sm:text-[11px] font-black uppercase tracking-wider sm:tracking-[0.2em] text-rose-600 dark:text-rose-400 mb-1 sm:mb-2.5">Wipe</h4>
+                      <p className="text-[7px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-tight sm:leading-relaxed max-w-[140px] mx-auto opacity-70">Factory reset the entire engine.</p>
                     </button>
                   </div>
 
@@ -793,10 +857,10 @@ const V5EditorContent = () => {
                   </div>
 
                   {/* Humorous Ads Notice */}
-                  <div className="w-full py-3 px-5 bg-black/5 dark:bg-white/5 rounded-2xl border border-dashed border-black/10 dark:border-white/10 flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
-                    <div className="text-lg text-slate-400 group-hover:rotate-12 transition-transform">☕</div>
-                    <p className="text-[9px] font-bold text-slate-500/80 leading-relaxed uppercase tracking-wider text-left">
-                      <span className="text-amber-500">Ad-Protocol Active:</span> We show Google Ads so we don't have to charge you. They pay for the electricity and the lead dev's questionable caffeine addiction.
+                  <div className="w-full py-3 px-5 bg-black/5 dark:bg-white/5 rounded-2xl border border-dashed border-black/10 dark:border-white/10 flex items-center gap-3">
+                    <div className="text-lg text-slate-400 transition-transform">☕</div>
+                    <p className="text-[9px] font-bold text-slate-600 dark:text-slate-400 leading-relaxed uppercase tracking-wider text-left">
+                      <span className="text-amber-600 dark:text-amber-500">Ad-Protocol Active:</span> We show Google Ads so we don't have to charge you. They pay for the electricity and the lead dev's questionable caffeine addiction.
                     </p>
                   </div>
                 </div>
@@ -901,6 +965,9 @@ const V5EditorContent = () => {
                   </div>
                 </div>
               )}
+
+              {/* Explicit Spacer for Mobile Dock Clearance */}
+              <div className="h-32 lg:hidden pointer-events-none" aria-hidden="true" />
             </div>
           </div>
         </main>
@@ -918,68 +985,64 @@ const V5EditorContent = () => {
           className="hidden xl:flex border-l border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col p-4 lg:p-8 print:hidden shadow-2xl overflow-hidden relative"
           style={isDesktop ? { width: `${100 - splitWidth}%` } : {}}
         >
-          <div className="flex items-center justify-between mb-4 px-4">
-            <div className="flex items-center gap-3">
-              <div className="w-2.5 h-2.5 rounded-full animate-pulse"
-                style={{ backgroundColor: activeColor, boxShadow: `0 0-10px ${activeColor}80` }} />
-              <span className="text-[11px] font-black text-slate-500 uppercase tracking-[0.2em]">Live Simulation</span>
+          <div className="flex items-center justify-between mb-4 px-4 h-12">
+            <div className="flex bg-slate-100 dark:bg-slate-800/50 p-1 rounded-xl border border-black/5 dark:border-white/5">
+              <button
+                onClick={() => setPreviewMode('preview')}
+                className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${previewMode === 'preview' ? 'bg-white dark:bg-slate-700 text-[var(--v5-heading)] shadow-sm' : 'text-slate-500 hover:text-slate-400'}`}
+              >
+                Preview
+              </button>
+              <button
+                onClick={() => setPreviewMode('json')}
+                className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${previewMode === 'json' ? 'bg-white dark:bg-slate-700 text-[var(--v5-heading)] shadow-sm' : 'text-slate-500 hover:text-slate-400'}`}
+              >
+                JSON Editor
+              </button>
             </div>
-            <div className="flex items-center gap-5">
-              <button className="p-2.5 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-all text-slate-500 hover:text-[var(--v5-heading)]"><Search size={18} /></button>
-              <button onClick={() => setIsEnlarged(true)} className="p-2.5 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-all text-slate-500 hover:text-[var(--v5-heading)]"><Maximize2 size={18} /></button>
+            <div className="flex items-center gap-3">
+              <button className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-all text-slate-500 hover:text-[var(--v5-heading)]"><Search size={16} /></button>
+              <button onClick={() => setIsEnlarged(true)} className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-all text-slate-500 hover:text-[var(--v5-heading)]"><Maximize2 size={16} /></button>
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col items-center relative">
-            <div
-              className="transition-all duration-700 mx-auto mt-5"
-              style={{
-                transform: 'scale(0.90)', // Optimized for high-density 50:50 split
-                transformOrigin: 'top center',
-                width: '800px',
-                maxWidth: '100%',
-                height: '0',
-                paddingBottom: 'calc(100% * 1.40 + 200px)' // Maintaining vertical perspective
-              }}
-            >
-              <div className="shadow-[0_40px_100px_rgba(0,0,0,0.3)] rounded-[1.5rem] overflow-hidden pointer-events-none">
-                <ModernLivePreview />
+          <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col items-stretch relative">
+            {previewMode === 'preview' ? (
+              <div
+                className="transition-all duration-700 mx-auto mt-5"
+                style={{
+                  transform: 'scale(0.90)', // Optimized for high-density 50:50 split
+                  transformOrigin: 'top center',
+                  width: '800px',
+                  maxWidth: '100%',
+                  height: '0',
+                  paddingBottom: 'calc(100% * 1.40 + 200px)' // Maintaining vertical perspective
+                }}
+              >
+                <div className="shadow-[0_40px_100px_rgba(0,0,0,0.3)] rounded-[1.5rem] overflow-hidden pointer-events-none border border-black/5 dark:border-white/5">
+                  <ModernLivePreview />
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="h-full pt-4 pb-20 flex flex-col items-center">
+                <div className="w-full max-w-4xl h-full flex flex-col px-4">
+                  <V5JsonEditor
+                    data={resumeData}
+                    onUpdate={setResumeData}
+                    activeColor={activeColor}
+                  />
+                  <p className="mt-4 text-[9px] font-black uppercase tracking-widest text-slate-500 text-center flex items-center justify-center gap-2">
+                    <Zap size={10} className="text-amber-500" /> Changes sync in real-time
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
       </div>
 
-      {/* Wipe Confirmation Modal */}
-      {showWipeConfirm && (
-        <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-3xl p-8 max-w-md w-full shadow-2xl animate-in zoom-in-95 backdrop-blur-xl">
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-rose-500/10 rounded-2xl flex items-center justify-center mb-6 border border-rose-500/20 text-rose-500">
-                <Trash2 size={30} />
-              </div>
-              <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-3">Wipe Engine Cache?</h3>
-              <p className="text-[13px] text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">This will erase all your resume data and reset the structural blueprint to factory defaults. This action cannot be undone.</p>
-
-              <div className="flex items-center gap-3 w-full">
-                <button
-                  onClick={() => setShowWipeConfirm(false)}
-                  className="flex-1 py-3.5 px-4 rounded-xl font-black text-[10px] uppercase tracking-widest text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition-all"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => { resetResume(); setShowWipeConfirm(false); }}
-                  className="flex-1 py-3.5 px-4 rounded-xl font-black text-[10px] uppercase tracking-widest text-white bg-rose-500 hover:bg-rose-600 shadow-lg shadow-rose-500/30 transition-all hover:-translate-y-0.5"
-                >
-                  Confirm Wipe
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Global Modals moved to relative contexts or kept as fixed if needed */}
 
       {/* Onboarding Modal */}
       {showOnboarding && (
@@ -1116,6 +1179,7 @@ const V5EditorContent = () => {
             { id: 'content', icon: FileText, label: 'Content' },
             { id: 'layout', icon: Layout, label: 'Layout' },
             { id: 'typography', icon: Type, label: 'Fonts' },
+            { id: 'json', icon: Code, label: 'JSON' },
             { id: 'snapshots', icon: Settings, label: 'Settings' }
           ].map((item) => (
             <button
@@ -1141,11 +1205,11 @@ const V5EditorContent = () => {
         </div>
       </div>
 
-      <PrintAdModal 
-        showPrintAd={showPrintAd} 
-        adCountdown={adCountdown} 
-        activeColor={activeColor} 
-        finalizePrintAction={finalizePrintAction} 
+      <PrintAdModal
+        showPrintAd={showPrintAd}
+        adCountdown={adCountdown}
+        activeColor={activeColor}
+        finalizePrintAction={finalizePrintAction}
         onClose={() => setShowPrintAd(false)}
       />
     </div>

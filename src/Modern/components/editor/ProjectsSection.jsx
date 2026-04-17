@@ -10,9 +10,18 @@ import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../../../MainConst
 const ProjectsSection = () => {
   const { resumeData, updateSection } = useResume();
 
+  const ensureAbsoluteUrl = (url) => {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto:') || url.startsWith('tel:') || url.startsWith('#')) {
+      return url;
+    }
+    return `https://${url}`;
+  };
+
   const handleUpdateProject = (id, field, value) => {
+    const finalValue = field === 'link' ? ensureAbsoluteUrl(value) : value;
     const updatedProjects = (resumeData.projects || []).map(proj => 
-      proj.id === id ? { ...proj, [field]: value } : proj
+      proj.id === id ? { ...proj, [field]: finalValue } : proj
     );
     updateSection('projects', updatedProjects);
   };
@@ -24,7 +33,7 @@ const ProjectsSection = () => {
       tech: 'React, Node.js',
       description: 'Project description with **highlights**',
       link: '',
-      icon: '🚀'
+      icon: ''
     };
     updateSection('projects', [...(resumeData.projects || []), newProject]);
   };
@@ -103,10 +112,10 @@ const ProjectsSection = () => {
                 />
                 <MinimalistInput 
                   id={`v5-proj-${proj.id}-icon`}
-                  label="Icon / Emoji" 
-                  value={proj.icon || '🚀'} 
+                  label="Icon / Emoji (Optional)" 
+                  value={proj.icon || ''} 
                   onChange={(e) => handleUpdateProject(proj.id, 'icon', e.target.value)} 
-                  placeholder="🚀"
+                  placeholder="Leave empty for default Briefcase"
                 />
               </div>
             </div>

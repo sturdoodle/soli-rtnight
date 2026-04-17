@@ -107,7 +107,13 @@ export const ProjectItem = ({ proj, themeColor, atsMode }) => {
     <div className="mb-6 print:mb-3 last:mb-0">
       <div className="flex justify-between items-center mb-1 print:mb-0 print:break-after-avoid print:[page-break-after:avoid]">
         <h3 className={`font-bold flex items-center gap-2 transition-colors ${atsMode ? 'text-black' : ''}`} style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'inherit' }}>
-          {!atsMode && <span className="text-lg">{proj.icon || '🚀'}</span>}
+          {!atsMode && (
+            proj.icon ? (
+              <span className="text-lg">{proj.icon}</span>
+            ) : (
+              <Briefcase size={16} className="opacity-70" style={{ color: sectionThemingEnabled ? themeColor : 'inherit' }} />
+            )
+          )}
           {proj.name}
         </h3>
         {proj.link && (

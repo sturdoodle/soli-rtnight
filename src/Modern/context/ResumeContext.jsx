@@ -8,6 +8,15 @@ const STORAGE_TYPE_KEY = 'modern_resume_storage_preference';
 const STORAGE_TIMESTAMP_KEY = 'modern_resume_timestamp';
 const EXPIRATION_MS = 3 * 24 * 60 * 60 * 1000; // 3 Days in milliseconds
 
+const ensureAbsoluteUrl = (url) => {
+  if (!url) return '';
+  if (typeof url !== 'string') return url;
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto:') || url.startsWith('tel:') || url.startsWith('#')) {
+    return url;
+  }
+  return `https://${url}`;
+};
+
 const getInitialState = () => {
   try {
     // 1. Determine preference (default to persistent)
@@ -39,6 +48,15 @@ const getInitialState = () => {
     };
     
     const parsedData = JSON.parse(savedData);
+    
+    // Normalize project links in the persisted data
+    if (parsedData.projects) {
+      parsedData.projects = parsedData.projects.map(p => ({
+        ...p,
+        link: ensureAbsoluteUrl(p.link)
+      }));
+    }
+
     return { 
       ...parsedData, 
       storageType: type, 

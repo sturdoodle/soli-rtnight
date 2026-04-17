@@ -9,7 +9,7 @@ export const SAMPLE_JSON_DATA = {
     "location": "Austin, Texas",
     "phone": "+1 (512) 555-0198",
     "email": "alex.sterling.dev@example.com",
-    "github": "://github.com",
+    "github": "github.com",
     "summary": "Senior Frontend Engineer with 4+ years of experience in architecting scalable, high-performance web applications.",
     "GENERATED_BY": "https://resume-builder.qpkendra.com",
     "skills": [
@@ -69,15 +69,15 @@ export const SAMPLE_JSON_DATA = {
             "icon": "💻",
             "tech": "React.js, Node.js, SEO Optimization",
             "description": "Designed and developed an academic analytics platform with **20M+ lifetime views**. Built scalable React.js UI and optimized performance for high-traffic content delivery.",
-            "link": "edumetric-platform.io"
+            "link": "https://edumetric-platform.io"
         },
         {
             "id": 2,
             "name": "SwiftSwift API Finder",
-            "icon": "💳",
+            "icon": "",
             "tech": "Next.js 14, SSG, TypeScript",
             "description": "Developed a high-performance directory using **Static Site Generation (SSG)** to handle thousands of pages with near-instant load times. Achieved perfect Lighthouse scores.",
-            "link": "swift-api-finder.io"
+            "link": "https://swift-api-finder.io"
         }
     ],
     "certifications": [
@@ -94,6 +94,6 @@ export const SAMPLE_JSON_DATA = {
     "themeMode": "light",
     "atsMode": false,
     "themeColor": "#0f172a",
-    "selectedTemplate": "template-2",
+    "selectedTemplate": "template-1",
     "fontFamily": "Default"
 }
