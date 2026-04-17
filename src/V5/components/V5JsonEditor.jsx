@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Check, AlertCircle, Copy, SquareTerminal, RefreshCw } from 'lucide-react';
 
-const V5JsonEditor = ({ data, onUpdate, activeColor }) => {
+const V5JsonEditor = ({ data, onUpdate, activeColor, className = "" }) => {
   const [jsonText, setJsonText] = useState('');
   const [error, setError] = useState(null);
   const [isCopied, setIsCopied] = useState(false);
   const [cursorPos, setCursorPos] = useState({ line: 1, col: 1 });
+  const textareaRef = useRef(null);
 
   // Initialize with formatted JSON
   useEffect(() => {
@@ -41,6 +42,10 @@ const V5JsonEditor = ({ data, onUpdate, activeColor }) => {
     });
   };
 
+  const handleScroll = (e) => {
+    updateCursorPosition(e);
+  };
+
   const prettify = () => {
     try {
       const parsed = JSON.parse(jsonText);
@@ -58,7 +63,7 @@ const V5JsonEditor = ({ data, onUpdate, activeColor }) => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#050A0F] rounded-2xl border border-white/5 overflow-hidden animate-in fade-in duration-500">
+    <div className={`flex flex-col h-full bg-[#050A0F] overflow-hidden animate-in fade-in duration-500 ${className}`}>
       {/* Editor Toolbar */}
       <div className="flex items-center justify-between px-4 py-2 border-b border-white/5 bg-slate-900/50">
         <div className="flex items-center gap-2">
@@ -99,21 +104,22 @@ const V5JsonEditor = ({ data, onUpdate, activeColor }) => {
         </div>
       </div>
 
-      {/* Editor Body */}
-      <div className="flex-1 relative min-h-[450px] sm:min-h-[500px]" style={{ backgroundColor: '#050A0F' }}>
+      <div className="flex-1 relative min-h-[450px] sm:min-h-[500px] overflow-hidden" style={{ backgroundColor: '#050A0F' }}>
         <textarea
+          ref={textareaRef}
           value={jsonText}
           onChange={handleTextChange}
           onKeyUp={updateCursorPosition}
           onClick={updateCursorPosition}
           onSelect={updateCursorPosition}
+          onScroll={handleScroll}
           spellCheck="false"
           className="absolute inset-0 w-full h-full p-4 sm:p-8 font-mono text-[10px] sm:text-xs leading-relaxed outline-none resize-none custom-scrollbar transition-all"
           placeholder="Enter raw JSON data here..."
           style={{ 
             backgroundColor: 'transparent',
             color: '#E0E7FF',
-            caretColor: activeColor,
+            caretColor: activeColor, // Restore native cursor
             fontFamily: "'Roboto Mono', 'Geist Mono', monospace",
             border: 'none',
             boxShadow: 'none'
@@ -131,9 +137,14 @@ const V5JsonEditor = ({ data, onUpdate, activeColor }) => {
       {/* Editor Status Bar */}
       <div className="px-4 py-1.5 border-t border-white/5 bg-slate-900/40 flex items-center justify-between text-[8px] font-bold uppercase tracking-widest text-slate-600">
           <div className="flex items-center gap-4">
-            <span>Ln {cursorPos.line}, Col {cursorPos.col}</span>
+            <span 
+              className="text-white brightness-200 transition-all px-2 py-0.5 rounded bg-white/5 border border-white/10"
+              style={{ textShadow: `0 0 8px ${activeColor}`, borderColor: `${activeColor}40` }}
+            >
+              Ln {cursorPos.line}, Col {cursorPos.col}
+            </span>
             <div className="w-px h-2 bg-white/5" />
-            <span>Characters: {jsonText.length}</span>
+            <span className="opacity-60">Characters: {jsonText.length}</span>
           </div>
           <span>Sync Status: {error ? 'Paused' : 'Live'}</span>
       </div>

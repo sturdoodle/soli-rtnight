@@ -274,7 +274,10 @@ const V5EditorContent = () => {
               style={{ backgroundColor: activeColor, boxShadow: `0 8px 20px -4px ${activeColor}60` }}>
               <img src={logo} alt="Logo" className="w-5 h-5 object-contain brightness-0 invert" />
             </div>
-            <h1 className="text-xl font-black tracking-[-0.05em] text-[var(--v5-heading)] hidden sm:block cursor-pointer">Resume Builder | QPkendra</h1>
+            <h1 className="text-lg sm:text-xl font-black tracking-[-0.05em] text-[var(--v5-heading)] flex items-center gap-2 cursor-pointer">
+              <span className="hidden xs:inline">Resume Builder</span>
+              <span className="hidden lg:inline text-slate-300 dark:text-slate-700 font-light">| QPkendra</span>
+            </h1>
           </div>
           <div className="hidden lg:flex items-center gap-8 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">
             <button
@@ -316,7 +319,7 @@ const V5EditorContent = () => {
               title="Export Backup (JSON)"
             >
               <Download size={14} className="group-hover:scale-110 transition-transform" />
-              <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap">Export</span>
+              <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap hidden xl:inline">Export</span>
             </button>
 
             <button
@@ -325,7 +328,7 @@ const V5EditorContent = () => {
               title="Import Snapshot (JSON)"
             >
               <Upload size={14} className="group-hover:scale-110 transition-transform" />
-              <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap">Import</span>
+              <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap hidden xl:inline">Import</span>
             </button>
             <input
               ref={navbarFileInputRef}
@@ -339,7 +342,7 @@ const V5EditorContent = () => {
           <div className={`flex items-center gap-1.5 sm:gap-3 p-1.5 rounded-full border transition-all duration-300 group cursor-pointer ${atsMode ? 'border-transparent shadow-lg' : 'bg-white/5 border-black/5 dark:border-white/10'}`}
             style={atsMode ? { backgroundColor: activeColor } : {}}
             onClick={toggleAts}>
-            <span className={`pl-2 pr-0.5 text-[9px] font-black uppercase tracking-widest transition-all ${atsMode ? 'text-white' : 'text-slate-500'}`}>
+            <span className={`pl-2 pr-0.5 text-[9px] font-black uppercase tracking-widest transition-all ${atsMode ? 'text-white' : 'text-slate-500'} hidden sm:inline`}>
               ATS
             </span>
             <div className={`w-8 h-4 rounded-full relative transition-all ${atsMode ? 'bg-white/20 shadow-inner' : 'bg-slate-700/20'}`}>
@@ -374,8 +377,7 @@ const V5EditorContent = () => {
             style={{ backgroundColor: activeColor, boxShadow: `0 10px 25px -5px ${activeColor}50` }}
           >
             <Download size={14} />
-            <span className="hidden xs:inline">Resume</span>
-            <span className="xs:hidden">Resume</span>
+            <span className="hidden sm:inline">Resume</span>
           </button>
         </div>
       </nav>
@@ -591,7 +593,7 @@ const V5EditorContent = () => {
 
         {/* Editor Canvas - Balanced 50:50 Split (Now Dynamic) */}
         <main
-          className="overflow-y-auto bg-[var(--v5-canvas)]/10 p-4 lg:p-8 pb-36 lg:pb-12 custom-scrollbar print:hidden will-change-transform"
+          className="overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/20 p-4 lg:p-8 pb-36 lg:pb-12 custom-scrollbar print:hidden will-change-transform lg:m-4 lg:rounded-[2.5rem] lg:border lg:border-black/5 dark:lg:border-white/5 transition-all duration-500 shadow-sm"
           style={isDesktop ? { width: `${splitWidth}%` } : { width: '100%' }}
         >
           {/* Hidden H1 for SEO Authority & AI Summary agents */}
@@ -728,11 +730,12 @@ const V5EditorContent = () => {
                       Advanced architectural access. Edit raw data directly. Syncing is live.
                     </p>
                   </div>
-                  <div className="flex-1 min-h-[600px] sm:min-h-[500px] rounded-3xl overflow-hidden border border-black/10 dark:border-white/10 shadow-2xl">
+                  <div className="flex-1 relative min-h-[700px] sm:min-h-[500px] overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl flex flex-col bg-[#050A0F]">
                     <V5JsonEditor
                       data={resumeData}
                       onUpdate={setResumeData}
                       activeColor={activeColor}
+                      className="flex-1"
                     />
                   </div>
                 </div>
