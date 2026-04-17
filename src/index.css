@@ -7,7 +7,7 @@
 
 .card-container {
   /* Apply the desired Tailwind utilities */
-  @apply bg-white rounded-2xl shadow-sm border border-gray-300 p-3 mb-2;
+  @apply bg-white rounded-2xl shadow-sm border border-gray-300 p-3 mb-2 max-w-full overflow-hidden;
 }
 
 .card-section-header {
@@ -430,6 +430,19 @@ input:focus {
   --color-sage-900: #f8fafc;
 }
 
+/* Global Container Respect & Stability */
+* {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0; /* Fix for flex containers squashing children */
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 .modern-bg-gradient {
   background: linear-gradient(135deg, var(--color-editor-bg) 0%, hsl(160, 20%, 85%) 100%);
   background-attachment: fixed;
@@ -580,23 +593,20 @@ input:focus {
 
 /* Guidance & Onboarding Modal System */
 .v5-modal-overlay {
-  background: rgba(10, 15, 20, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: #050a0f; /* Match --v5-bg for Dark Mode solid look */
   animation: modal-fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .v5-modal {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(40px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: #ffffff; /* Solid White for Light Mode */
+  border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.3);
   animation: modal-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .dark .v5-modal {
-  background: rgba(13, 21, 28, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #0d151c; /* Solid Dark Theme Color from --v5-card */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 50px 120px -30px rgba(0, 0, 0, 0.7);
 }
 

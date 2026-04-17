@@ -29,9 +29,12 @@ const router=createHashRouter([
   },
 ])
 
+import ThirdPartyScripts from './components/ThirdPartyScripts.jsx';
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
-   </StrictMode>,
-  
+    <ThirdPartyScripts>
+      <RouterProvider router={router}/>
+    </ThirdPartyScripts>
+  </StrictMode>,
 )

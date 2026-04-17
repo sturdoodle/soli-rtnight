@@ -504,6 +504,20 @@ const V5EditorContent = () => {
               )}
             </a>
             <a
+              href="https://mypdf.qpkendra.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="My PDF Tools - PDF Conversion & Editing"
+              className="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 hover:bg-black/5 dark:hover:bg-white/5 group"
+            >
+              <div className="p-2 rounded-xl transition-all group-hover:scale-110" style={{ color: activeColor, backgroundColor: `${activeColor}15` }}>
+                <FileText size={18} />
+              </div>
+              {!isSidebarCollapsed && (
+                <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-[var(--v5-heading)]">My PDF</span>
+              )}
+            </a>
+            <a
               href="https://qpkendra.com"
               target="_blank"
               rel="noopener noreferrer"
@@ -798,7 +812,7 @@ const V5EditorContent = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Pillar 1: Getting Started */}
-                    <div className="p-8 rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
+                    <div className="p-5 sm:p-8 rounded-3xl sm:rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
                       <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-blue-500/10 text-blue-500 group-hover:scale-110 transition-transform">
                         <Plus size={24} />
                       </div>
@@ -807,7 +821,7 @@ const V5EditorContent = () => {
                     </div>
 
                     {/* Pillar 2: Section Color Logic */}
-                    <div className="p-8 rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
+                    <div className="p-5 sm:p-8 rounded-3xl sm:rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
                       <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-amber-500/10 text-amber-500 group-hover:scale-110 transition-transform">
                         <Palette size={24} />
                       </div>
@@ -816,7 +830,7 @@ const V5EditorContent = () => {
                     </div>
 
                     {/* Pillar 3: Smart Section Cleanup */}
-                    <div className="p-8 rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
+                    <div className="p-5 sm:p-8 rounded-3xl sm:rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
                       <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-emerald-500/10 text-emerald-500 group-hover:scale-110 transition-transform">
                         <Sparkles size={24} />
                       </div>
@@ -825,7 +839,7 @@ const V5EditorContent = () => {
                     </div>
 
                     {/* Pillar 4: ATS Optimization */}
-                    <div className="p-8 rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
+                    <div className="p-5 sm:p-8 rounded-3xl sm:rounded-[2.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-4 group hover:bg-black/10 transition-all">
                       <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-indigo-500/10 text-indigo-500 group-hover:scale-110 transition-transform">
                         <ShieldCheck size={24} />
                       </div>
@@ -846,7 +860,7 @@ const V5EditorContent = () => {
               )}
 
               {activeTab === 'about' && (
-                <div className="p-10 space-y-8 max-w-3xl mx-auto rounded-[3rem] bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <div className="p-6 sm:p-10 space-y-8 max-w-3xl mx-auto rounded-[2rem] sm:rounded-[3rem] bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 animate-in fade-in slide-in-from-bottom-4 duration-700">
                   <div className="flex flex-col items-center text-center space-y-4">
                     <Rocket className="w-16 h-16" style={{ color: activeColor }} />
                     <h2 className="text-3xl font-black tracking-tight text-[var(--v5-heading)]">🚀 Build Your Professional Resume in Minutes</h2>
@@ -969,11 +983,9 @@ const V5EditorContent = () => {
 
       {/* Onboarding Modal */}
       {showOnboarding && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-4 v5-modal-overlay">
-          <div className="max-w-2xl w-full v5-modal rounded-[2.5rem] sm:rounded-[3rem] p-6 sm:p-10 relative overflow-y-auto max-h-[min(95vh,850px)] custom-scrollbar animate-in zoom-in-95 duration-500 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]">
-            {/* Background Glows for Modal */}
-            <div className="absolute top-0 right-0 w-48 h-48 blur-[80px] opacity-10" style={{ backgroundColor: activeColor }} />
-            <div className="absolute bottom-0 left-0 w-32 h-32 blur-[60px] opacity-10 bg-indigo-500" />
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-4 bg-[var(--v5-bg)]">
+          <div className="max-w-2xl w-full bg-[var(--v5-card)] rounded-[2rem] sm:rounded-[3rem] p-4 sm:p-10 relative overflow-y-auto max-h-[min(95vh,850px)] custom-scrollbar animate-in zoom-in-95 duration-500 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-[var(--v5-border)]">
+            {/* Background Glows removed for solid look */}
 
             <div className="relative z-10 flex flex-col items-center">
               {/* Header */}
@@ -985,7 +997,7 @@ const V5EditorContent = () => {
               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-8 text-center opacity-70">by qpkendra</p>
 
               {/* Privacy Notice Pill */}
-              <div className="w-full mb-6 py-3.5 px-6 bg-emerald-500/5 dark:bg-emerald-400/10 border border-emerald-500/20 rounded-2xl flex items-center gap-4">
+              <div className="w-full mb-6 py-3.5 px-6 bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/20 rounded-2xl flex items-center gap-4">
                 <div className="p-2 bg-emerald-500/20 rounded-xl">
                   <ShieldCheck className="text-emerald-500" size={18} />
                 </div>
@@ -996,17 +1008,17 @@ const V5EditorContent = () => {
               </div>
 
               {/* Storage Selection Toggle */}
-              <div className="w-full mb-10 p-5 bg-black/5 dark:bg-white/5 rounded-3xl border border-black/5 dark:border-white/5">
-                <div className="flex items-center justify-between gap-4 mb-4">
-                  <h4 className="text-[11px] font-black text-[var(--v5-heading)] uppercase tracking-widest">Storage Preference</h4>
-                  <div className="flex bg-black/10 dark:bg-black/20 p-1 rounded-xl border border-black/5 dark:border-white/10">
+              <div className="w-full mb-8 sm:mb-10 p-4 sm:p-5 bg-slate-100 dark:bg-slate-800/50 rounded-2xl sm:rounded-3xl border border-black/5 dark:border-white/5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                  <h4 className="text-[10px] sm:text-[11px] font-black text-[var(--v5-heading)] uppercase tracking-widest">Storage Preference</h4>
+                  <div className="flex bg-black/10 dark:bg-black/20 p-1 rounded-xl border border-black/5 dark:border-white/10 w-fit">
                     {['persistent', 'session'].map((mode) => {
                       const isActive = resumeData.storageType === mode;
                       return (
                         <button
                           key={mode}
                           onClick={() => updateStorageType(mode)}
-                          className={`px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${isActive ? 'text-white shadow-lg' : 'text-slate-500 hover:text-slate-400'}`}
+                          className={`px-3 sm:px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${isActive ? 'text-white shadow-lg' : 'text-slate-500 hover:text-slate-400'}`}
                           style={isActive ? { backgroundColor: activeColor } : {}}
                         >
                           {mode === 'persistent' ? 'Permanent' : 'Temporary'}
@@ -1015,25 +1027,25 @@ const V5EditorContent = () => {
                     })}
                   </div>
                 </div>
-                <p className="text-[10px] text-slate-500 leading-relaxed font-medium bg-white/40 dark:bg-black/20 p-3 rounded-xl border border-black/5 dark:border-white/5 mb-3">
+                <p className="text-[10px] text-slate-500 leading-relaxed font-medium bg-white dark:bg-black/40 p-3 rounded-xl border border-black/5 dark:border-white/5 mb-3">
                   {resumeData.storageType === 'persistent'
-                    ? "🚀 Permanent Mode: Your work is saved automatically. You can close this tab and come back later to finish."
-                    : "🔒 Temporary Mode: Your work is deleted instantly when you close this tab. Perfect for public computers."
+                    ? "🚀 Permanent Mode: Your work is saved automatically."
+                    : "🔒 Temporary Mode: Your work is deleted on tab close."
                   }
                 </p>
-                <p className="text-[10px] font-black text-slate-700 dark:text-slate-200 text-center flex items-center justify-center gap-2">
-                  <span className="text-amber-500">💡</span> Made a mistake or have commitment issues? You can always change this in the Settings tab later.
+                <p className="text-[9px] sm:text-[10px] font-black text-slate-700 dark:text-slate-200 text-center flex items-center justify-center gap-2">
+                  <span className="text-amber-500">💡</span> Change this in Settings later.
                 </p>
               </div>
 
               {/* Workflow Steps */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 w-full mb-8 sm:mb-10">
                 {ONBOARDING_STEPS.map((step, i) => (
-                  <div key={i} className="flex flex-col items-center text-center p-4 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5 group hover:bg-black/[0.08] dark:hover:bg-white/[0.08] transition-all">
-                    <div className={`p-3 rounded-xl mb-3 mb-4 bg-${step.color}-500/10 text-${step.color}-500 group-hover:scale-110 transition-transform`}>
+                  <div key={i} className="flex flex-col items-center text-center p-4 sm:p-5 bg-slate-100 dark:bg-slate-800/40 rounded-2xl border border-black/5 dark:border-white/5 group hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+                    <div className={`p-3 rounded-xl mb-3 bg-${step.color}-500/20 text-${step.color}-500 group-hover:scale-110 transition-transform`}>
                       <step.icon size={20} />
                     </div>
-                    <h5 className="text-[11px] font-black uppercase tracking-widest mb-2 text-[var(--v5-heading)]">{step.title}</h5>
+                    <h5 className="text-[11px] font-black uppercase tracking-widest mb-1.5 text-[var(--v5-heading)]">{step.title}</h5>
                     <p className="text-[10px] text-slate-500 leading-relaxed font-medium">{step.desc}</p>
                   </div>
                 ))}
@@ -1041,15 +1053,15 @@ const V5EditorContent = () => {
 
               {/* Advanced Features (Row) */}
               <div className="w-full flex flex-col gap-3 mb-10">
-                <div className="p-5 bg-indigo-500/5 border border-indigo-500/10 rounded-2xl flex items-start gap-4">
-                  <div className="p-2 bg-indigo-500/10 rounded-lg mt-1"><Sparkles size={16} className="text-indigo-500" /></div>
+                <div className="p-5 bg-indigo-500/10 dark:bg-indigo-500/20 border border-indigo-500/10 rounded-2xl flex items-start gap-4">
+                  <div className="p-2 bg-indigo-500/20 rounded-lg mt-1"><Sparkles size={16} className="text-indigo-500" /></div>
                   <div>
                     <h4 className="text-[11px] font-black text-indigo-500 uppercase tracking-[0.15em] mb-1">ATS Intelligence</h4>
                     <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Monitor your keyword density and professional score in real-time. Smart sections auto-hide if left empty.</p>
                   </div>
                 </div>
-                <div className="p-5 bg-amber-500/5 border border-amber-500/10 rounded-2xl flex items-start gap-4">
-                  <div className="p-2 bg-amber-500/10 rounded-lg mt-1"><Settings size={16} className="text-amber-500" /></div>
+                <div className="p-5 bg-amber-500/10 dark:bg-amber-500/20 border border-amber-500/10 rounded-2xl flex items-start gap-4">
+                  <div className="p-2 bg-amber-500/20 rounded-lg mt-1"><Settings size={16} className="text-amber-500" /></div>
                   <div>
                     <h4 className="text-[11px] font-black text-amber-500 uppercase tracking-[0.15em] mb-1">Time Machine (Snapshots)</h4>
                     <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Use the Snapshots tab to save Master JSON backups. Restore any career version in seconds.</p>
@@ -1058,7 +1070,7 @@ const V5EditorContent = () => {
               </div>
 
               {/* Humorous Ads Notice */}
-              <div className="w-full mb-8 py-3 px-5 bg-black/5 dark:bg-white/5 rounded-2xl border border-dashed border-black/10 dark:border-white/10 flex items-center gap-3">
+              <div className="w-full mb-8 py-3 px-5 bg-slate-100 dark:bg-slate-800/60 rounded-2xl border border-dashed border-black/10 dark:border-white/10 flex items-center gap-3">
                 <div className="text-lg text-slate-400 group-hover:rotate-12 transition-transform">☕</div>
                 <p className="text-[9px] font-bold text-slate-500/80 leading-relaxed uppercase tracking-wider">
                   <span className="text-amber-500">Ad-Protocol Active:</span> We show Google Ads so we don't have to charge you. They pay for the electricity and the lead dev's questionable caffeine addiction.

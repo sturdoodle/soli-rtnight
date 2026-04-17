@@ -91,9 +91,9 @@ export const SAMPLE_JSON_DATA = {
         }
     ],
     "storageType": "persistent",
-    "themeMode": "dark",
-    "atsMode": true,
-    "themeColor": "#334155",
+    "themeMode": "light",
+    "atsMode": false,
+    "themeColor": "#0f172a",
     "selectedTemplate": "template-2",
     "fontFamily": "Default"
 }

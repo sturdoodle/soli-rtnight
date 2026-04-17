@@ -1,18 +1,25 @@
 import React from 'react';
 import { Printer, Download, X, Settings } from 'lucide-react';
 import AdSenseAd from '../../AdsenseAdsBlock.jsx';
-import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../../MainConstant.js';
+import { ANALYTICS_CONFIG } from '../../config/analyticsConfig.js';
 
 const PrintAdModal = ({ showPrintAd, adCountdown, activeColor, finalizePrintAction, onClose }) => {
-  if (!showPrintAd) return null;
+  // To strictly follow Google Ads policy, we only render the ad when the modal is intended to be seen.
+  // We use CSS visibility to keep it 'loaded' after the first trigger for better UX.
+  if (!showPrintAd && !window._printAdTriggered) return null;
+  
+  // Mark as triggered once it has been shown once
+  if (showPrintAd) window._printAdTriggered = true;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-4 animate-in fade-in duration-300">
+    <div 
+      className={`fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-4 transition-all duration-300 ${showPrintAd ? 'opacity-100 pointer-events-auto visible' : 'opacity-0 pointer-events-none invisible'}`}
+    >
       <div className="absolute inset-0 bg-slate-900/40 dark:bg-black/90 backdrop-blur-3xl" onClick={onClose} />
-      
-      <div className="relative w-full max-w-4xl max-h-[95vh] bg-white dark:bg-[#0A0C10] rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.8)] overflow-y-auto animate-in zoom-in-95 duration-500 custom-scrollbar">
+
+      <div className={`relative w-full max-w-4xl max-h-[95vh] bg-white dark:bg-[#0A0C10] rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.8)] overflow-y-auto custom-scrollbar transition-all duration-500 ${showPrintAd ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}>
         {/* Close Button */}
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors z-20 bg-black/5 dark:bg-white/5 rounded-xl hover:scale-110 active:scale-95"
           aria-label="Cancel Printing"
@@ -58,10 +65,8 @@ const PrintAdModal = ({ showPrintAd, adCountdown, activeColor, finalizePrintActi
             <div className="absolute top-2 right-4 text-[8px] font-black uppercase tracking-widest text-slate-400 opacity-30 z-10">Sponsored Content</div>
             <div className="w-full h-full flex items-center justify-center">
               <AdSenseAd
-                client={ADSENSE_CLIENT_ID}
-                slot={ADSENSE_INBETWEEN_SLOT_ID}
+                slot={ANALYTICS_CONFIG.ADSENSE_INBETWEEN_SLOT || '1239783582'}
                 format="auto"
-                responsive="true"
               />
             </div>
           </div>
@@ -76,7 +81,7 @@ const PrintAdModal = ({ showPrintAd, adCountdown, activeColor, finalizePrintActi
                     Ready in <span className="text-indigo-500">{adCountdown}s</span>
                   </span>
                 </div>
-                <button 
+                <button
                   onClick={onClose}
                   className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors py-2"
                 >
@@ -93,7 +98,7 @@ const PrintAdModal = ({ showPrintAd, adCountdown, activeColor, finalizePrintActi
                 Continue to Print
               </button>
             )}
-            
+
             <p className="mt-5 text-[8px] font-bold text-slate-400 uppercase tracking-widest opacity-40 text-center">
               Ads help us keep this pro-grade builder free for everyone.
             </p>

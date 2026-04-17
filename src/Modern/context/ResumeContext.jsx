@@ -28,8 +28,8 @@ const getInitialState = () => {
     if (!savedData || savedData === 'undefined') return {
       ...SAMPLE_JSON_DATA,
       selectedTemplate: SAMPLE_JSON_DATA.selectedTemplate || 'template-2',
-      themeColor: SAMPLE_JSON_DATA.themeColor || '#334155',
-      themeMode: SAMPLE_JSON_DATA.themeMode || 'dark',
+      themeColor: SAMPLE_JSON_DATA.themeColor || '#0f172a',
+      themeMode: SAMPLE_JSON_DATA.themeMode || 'light',
       atsMode: SAMPLE_JSON_DATA.atsMode ?? true,
       storageType: type,
       editorStyle: 'modern',
@@ -51,8 +51,8 @@ const getInitialState = () => {
     return {
       ...SAMPLE_JSON_DATA,
       selectedTemplate: SAMPLE_JSON_DATA.selectedTemplate || 'template-2',
-      themeColor: SAMPLE_JSON_DATA.themeColor || '#334155',
-      themeMode: SAMPLE_JSON_DATA.themeMode || 'dark',
+      themeColor: SAMPLE_JSON_DATA.themeColor || '#0f172a',
+      themeMode: SAMPLE_JSON_DATA.themeMode || 'light',
       atsMode: SAMPLE_JSON_DATA.atsMode ?? true,
       storageType: 'persistent',
       predictiveScoreEnabled: false,
@@ -100,8 +100,8 @@ function resumeReducer(state, action) {
       newState = {
         ...SAMPLE_JSON_DATA,
         selectedTemplate: SAMPLE_JSON_DATA.selectedTemplate || 'template-2',
-        themeColor: SAMPLE_JSON_DATA.themeColor || '#334155',
-        themeMode: SAMPLE_JSON_DATA.themeMode || 'dark',
+        themeColor: SAMPLE_JSON_DATA.themeColor || '#0f172a',
+        themeMode: SAMPLE_JSON_DATA.themeMode || 'light',
         atsMode: SAMPLE_JSON_DATA.atsMode ?? true,
         storageType: state.storageType,
         predictiveScoreEnabled: false,
