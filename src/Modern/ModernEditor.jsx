@@ -15,7 +15,7 @@ import { ResumeProvider, useResume } from './context/ResumeContext';
 import { useNotification } from '../context/NotificationContext';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from './components/ui/ThemeToggle';
-import logo from '../V4/components/shared/o-logo.png';
+import logo from '../assets/logo.png';
 
 const ModernEditorContent = () => {
   const { resumeData, setResumeData, updateTemplate, updateThemeColor, toggleAts, setEditorStyle } = useResume();

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { SAMPLE_JSON_DATA } from '../../V4/components/utils/constat.js';
+import { SAMPLE_JSON_DATA } from '../../utils/constants.js';
 
 const ResumeContext = createContext();
 

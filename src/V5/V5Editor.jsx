@@ -17,7 +17,7 @@ import EducationSection from '../Modern/components/editor/EducationSection';
 import CertificationsSection from '../Modern/components/editor/CertificationsSection';
 import SkillsSection from '../Modern/components/editor/SkillsSection';
 import FormattingTip from '../Modern/components/editor/FormattingTip';
-import logo from '../V4/components/shared/o-logo.png';
+import logo from '../assets/logo.png';
 import AdSenseAd from '../AdsenseAdsBlock.jsx';
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../MainConstant.js';
 import { isDevelopmentMode, TAB_META, ONBOARDING_STEPS } from './V5Constants';

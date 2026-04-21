@@ -1,5 +1,5 @@
-import { FOOTER_COPYRIGHT_TEXT, FOOTER_GOOGLE_TAG_NOTICE, FOOTER_P_TAG, FOOTER_SLOGAN } from "./V4/components/utils/constat";
-import { processTextFormatting } from "./V4/components/utils/dataHelper";
+import { FOOTER_COPYRIGHT_TEXT, FOOTER_GOOGLE_TAG_NOTICE, FOOTER_P_TAG, FOOTER_SLOGAN } from "./utils/constants";
+import { processTextFormatting } from "./utils/dataHelper";
 
 const Footer = () => {
   return (
