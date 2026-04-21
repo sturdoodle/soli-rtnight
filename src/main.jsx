@@ -10,31 +10,34 @@ import V5Editor from './V5/V5Editor.jsx';
 import NotFoundPage from './NotFound.jsx';
 
 // const router=createBrowserRouter([
-const router=createHashRouter([
-{
-  path:"/",
-  element:<V5Editor/>
-},
-{
-  path:"/v5",
-  element:<V5Editor/>
-},
-{
-  path:"#google_vignette",
-  element:<V5Editor/>
-},
-{
+const router = createHashRouter([
+  {
+    path: "/",
+    element: <V5Editor />
+  },
+  {
+    path: "/v5",
+    element: <V5Editor />
+  },
+  {
+    path: "#google_vignette",
+    element: <V5Editor />
+  },
+  {
     path: '*', // This wildcard path must be the LAST route defined
-    element: <NotFoundPage/>,
+    element: <NotFoundPage />,
   },
 ])
 
+import { NotificationProvider } from './context/NotificationContext.jsx';
 import ThirdPartyScripts from './components/ThirdPartyScripts.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThirdPartyScripts>
-      <RouterProvider router={router}/>
-    </ThirdPartyScripts>
+    <NotificationProvider>
+      <ThirdPartyScripts>
+        <RouterProvider router={router} />
+      </ThirdPartyScripts>
+    </NotificationProvider>
   </StrictMode>,
 )

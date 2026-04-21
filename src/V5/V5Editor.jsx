@@ -5,6 +5,7 @@ import {
   Trash2, Search, Maximize2, Zap, BarChart3, User, Briefcase, GraduationCap, Award, FileText, FolderCode, Mail, Phone, MapPin, Github, ArrowLeft, X, Rocket, ExternalLink, Menu, ChevronLeft, ChevronRight, Printer, Settings, Timer, BookOpen, Code, Braces
 } from 'lucide-react';
 import { useResume, ResumeProvider } from '../Modern/context/ResumeContext';
+import { useNotification } from '../context/NotificationContext';
 import { useNavigate } from 'react-router-dom';
 import ModernLivePreview from '../Modern/components/preview/ModernLivePreview';
 import TemplateSelector from '../Modern/components/editor/TemplateSelector';
@@ -31,6 +32,7 @@ const V5EditorContent = () => {
     resumeData, updateField, setResumeData, toggleAts, toggleTheme,
     updateStorageType, resetResume, setEditorStyle
   } = useResume();
+  const { showNotification } = useNotification();
   const [activeTab, setActiveTab] = useState('content'); // content, layout, theme, analytics
   const [isEnlarged, setIsEnlarged] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -218,14 +220,17 @@ const V5EditorContent = () => {
 
   const handleExportJSON = () => {
     const dataStr = JSON.stringify(resumeData, null, 2);
-    const dataRow = "data:text/json;charset=utf-8," + encodeURIComponent(dataStr);
-    const downloadAnchorNode = document.createElement('a');
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
     const date = new Date().toISOString().split('T')[0];
-    downloadAnchorNode.setAttribute("href", dataRow);
-    downloadAnchorNode.setAttribute("download", `resume-snapshot-${date}.json`);
-    document.body.appendChild(downloadAnchorNode);
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
+    link.href = url;
+    link.download = `resume-snapshot-${date}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showNotification("Resume snapshot exported successfully!", "success");
   };
 
   const handleImportJSON = (e) => {
@@ -236,8 +241,9 @@ const V5EditorContent = () => {
       try {
         const json = JSON.parse(event.target.result);
         setResumeData(json);
+        showNotification("Resume snapshot imported successfully!", "success");
       } catch (err) {
-        alert("Invalid JSON snapshot file.");
+        showNotification("Invalid JSON snapshot file.", "error");
       }
     };
     reader.readAsText(file);

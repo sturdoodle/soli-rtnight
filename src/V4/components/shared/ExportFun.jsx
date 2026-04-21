@@ -1,4 +1,7 @@
+import { useNotification } from "../../../context/NotificationContext";
+
 function ExportFun(props) {
+    const { showNotification } = useNotification();
     const downloadJSON = () => {
         const json = JSON.stringify(props.formData, null, 2);  // Prettified JSON
         const blob = new Blob([json], { type: "application/json" });
@@ -10,6 +13,7 @@ function ExportFun(props) {
         link.click();
 
         URL.revokeObjectURL(url);
+        showNotification("Resume data exported successfully!", "success");
     };
 
 

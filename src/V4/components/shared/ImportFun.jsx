@@ -1,4 +1,7 @@
+import { useNotification } from "../../../context/NotificationContext";
+
 function ImportFun(props) {
+  const { showNotification } = useNotification();
   const handleImportJson = (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -9,9 +12,9 @@ function ImportFun(props) {
       try {
         const jsonData = JSON.parse(e.target.result);  // Convert file → JSON
         props.setFormData(jsonData);                              // Update state
-        alert("JSON Imported Successfully!");
+        showNotification("JSON Imported Successfully!", "success");
       } catch (error) {
-        alert("Invalid JSON file!");
+        showNotification("Invalid JSON file!", "error");
       }
     };
 

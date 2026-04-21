@@ -12,12 +12,14 @@ import TemplateSelector from './components/editor/TemplateSelector';
 import ModernLivePreview from './components/preview/ModernLivePreview';
 import PillButton from './components/ui/PillButton';
 import { ResumeProvider, useResume } from './context/ResumeContext';
+import { useNotification } from '../context/NotificationContext';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from './components/ui/ThemeToggle';
 import logo from '../V4/components/shared/o-logo.png';
 
 const ModernEditorContent = () => {
   const { resumeData, setResumeData, updateTemplate, updateThemeColor, toggleAts, setEditorStyle } = useResume();
+  const { showNotification } = useNotification();
   const themeMode = resumeData.themeMode;
   const atsMode = resumeData.atsMode;
   const previewRef = useRef();
@@ -35,9 +37,9 @@ const ModernEditorContent = () => {
     const originalTitle = document.title;
     const fileName = resumeData.fullName ? `${resumeData.fullName.replace(/\s+/g, '_')}_Resume` : 'Resume';
     document.title = fileName;
-    
+
     window.print();
-    
+
     // Restore title after a short delay to ensure print dialog captures it
     setTimeout(() => {
       document.title = originalTitle;
@@ -55,6 +57,7 @@ const ModernEditorContent = () => {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+    showNotification("Resume JSON exported successfully!", "success");
   };
 
   const handleImportJSON = (e) => {
@@ -66,9 +69,9 @@ const ModernEditorContent = () => {
       try {
         const jsonData = JSON.parse(event.target.result);
         setResumeData(jsonData);
-        alert('Resume restored successfully!');
+        showNotification("Resume restored successfully!", "success");
       } catch (err) {
-        alert('Error: Invalid JSON file format.');
+        showNotification("Error: Invalid JSON file format.", "error");
       }
     };
     reader.readAsText(file);
@@ -98,11 +101,11 @@ const ModernEditorContent = () => {
             <span className="text-[10px] font-bold text-sage-400 dark:text-sage-500 uppercase tracking-[0.2em] translate-y-[-2px]">v1.0 Premium</span>
           </div>
         </div>
-        
+
         <div className="flex items-center justify-center sm:justify-end gap-3 w-full sm:w-auto flex-wrap pb-2 sm:pb-0">
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-sage-50/50 dark:bg-sage-900/50 border border-sage-200/50 dark:border-sage-800/50 shadow-sm transition-all hover:bg-white dark:hover:bg-sage-900 group">
             <span className="text-[10px] font-bold text-sage-500 dark:text-sage-400 uppercase tracking-widest">ATS Safe</span>
-            <button 
+            <button
               onClick={toggleAts}
               className={`w-9 h-5 rounded-full transition-all relative border border-transparent ${atsMode ? 'bg-sage-500 shadow-[0_0_10px_rgba(45,212,191,0.3)]' : 'bg-sage-200 dark:bg-sage-800'}`}
             >
@@ -114,26 +117,26 @@ const ModernEditorContent = () => {
             <ThemeToggle />
           </div>
           <div className="flex items-center gap-2">
-            <PillButton 
+            <PillButton
               variant="glass"
-              icon={Zap} 
+              icon={Zap}
               onClick={() => goInstead('/v5')}
               className="text-sky-500 hover:bg-sky-50 transition-all font-bold"
             >
               V5 Liquid
             </PillButton>
             <div className="h-4 w-px bg-sage-200 dark:bg-sage-800 hidden sm:block mx-1" />
-            <PillButton 
+            <PillButton
               variant="glass"
-              icon={FileDown} 
+              icon={FileDown}
               onClick={handleExportJSON}
               className="text-sage-600 dark:text-sage-400 py-1.5 px-3 sm:py-2 sm:px-4 text-xs font-semibold"
             >
               JSON
             </PillButton>
-            <PillButton 
+            <PillButton
               variant="glass"
-              icon={FileUp} 
+              icon={FileUp}
               onClick={() => fileInputRef.current.click()}
               className="text-sage-600 dark:text-sage-400 py-1.5 px-3 sm:py-2 sm:px-4 text-xs font-semibold"
             >
@@ -141,28 +144,28 @@ const ModernEditorContent = () => {
             </PillButton>
           </div>
 
-          <input 
-            type="file" 
-            ref={fileInputRef} 
-            onChange={handleImportJSON} 
-            accept=".json" 
-            className="hidden" 
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleImportJSON}
+            accept=".json"
+            className="hidden"
           />
 
           <div className="h-4 w-px bg-sage-200 dark:bg-sage-800 hidden sm:block mx-1" />
-          
+
           <div className="flex items-center gap-2">
-             <PillButton 
+            <PillButton
               variant="glass"
-              icon={FileDown} 
-              onClick={() => handleDownload('download')} 
+              icon={FileDown}
+              onClick={() => handleDownload('download')}
               className="hover:bg-sage-100 dark:hover:bg-sage-800 !px-3 sm:!px-4"
             >
               <span className="hidden sm:inline">Download</span> PDF
             </PillButton>
-            <PillButton 
-              icon={Printer} 
-              onClick={() => handleDownload('print')} 
+            <PillButton
+              icon={Printer}
+              onClick={() => handleDownload('print')}
               className="!px-3 sm:!px-4"
             >
               <span className="hidden sm:inline">Print</span> PDF
@@ -171,70 +174,70 @@ const ModernEditorContent = () => {
         </div>
       </header>
 
-        {/* Main Content: Split Screen */}
-        <main className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start px-4 sm:px-8 lg:px-12 pb-24 md:pb-12 print:block print:p-0 print:m-0 print:max-w-none print:overflow-visible">
-          
-          {/* Editor Column */}
-          <div className={`space-y-6 pb-20 overflow-y-auto max-h-[85vh] pr-6 custom-scrollbar ${mobileTab === 'preview' ? 'hidden md:block' : 'block'} print:hidden`}>
-            <div className="flex items-center gap-2 text-sage-400 mb-2 ml-2">
-              <WandSparkles size={16} />
-              <span className="text-xs uppercase tracking-widest font-bold text-sage-500 dark:text-sage-400">Smart Editor</span>
-            </div>
-            
-            <TemplateSelector />
-            
-            <FormattingTip />
-            <PersonalDetails />
-            <SummarySection />
-            <ExperienceSection />
-            <ProjectsSection />
-            <EducationSection />
-            <CertificationsSection />
-            <SkillsSection />
+      {/* Main Content: Split Screen */}
+      <main className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start px-4 sm:px-8 lg:px-12 pb-24 md:pb-12 print:block print:p-0 print:m-0 print:max-w-none print:overflow-visible">
+
+        {/* Editor Column */}
+        <div className={`space-y-6 pb-20 overflow-y-auto max-h-[85vh] pr-6 custom-scrollbar ${mobileTab === 'preview' ? 'hidden md:block' : 'block'} print:hidden`}>
+          <div className="flex items-center gap-2 text-sage-400 mb-2 ml-2">
+            <WandSparkles size={16} />
+            <span className="text-xs uppercase tracking-widest font-bold text-sage-500 dark:text-sage-400">Smart Editor</span>
           </div>
 
-          {/* Preview Column: Sticky on Desktop with internal scroll */}
-          <div className={`lg:sticky lg:top-32 h-[calc(100vh-180px)] flex-col ${mobileTab === 'editor' ? 'hidden md:flex' : 'flex'} print:!block print:p-0 print:m-0 print:static print:h-auto print:w-full print:bg-white`}>
-            <div className="flex items-center justify-between mb-4 px-2 print:hidden">
-              <div className="flex items-center gap-2 text-sage-400">
-                <Sparkles size={16} />
-                <span className="text-xs uppercase tracking-widest font-bold">Live Premium Preview</span>
-              </div>
-              <span className="text-[10px] font-bold text-sage-300 uppercase tracking-tighter">Scroll to view all</span>
+          <TemplateSelector />
+
+          <FormattingTip />
+          <PersonalDetails />
+          <SummarySection />
+          <ExperienceSection />
+          <ProjectsSection />
+          <EducationSection />
+          <CertificationsSection />
+          <SkillsSection />
+        </div>
+
+        {/* Preview Column: Sticky on Desktop with internal scroll */}
+        <div className={`lg:sticky lg:top-32 h-[calc(100vh-180px)] flex-col ${mobileTab === 'editor' ? 'hidden md:flex' : 'flex'} print:!block print:p-0 print:m-0 print:static print:h-auto print:w-full print:bg-white`}>
+          <div className="flex items-center justify-between mb-4 px-2 print:hidden">
+            <div className="flex items-center gap-2 text-sage-400">
+              <Sparkles size={16} />
+              <span className="text-xs uppercase tracking-widest font-bold">Live Premium Preview</span>
             </div>
-            
-            <div className="flex-1 overflow-y-auto overflow-x-hidden print:overflow-visible print:p-0 rounded-3xl shadow-2xl transition-all hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] bg-white custom-scrollbar border border-white/20 print:shadow-none print:border-none print:rounded-none">
-              <div ref={previewRef}>
-                <ModernLivePreview />
-              </div>
+            <span className="text-[10px] font-bold text-sage-300 uppercase tracking-tighter">Scroll to view all</span>
+          </div>
+
+          <div className="flex-1 overflow-y-auto overflow-x-hidden print:overflow-visible print:p-0 rounded-3xl shadow-2xl transition-all hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] bg-white custom-scrollbar border border-white/20 print:shadow-none print:border-none print:rounded-none">
+            <div ref={previewRef}>
+              <ModernLivePreview />
             </div>
           </div>
-        </main>
+        </div>
+      </main>
 
-        {/* Footer info */}
-        <footer className="max-w-[1600px] mx-auto mt-20 p-8 pt-0 pb-28 md:pb-8 text-center text-sage-400 text-sm md:block hidden print:hidden">
-          <p>© {new Date().getFullYear()} Resume Builder | Modern Modular Architecture</p>
-        </footer>
-        
-        {/* Mobile Navigation Bar */}
-        <nav className="md:hidden fixed bottom-0 left-0 w-full glass-panel !rounded-none !border-x-0 !border-b-0 border-t border-sage-200/30 dark:border-white/10 p-3 pt-4 z-50 flex justify-around shadow-[0_-8px_30px_rgba(0,0,0,0.1)]">
-          <button 
-            onClick={() => setMobileTab('editor')} 
-            className={`flex flex-col items-center gap-1.5 transition-all ${mobileTab === 'editor' ? 'text-sage-600 dark:text-sage-300 scale-110' : 'text-sage-400 dark:text-sage-600 hover:text-sage-500'}`}
-          >
-            <Edit3 size={20} strokeWidth={mobileTab === 'editor' ? 2.5 : 2} />
-            <span className="text-[10px] uppercase font-bold tracking-widest">Editor</span>
-          </button>
-          
-          <button 
-            onClick={() => setMobileTab('preview')} 
-            className={`flex flex-col items-center gap-1.5 transition-all ${mobileTab === 'preview' ? 'text-sage-600 dark:text-sage-300 scale-110' : 'text-sage-400 dark:text-sage-600 hover:text-sage-500'}`}
-          >
-            <Eye size={20} strokeWidth={mobileTab === 'preview' ? 2.5 : 2} />
-            <span className="text-[10px] uppercase font-bold tracking-widest">Preview</span>
-          </button>
-        </nav>
-      </div>
+      {/* Footer info */}
+      <footer className="max-w-[1600px] mx-auto mt-20 p-8 pt-0 pb-28 md:pb-8 text-center text-sage-400 text-sm md:block hidden print:hidden">
+        <p>© {new Date().getFullYear()} Resume Builder | Modern Modular Architecture</p>
+      </footer>
+
+      {/* Mobile Navigation Bar */}
+      <nav className="md:hidden fixed bottom-0 left-0 w-full glass-panel !rounded-none !border-x-0 !border-b-0 border-t border-sage-200/30 dark:border-white/10 p-3 pt-4 z-50 flex justify-around shadow-[0_-8px_30px_rgba(0,0,0,0.1)]">
+        <button
+          onClick={() => setMobileTab('editor')}
+          className={`flex flex-col items-center gap-1.5 transition-all ${mobileTab === 'editor' ? 'text-sage-600 dark:text-sage-300 scale-110' : 'text-sage-400 dark:text-sage-600 hover:text-sage-500'}`}
+        >
+          <Edit3 size={20} strokeWidth={mobileTab === 'editor' ? 2.5 : 2} />
+          <span className="text-[10px] uppercase font-bold tracking-widest">Editor</span>
+        </button>
+
+        <button
+          onClick={() => setMobileTab('preview')}
+          className={`flex flex-col items-center gap-1.5 transition-all ${mobileTab === 'preview' ? 'text-sage-600 dark:text-sage-300 scale-110' : 'text-sage-400 dark:text-sage-600 hover:text-sage-500'}`}
+        >
+          <Eye size={20} strokeWidth={mobileTab === 'preview' ? 2.5 : 2} />
+          <span className="text-[10px] uppercase font-bold tracking-widest">Preview</span>
+        </button>
+      </nav>
+    </div>
   );
 };
 
