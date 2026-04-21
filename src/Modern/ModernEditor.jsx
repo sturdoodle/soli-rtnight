@@ -13,17 +13,19 @@ import ModernLivePreview from './components/preview/ModernLivePreview';
 import PillButton from './components/ui/PillButton';
 import { ResumeProvider, useResume } from './context/ResumeContext';
 import { useNotification } from '../context/NotificationContext';
+import { useResumeActions } from '../hooks/useResumeActions';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggle from './components/ui/ThemeToggle';
+import EditorForm from '../components/editor/EditorForm';
 import logo from '../assets/logo.png';
 
 const ModernEditorContent = () => {
   const { resumeData, setResumeData, updateTemplate, updateThemeColor, toggleAts, setEditorStyle } = useResume();
-  const { showNotification } = useNotification();
   const themeMode = resumeData.themeMode;
   const atsMode = resumeData.atsMode;
   const previewRef = useRef();
   const fileInputRef = useRef();
+  const { handleExportJSON, handleImportJSON, handlePrint } = useResumeActions(resumeData, setResumeData);
   const goInstead = useNavigate();
   const [mobileTab, setMobileTab] = useState('editor'); // 'editor' | 'preview'
 
@@ -38,44 +40,12 @@ const ModernEditorContent = () => {
     const fileName = resumeData.fullName ? `${resumeData.fullName.replace(/\s+/g, '_')}_Resume` : 'Resume';
     document.title = fileName;
 
-    window.print();
+    handlePrint();
 
     // Restore title after a short delay to ensure print dialog captures it
     setTimeout(() => {
       document.title = originalTitle;
     }, 1000);
-  };
-
-  const handleExportJSON = () => {
-    const dataStr = JSON.stringify(resumeData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `resume-${resumeData.fullName.replace(/\s+/g, '_') || 'data'}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    showNotification("Resume JSON exported successfully!", "success");
-  };
-
-  const handleImportJSON = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const jsonData = JSON.parse(event.target.result);
-        setResumeData(jsonData);
-        showNotification("Resume restored successfully!", "success");
-      } catch (err) {
-        showNotification("Error: Invalid JSON file format.", "error");
-      }
-    };
-    reader.readAsText(file);
-    e.target.value = null; // Reset input
   };
 
   return (
@@ -186,14 +156,7 @@ const ModernEditorContent = () => {
 
           <TemplateSelector />
 
-          <FormattingTip />
-          <PersonalDetails />
-          <SummarySection />
-          <ExperienceSection />
-          <ProjectsSection />
-          <EducationSection />
-          <CertificationsSection />
-          <SkillsSection />
+          <EditorForm />
         </div>
 
         {/* Preview Column: Sticky on Desktop with internal scroll */}
