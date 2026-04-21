@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import {
   Menu, Download, Upload, Sun, Moon, Maximize2, X, Printer, Zap, FileText, Layout, Type, Settings, Braces
 } from 'lucide-react';
@@ -8,23 +8,37 @@ import { useResumeActions } from '../hooks/useResumeActions';
 import { useSplitPane } from '../hooks/useSplitPane';
 import { useNavigate } from 'react-router-dom';
 
-import ModernLivePreview from '../Modern/components/preview/ModernLivePreview';
-import TemplateSelector from '../Modern/components/editor/TemplateSelector';
-import EditorForm from '../components/editor/EditorForm';
 import logo from '../assets/logo.png';
 import AdSenseAd from '../AdsenseAdsBlock.jsx';
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../MainConstant.js';
 import { isDevelopmentMode, TAB_META } from './V5Constants';
-import PrintAdModal from './components/PrintAdModal';
-import V5JsonEditor from './components/V5JsonEditor';
-import V5WipeModal from './components/V5WipeModal';
 
 import V5Navbar from './components/V5Navbar';
 import V5Sidebar from './components/V5Sidebar';
-import TypographyTab from './components/tabs/TypographyTab';
-import SettingsTab from './components/tabs/SettingsTab';
-import HelpTab from './components/tabs/HelpTab';
-import AboutTab from './components/tabs/AboutTab';
+
+// Lazy Loaded Components for Tree Shaking & Performance Optimization
+const TypographyTab = lazy(() => import('./components/tabs/TypographyTab'));
+const SettingsTab = lazy(() => import('./components/tabs/SettingsTab'));
+const HelpTab = lazy(() => import('./components/tabs/HelpTab'));
+const AboutTab = lazy(() => import('./components/tabs/AboutTab'));
+const V5JsonEditor = lazy(() => import('./components/V5JsonEditor'));
+const ModernLivePreview = lazy(() => import('../Modern/components/preview/ModernLivePreview'));
+const EditorForm = lazy(() => import('../components/editor/EditorForm'));
+const TemplateSelector = lazy(() => import('../Modern/components/editor/TemplateSelector'));
+const PrintAdModal = lazy(() => import('./components/PrintAdModal'));
+const V5WipeModal = lazy(() => import('./components/V5WipeModal'));
+
+// Premium Shimmer Loading Skeleton
+const TabLoadingSkeleton = () => (
+  <div className="w-full h-full p-4 sm:p-6 space-y-8 animate-pulse text-center flex flex-col items-center justify-center">
+    <div className="w-full h-32 bg-slate-200/20 dark:bg-white/5 rounded-[3rem]" />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+      {[1, 2, 3, 4].map((i) => (
+        <div key={i} className="h-32 bg-slate-200/10 dark:bg-white/5 rounded-[2.5rem]" />
+      ))}
+    </div>
+  </div>
+);
 
 const V5EditorContent = () => {
   const {
@@ -114,13 +128,15 @@ const V5EditorContent = () => {
         </div>
       )}
 
-      <PrintAdModal 
-        isOpen={showPrintAd} 
-        countdown={adCountdown} 
-        setCountdown={setAdCountdown} 
-        onComplete={finalizePrintAction}
-        activeColor={activeColor}
-      />
+      <Suspense fallback={null}>
+        <PrintAdModal 
+          isOpen={showPrintAd} 
+          countdown={adCountdown} 
+          setCountdown={setAdCountdown} 
+          onComplete={finalizePrintAction}
+          activeColor={activeColor}
+        />
+      </Suspense>
 
       <V5Navbar 
         activeTab={activeTab}
@@ -173,51 +189,55 @@ const V5EditorContent = () => {
         >
           <div className="max-w-[1400px] mx-auto h-full">
             <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] px-1.5 sm:px-6 lg:px-8 py-6 relative">
-              <V5WipeModal
-                isOpen={showWipeConfirm}
-                onClose={() => setShowWipeConfirm(false)}
-                onConfirm={resetResume}
-                title="Wipe Engine Cache?"
-                description="This will erase all your resume data and reset the structural blueprint to factory defaults."
-              />
-              
-              {activeTab === 'content' && (
-                <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                  <div className="mb-4 p-4 sm:p-6 rounded-[2.5rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block">
-                    <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
-                  </div>
-                  <EditorForm />
-                  <div className="p-10 rounded-[3rem] bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 flex flex-col items-center text-center justify-center min-h-[220px]">
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 bg-white/50 dark:bg-black/30 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-lg">
-                      <span className="text-3xl font-black" style={{ fontFamily: 'Absans, sans-serif', color: activeColor }}>qp</span>
-                    </div>
-                    <h3 className="text-3xl font-black text-[var(--v5-heading)] opacity-90" style={{ fontFamily: 'Absans, sans-serif' }}>qpkendra</h3>
-                    <p className="text-xs font-bold text-slate-500 mt-2 uppercase tracking-widest">Crafted with <span className="text-blue-500 text-sm inline-block animate-pulse mx-1">💙</span> in India</p>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'layout' && <TemplateSelector />}
-              {activeTab === 'typography' && <TypographyTab activeColor={activeColor} />}
-              
-              {activeTab === 'json' && (
-                <div className="h-full flex flex-col space-y-4 px-1 sm:px-6">
-                  <V5JsonEditor data={resumeData} onUpdate={setResumeData} activeColor={activeColor} className="flex-1" />
-                </div>
-              )}
-
-              {activeTab === 'snapshots' && (
-                <SettingsTab 
-                  activeColor={activeColor}
-                  handleExportJSON={handleExportJSON}
-                  handleImportJSON={handleImportJSON}
-                  settingsFileInputRef={settingsFileInputRef}
-                  setShowWipeConfirm={setShowWipeConfirm}
+              <Suspense fallback={null}>
+                <V5WipeModal
+                  isOpen={showWipeConfirm}
+                  onClose={() => setShowWipeConfirm(false)}
+                  onConfirm={resetResume}
+                  title="Wipe Engine Cache?"
+                  description="This will erase all your resume data and reset the structural blueprint to factory defaults."
                 />
-              )}
+              </Suspense>
+              
+              <Suspense fallback={<TabLoadingSkeleton />}>
+                {activeTab === 'content' && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="mb-4 p-4 sm:p-6 rounded-[2.5rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block">
+                      <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
+                    </div>
+                    <EditorForm />
+                    <div className="p-10 rounded-[3rem] bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 flex flex-col items-center text-center justify-center min-h-[220px]">
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 bg-white/50 dark:bg-black/30 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-lg">
+                        <span className="text-3xl font-black" style={{ fontFamily: 'Absans, sans-serif', color: activeColor }}>qp</span>
+                      </div>
+                      <h3 className="text-3xl font-black text-[var(--v5-heading)] opacity-90" style={{ fontFamily: 'Absans, sans-serif' }}>qpkendra</h3>
+                      <p className="text-xs font-bold text-slate-500 mt-2 uppercase tracking-widest">Crafted with <span className="text-blue-500 text-sm inline-block animate-pulse mx-1">💙</span> in India</p>
+                    </div>
+                  </div>
+                )}
 
-              {activeTab === 'help' && <HelpTab activeColor={activeColor} />}
-              {activeTab === 'about' && <AboutTab activeColor={activeColor} />}
+                {activeTab === 'layout' && <TemplateSelector />}
+                {activeTab === 'typography' && <TypographyTab activeColor={activeColor} />}
+                
+                {activeTab === 'json' && (
+                  <div className="h-full flex flex-col space-y-4 px-1 sm:px-6">
+                    <V5JsonEditor data={resumeData} onUpdate={setResumeData} activeColor={activeColor} className="flex-1" />
+                  </div>
+                )}
+
+                {activeTab === 'snapshots' && (
+                  <SettingsTab 
+                    activeColor={activeColor}
+                    handleExportJSON={handleExportJSON}
+                    handleImportJSON={handleImportJSON}
+                    settingsFileInputRef={settingsFileInputRef}
+                    setShowWipeConfirm={setShowWipeConfirm}
+                  />
+                )}
+
+                {activeTab === 'help' && <HelpTab activeColor={activeColor} />}
+                {activeTab === 'about' && <AboutTab activeColor={activeColor} />}
+              </Suspense>
             </div>
           </div>
         </main>
@@ -251,17 +271,19 @@ const V5EditorContent = () => {
           </div>
 
           <div className="flex-1 min-h-0 relative">
-            {previewMode === 'preview' ? (
-              <div className="h-full overflow-y-auto custom-scrollbar rounded-2xl shadow-inner bg-slate-200/20 dark:bg-black/20 p-4 border border-black/5 dark:border-white/5">
-                <div className="w-full origin-top transition-transform duration-500 bg-white dark:bg-slate-900 shadow-2xl min-h-[1122px]">
-                  <ModernLivePreview contentRef={previewRef} />
+            <Suspense fallback={<TabLoadingSkeleton />}>
+              {previewMode === 'preview' ? (
+                <div className="h-full overflow-y-auto custom-scrollbar rounded-2xl shadow-inner bg-slate-200/20 dark:bg-black/20 p-4 border border-black/5 dark:border-white/5">
+                  <div className="w-full origin-top transition-transform duration-500 bg-white dark:bg-slate-900 shadow-2xl min-h-[1122px]">
+                    <ModernLivePreview contentRef={previewRef} />
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="h-full rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-xl flex flex-col bg-[#050A0F]">
-                <V5JsonEditor data={resumeData} onUpdate={setResumeData} activeColor={activeColor} className="flex-1" />
-              </div>
-            )}
+              ) : (
+                <div className="h-full rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-xl flex flex-col bg-[#050A0F]">
+                  <V5JsonEditor data={resumeData} onUpdate={setResumeData} activeColor={activeColor} className="flex-1" />
+                </div>
+              )}
+            </Suspense>
           </div>
         </section>
       </div>
@@ -281,7 +303,9 @@ const V5EditorContent = () => {
             </div>
           </div>
           <div className="flex-1 overflow-y-auto p-4 sm:p-12 lg:max-w-6xl lg:mx-auto w-full">
-            <ModernLivePreview contentRef={previewRef} />
+            <Suspense fallback={<TabLoadingSkeleton />}>
+              <ModernLivePreview contentRef={previewRef} />
+            </Suspense>
           </div>
         </div>
       )}
@@ -312,9 +336,7 @@ const V5EditorContent = () => {
 };
 
 const V5Editor = () => (
-  <ResumeProvider>
-    <V5EditorContent />
-  </ResumeProvider>
+  <V5EditorContent />
 );
 
 export default V5Editor;
