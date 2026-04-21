@@ -22,11 +22,13 @@ const SettingsTab = lazy(() => import('./components/tabs/SettingsTab'));
 const HelpTab = lazy(() => import('./components/tabs/HelpTab'));
 const AboutTab = lazy(() => import('./components/tabs/AboutTab'));
 const V5JsonEditor = lazy(() => import('./components/V5JsonEditor'));
-const ModernLivePreview = lazy(() => import('../Modern/components/preview/ModernLivePreview'));
 const EditorForm = lazy(() => import('../components/editor/EditorForm'));
 const TemplateSelector = lazy(() => import('../Modern/components/editor/TemplateSelector'));
 const PrintAdModal = lazy(() => import('./components/PrintAdModal'));
 const V5WipeModal = lazy(() => import('./components/V5WipeModal'));
+
+// Synchronous import specifically for the Print Buffer to avoid lazy-loading race conditions
+import ModernLivePreview from '../Modern/components/preview/ModernLivePreview';
 
 // Premium Shimmer Loading Skeleton
 const TabLoadingSkeleton = () => (
@@ -88,9 +90,10 @@ const V5EditorContent = () => {
 
   const finalizePrintAction = () => {
     setShowPrintAd(false);
+    // Increased timeout to ensure the buffer is fully visible to the browser's print engine
     setTimeout(() => {
       handlePrint();
-    }, 300);
+    }, 500);
   };
 
   useEffect(() => {
@@ -119,10 +122,10 @@ const V5EditorContent = () => {
                 <Zap size={48} style={{ color: activeColor }} />
               </div>
               <div className="space-y-4">
-                <h2 className="text-4xl font-black tracking-tight text-[var(--v5-heading)]">Welcome to V5 Liquid</h2>
-                <p className="text-slate-500 text-lg leading-relaxed">Experience our most advanced architectural engine yet. Professional-grade resume engineering with real-time ATS optimization.</p>
+                <h2 className="text-4xl font-black tracking-tight text-[var(--v5-heading)]">Welcome to Resume Builder</h2>
+                <p className="text-slate-500 text-lg leading-relaxed">Experience our most advanced builder yet. Professional-grade resume builder with real-time ATS optimization.</p>
               </div>
-              <button onClick={completeOnboarding} className="px-12 py-5 rounded-full text-white font-black uppercase tracking-[0.2em] shadow-xl" style={{ backgroundColor: activeColor }}>Initialize Dashboard</button>
+              <button onClick={completeOnboarding} className="px-12 py-5 rounded-full text-white font-black uppercase tracking-[0.2em] shadow-xl" style={{ backgroundColor: activeColor }}>Start Building</button>
             </div>
           </div>
         </div>
@@ -250,10 +253,10 @@ const V5EditorContent = () => {
         </div>
 
         <section
-          className="hidden xl:flex border-l border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col p-4 lg:p-8 print:hidden shadow-2xl overflow-hidden relative"
+          className="hidden xl:flex border-l border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col p-4 lg:p-8 shadow-2xl overflow-hidden relative"
           style={isDesktop ? { width: `${100 - splitWidth}%` } : {}}
         >
-          <div className="flex items-center justify-between mb-4 px-4 h-12">
+          <div className="flex items-center justify-between mb-4 px-4 h-12 print:hidden">
             <div className="flex bg-slate-100 dark:bg-slate-800/50 p-1 rounded-xl border border-black/5 dark:border-white/5">
               {['preview', 'json'].map((mode) => (
                 <button
@@ -273,13 +276,13 @@ const V5EditorContent = () => {
           <div className="flex-1 min-h-0 relative">
             <Suspense fallback={<TabLoadingSkeleton />}>
               {previewMode === 'preview' ? (
-                <div className="h-full overflow-y-auto custom-scrollbar rounded-2xl shadow-inner bg-slate-200/20 dark:bg-black/20 p-4 border border-black/5 dark:border-white/5">
-                  <div className="w-full origin-top transition-transform duration-500 bg-white dark:bg-slate-900 shadow-2xl min-h-[1122px]">
+                <div className="h-full overflow-y-auto custom-scrollbar rounded-2xl shadow-inner bg-slate-200/20 dark:bg-black/20 p-4 border border-black/5 dark:border-white/5 print:hidden">
+                  <div className="w-full origin-top transition-transform duration-500 bg-white dark:bg-slate-900 shadow-2xl min-h-[1122px] print:hidden">
                     <ModernLivePreview contentRef={previewRef} />
                   </div>
                 </div>
               ) : (
-                <div className="h-full rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-xl flex flex-col bg-[#050A0F]">
+                <div className="h-full rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-xl flex flex-col bg-[#050A0F] print:hidden">
                   <V5JsonEditor data={resumeData} onUpdate={setResumeData} activeColor={activeColor} className="flex-1" />
                 </div>
               )}
@@ -288,12 +291,17 @@ const V5EditorContent = () => {
         </section>
       </div>
 
+      {/* Synchronous Background Print Buffer: Ensures zero-latency printing from any tab */}
+      <div className="hidden print:block fixed inset-0 z-[9999] bg-white pointer-events-none" aria-hidden="true">
+         <ModernLivePreview />
+      </div>
+
       {isEnlarged && (
-        <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-3xl flex flex-col">
-          <div className="flex items-center justify-between p-6 border-b border-white/10">
+        <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-3xl flex flex-col print:bg-white print:backdrop-blur-none">
+          <div className="flex items-center justify-between p-6 border-b border-white/10 print:hidden">
             <div className="flex items-center gap-4 text-white">
               <Zap size={22} className="text-amber-400" />
-              <h3 className="text-lg font-black tracking-tight">Zen Preview Protocol</h3>
+              <h3 className="text-lg font-black tracking-tight">Preview Mode</h3>
             </div>
             <div className="flex items-center gap-3">
               <button onClick={triggerDownload} className="px-6 py-2.5 bg-white text-black rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl">
@@ -302,15 +310,18 @@ const V5EditorContent = () => {
               <button onClick={() => setIsEnlarged(false)} className="p-3 bg-white/10 text-white rounded-full"><X size={20} /></button>
             </div>
           </div>
-          <div className="flex-1 overflow-y-auto p-4 sm:p-12 lg:max-w-6xl lg:mx-auto w-full">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-12 lg:max-w-6xl lg:mx-auto w-full print:p-0 print:max-w-none">
             <Suspense fallback={<TabLoadingSkeleton />}>
-              <ModernLivePreview contentRef={previewRef} />
+              <div className="print:block print:w-full">
+                <ModernLivePreview contentRef={previewRef} />
+              </div>
             </Suspense>
           </div>
         </div>
       )}
 
-      <div className="lg:hidden fixed bottom-6 left-6 right-6 z-[60]">
+      {/* Mobile Bottom Navigation - Liquid Dock */}
+      <div className="lg:hidden fixed bottom-6 left-6 right-6 z-[60] print:hidden animate-in slide-in-from-bottom-8 duration-500">
         <div className="bg-black/80 dark:bg-black/40 backdrop-blur-3xl border border-white/10 rounded-full p-2 flex items-center justify-around shadow-2xl">
           {[
             { id: 'content', icon: FileText, label: 'Content' },
@@ -322,13 +333,23 @@ const V5EditorContent = () => {
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center justify-center p-2 transition-all rounded-2xl ${activeTab === item.id ? 'bg-white/10' : 'text-slate-400 opacity-60'}`}
+              className={`flex flex-col items-center justify-center p-2 relative transition-all rounded-2xl group ${activeTab === item.id ? 'bg-white/10 scale-105' : 'text-slate-400 opacity-60 hover:opacity-100 hover:bg-white/5'}`}
               style={activeTab === item.id ? { color: activeColor } : {}}
             >
               <item.icon size={18} className="mb-1" />
               <span className="text-[8px] font-black uppercase tracking-widest leading-none xs:block hidden">{item.label}</span>
+              {activeTab === item.id && (
+                <div className="absolute -bottom-1 w-1.5 h-1.5 rounded-full shadow-[0_0_8px_currentColor]" style={{ backgroundColor: activeColor, color: activeColor }} />
+              )}
             </button>
           ))}
+          <div className="w-px h-8 bg-white/10 mx-1" />
+          <button onClick={triggerDownload} className="p-2 xs:p-3 rounded-full text-white hover:bg-white/10 transition-colors" title="Print as PDF">
+            <Printer size={20} />
+          </button>
+          <button onClick={() => setIsEnlarged(true)} className="p-2 xs:p-3 rounded-full text-white bg-white/10 ml-1 hover:scale-110 transition-transform">
+            <Maximize2 size={20} />
+          </button>
         </div>
       </div>
     </div>

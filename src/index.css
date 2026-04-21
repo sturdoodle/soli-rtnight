@@ -758,9 +758,7 @@ img, video, canvas, svg {
   }
 
   /* 2. Hide all interactive UI elements */
-  body * {
-    visibility: hidden;
-  }
+  /* Reverting to surgical display: none to ensure DOM accessibility for PDF engine */
 
   /* 3. Define the printable area and make it visible */
   .printable-area,

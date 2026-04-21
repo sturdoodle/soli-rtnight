@@ -11,7 +11,7 @@ export const useResumeActions = (resumeData, setResumeData) => {
     const link = document.createElement('a');
     const date = new Date().toISOString().split('T')[0];
     const fileName = resumeData.fullName 
-      ? `${resumeData.fullName.replace(/\s+/g, '_')}_Resume_Backup` 
+      ? `${resumeData.fullName.replace(/\s+/g, '_')}_Resume_Backup_${date}` 
       : `resume-snapshot-${date}`;
     
     link.href = url;

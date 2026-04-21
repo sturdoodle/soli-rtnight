@@ -9,7 +9,7 @@ export const TAB_META = {
   typography: { title: "Typography", subtitle: "Choose professional fonts for maximum readability" },
   snapshots: { title: "Backups", subtitle: "Save and manage your resume drafts" },
   history: { title: "Backups", subtitle: "Save and manage your resume drafts" },
-  help: { title: "Help & Guidance", subtitle: "Master the V5 Resume Builder Ecosystem." },
+  help: { title: "Help & Guidance", subtitle: "Documentation & support for the Resume Builder." },
   about: { title: "About Us", subtitle: "Privacy First: Your data remains secure and private." }
 };
 
