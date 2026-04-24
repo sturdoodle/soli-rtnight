@@ -381,10 +381,7 @@ const V5EditorContent = () => {
             </button>
           ))}
           <div className="w-px h-8 bg-white/10 mx-1" />
-          <button onClick={() => triggerDownload('download')} className="p-2 xs:p-3 rounded-full text-white hover:bg-white/10 transition-colors" title="Download as PDF">
-            <Download size={20} />
-          </button>
-          <button onClick={() => triggerDownload('print')} className="p-2 xs:p-3 rounded-full text-white hover:bg-white/10 transition-colors" title="Print as PDF">
+          <button onClick={() => triggerDownload('print')} className="p-2 xs:p-3 rounded-full text-white hover:bg-white/10 transition-colors" title="Print/Download PDF">
             <Printer size={20} />
           </button>
           <button onClick={() => setIsEnlarged(true)} className="p-2 xs:p-3 rounded-full text-white bg-white/10 ml-1 hover:scale-110 transition-transform">
