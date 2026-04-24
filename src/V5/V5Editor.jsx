@@ -62,6 +62,7 @@ const V5EditorContent = () => {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showPrintAd, setShowPrintAd] = useState(false);
   const [adCountdown, setAdCountdown] = useState(7);
+  const [downloadIntent, setDownloadIntent] = useState('print'); // 'print' | 'download'
   const [previewMode, setPreviewMode] = useState('preview');
 
   const navbarFileInputRef = React.useRef(null);
@@ -79,9 +80,10 @@ const V5EditorContent = () => {
     setShowOnboarding(false);
   };
 
-  const triggerDownload = () => {
+  const triggerDownload = (intent = 'print') => {
+    setDownloadIntent(intent);
     if (isDevelopmentMode) {
-      handlePrint();
+      finalizePrintAction();
       return;
     }
     setShowPrintAd(true);
@@ -90,9 +92,30 @@ const V5EditorContent = () => {
 
   const finalizePrintAction = () => {
     setShowPrintAd(false);
+    
     // Increased timeout to ensure the buffer is fully visible to the browser's print engine
-    setTimeout(() => {
-      handlePrint();
+    setTimeout(async () => {
+      const fileName = resumeData.fullName ? `${resumeData.fullName.replace(/\s+/g, '_')}_Resume` : 'Resume';
+      
+      if (downloadIntent === 'download') {
+        const { downloadPdf } = await import('../Modern/utils/pdfGenerator');
+        const printBuffer = document.getElementById('print-buffer');
+        if (printBuffer) {
+          try {
+            await downloadPdf(printBuffer, `${fileName}.pdf`);
+          } catch (err) {
+            console.error("PDF generation failed:", err);
+            window.print(); // Fallback to print
+          }
+        }
+      } else {
+        const originalTitle = document.title;
+        document.title = fileName;
+        window.print();
+        setTimeout(() => {
+          document.title = originalTitle;
+        }, 1000);
+      }
     }, 500);
   };
 
@@ -100,17 +123,31 @@ const V5EditorContent = () => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
         e.preventDefault();
-        triggerDownload();
+        triggerDownload('print');
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [resumeData]);
+  }, [resumeData, downloadIntent]);
+
+  // Advertisement Countdown Timer Logic
+  useEffect(() => {
+    let timer;
+    if (showPrintAd && adCountdown > 0) {
+      timer = setInterval(() => {
+        setAdCountdown(prev => prev - 1);
+      }, 1000);
+    } else if (showPrintAd && adCountdown === 0) {
+      // Auto-trigger finalize is sometimes annoying, but let's keep it consistent
+      // Actually, standard behavior usually waits for user to click button in modal
+    }
+    return () => clearInterval(timer);
+  }, [showPrintAd, adCountdown]);
 
   const activeColor = resumeData.themeColor || '#0ea5e9';
 
   return (
-    <div className="flex flex-col h-screen bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:h-auto print:bg-white overflow-hidden" 
+    <div className="flex flex-col h-screen bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:h-auto print:bg-white print:overflow-visible overflow-hidden" 
          style={{ '--v5-accent': activeColor }}>
       
       {showOnboarding && (
@@ -133,10 +170,10 @@ const V5EditorContent = () => {
 
       <Suspense fallback={null}>
         <PrintAdModal 
-          isOpen={showPrintAd} 
-          countdown={adCountdown} 
-          setCountdown={setAdCountdown} 
-          onComplete={finalizePrintAction}
+          showPrintAd={showPrintAd} 
+          adCountdown={adCountdown} 
+          finalizePrintAction={finalizePrintAction}
+          onClose={() => setShowPrintAd(false)}
           activeColor={activeColor}
         />
       </Suspense>
@@ -145,7 +182,7 @@ const V5EditorContent = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         activeColor={activeColor}
-        triggerDownload={triggerDownload}
+        triggerDownload={() => triggerDownload('print')}
         handleExportJSON={handleExportJSON}
         handleImportJSON={handleImportJSON}
         navbarFileInputRef={navbarFileInputRef}
@@ -292,7 +329,7 @@ const V5EditorContent = () => {
       </div>
 
       {/* Synchronous Background Print Buffer: Ensures zero-latency printing from any tab */}
-      <div className="hidden print:block fixed inset-0 z-[9999] bg-white pointer-events-none" aria-hidden="true">
+      <div id="print-buffer" className="hidden print:block bg-white" aria-hidden="true">
          <ModernLivePreview />
       </div>
 
@@ -304,7 +341,7 @@ const V5EditorContent = () => {
               <h3 className="text-lg font-black tracking-tight">Preview Mode</h3>
             </div>
             <div className="flex items-center gap-3">
-              <button onClick={triggerDownload} className="px-6 py-2.5 bg-white text-black rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl">
+              <button onClick={() => triggerDownload('print')} className="px-6 py-2.5 bg-white text-black rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center gap-2">
                 <Printer size={16} /> Final Print
               </button>
               <button onClick={() => setIsEnlarged(false)} className="p-3 bg-white/10 text-white rounded-full"><X size={20} /></button>
@@ -344,7 +381,10 @@ const V5EditorContent = () => {
             </button>
           ))}
           <div className="w-px h-8 bg-white/10 mx-1" />
-          <button onClick={triggerDownload} className="p-2 xs:p-3 rounded-full text-white hover:bg-white/10 transition-colors" title="Print as PDF">
+          <button onClick={() => triggerDownload('download')} className="p-2 xs:p-3 rounded-full text-white hover:bg-white/10 transition-colors" title="Download as PDF">
+            <Download size={20} />
+          </button>
+          <button onClick={() => triggerDownload('print')} className="p-2 xs:p-3 rounded-full text-white hover:bg-white/10 transition-colors" title="Print as PDF">
             <Printer size={20} />
           </button>
           <button onClick={() => setIsEnlarged(true)} className="p-2 xs:p-3 rounded-full text-white bg-white/10 ml-1 hover:scale-110 transition-transform">

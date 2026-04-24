@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import ThemeToggle from './components/ui/ThemeToggle';
 import EditorForm from '../components/editor/EditorForm';
 import logo from '../assets/logo.png';
+import { downloadPdf } from './utils/pdfGenerator';
 
 const ModernEditorContent = () => {
   const { resumeData, setResumeData, updateTemplate, updateThemeColor, toggleAts, setEditorStyle } = useResume();
@@ -34,14 +35,26 @@ const ModernEditorContent = () => {
   }, []);
 
 
-  const handleDownload = (type = 'print') => {
+  const handleDownload = async (type = 'print') => {
     // Set document title to traveler name for better PDF filename
     const originalTitle = document.title;
     const fileName = resumeData.fullName ? `${resumeData.fullName.replace(/\s+/g, '_')}_Resume` : 'Resume';
     document.title = fileName;
-
-    handlePrint();
-
+    
+    if (type === 'download') {
+      const element = previewRef.current;
+      if (element) {
+        try {
+          await downloadPdf(element, `${fileName}.pdf`);
+        } catch (err) {
+          console.error("PDF download failed, falling back to print:", err);
+          window.print();
+        }
+      }
+    } else {
+      window.print();
+    }
+    
     // Restore title after a short delay to ensure print dialog captures it
     setTimeout(() => {
       document.title = originalTitle;
