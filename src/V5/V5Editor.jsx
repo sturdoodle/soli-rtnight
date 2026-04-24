@@ -213,7 +213,7 @@ const V5EditorContent = () => {
         </div>
       )}
 
-      <div className="flex flex-1 h-[calc(100vh-64px)] print:h-auto print:block relative z-10 overflow-hidden">
+      <div className="flex flex-1 print:h-auto print:block relative z-10 overflow-hidden">
         <V5Sidebar 
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -224,10 +224,10 @@ const V5EditorContent = () => {
         />
 
         <main
-          className="overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-8 pb-48 lg:pt-14 lg:pb-16 px-0 custom-scrollbar print:hidden lg:m-4 lg:rounded-[2.5rem] lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm"
+          className="flex-1 h-full overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-8 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-14 lg:pb-16 px-0 custom-scrollbar print:hidden lg:m-4 lg:rounded-[2.5rem] lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm"
           style={isDesktop ? { width: `${splitWidth}%` } : { width: '100%' }}
         >
-          <div className="max-w-[1400px] mx-auto h-full">
+          <div className="max-w-[1400px] mx-auto min-h-full">
             <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] px-1.5 sm:px-6 lg:px-8 py-6 relative">
               <Suspense fallback={null}>
                 <V5WipeModal
