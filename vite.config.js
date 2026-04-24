@@ -15,8 +15,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'robots.txt', 'o-logo.png', 'manifest.json'],
       manifest: {
-        name: 'Resume 🗎',
-        short_name: 'Resume 🗎',
+        name: 'Resume',
+        short_name: 'Resume',
         description: 'Resume Builder | QPKendra',
         theme_color: '#ffffff',
         background_color: '#000000',
