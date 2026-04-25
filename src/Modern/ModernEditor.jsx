@@ -22,6 +22,14 @@ import { downloadPdf } from './utils/pdfGenerator';
 
 const ModernEditorContent = () => {
   const { resumeData, setResumeData, updateTemplate, updateThemeColor, toggleAts, setEditorStyle } = useResume();
+  const activeColor = resumeData.themeColor || '#0ea5e9';
+  
+  // Helper to convert hex to rgb for glow effects
+  const hexToRgb = (hex) => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '14, 165, 233';
+  };
+
   const themeMode = resumeData.themeMode;
   const atsMode = resumeData.atsMode;
   const previewRef = useRef();
@@ -62,7 +70,8 @@ const ModernEditorContent = () => {
   };
 
   return (
-    <div className="min-h-screen modern-bg-gradient py-6 px-4 sm:px-8 transition-colors duration-500 relative overflow-hidden print:bg-white print:p-0 print:overflow-visible">
+    <div className="min-h-screen modern-bg-gradient py-6 px-4 sm:px-8 transition-colors duration-500 relative overflow-hidden print:bg-white print:p-0 print:overflow-visible"
+         style={{ '--v5-accent': activeColor, '--v5-accent-rgb': hexToRgb(activeColor) }}>
       {/* Background Ambient Glows */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sage-500/10 dark:bg-sage-400/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/10 dark:bg-indigo-400/20 rounded-full blur-[120px] pointer-events-none" />

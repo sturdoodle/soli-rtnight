@@ -27,7 +27,11 @@ const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'te
       case 'bold': replacement = `**${selectedText}**`; break;
       case 'italic': replacement = `*${selectedText}*`; break;
       case 'underline': replacement = `__${selectedText}__`; break;
-      case 'link': replacement = `[${selectedText || 'link text'}](url)`; break;
+      case 'link': 
+        const url = prompt('Enter the destination URL:', 'https://');
+        if (url === null) return; // User cancelled
+        replacement = `[${selectedText || 'link text'}](${url || 'https://'})`; 
+        break;
       default: replacement = selectedText;
     }
     
@@ -91,12 +95,12 @@ const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'te
         
         {/* Floating Toolbar for Textareas */}
         {textarea && isFocused && (
-          <div className="flex items-center gap-1.5 p-1 bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-lg shadow-xl animate-in fade-in zoom-in-95 duration-200">
-            <button onClick={() => applyFormat('bold')} type="button" className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all"><Bold size={11} /></button>
-            <button onClick={() => applyFormat('italic')} type="button" className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all"><Italic size={11} /></button>
-            <button onClick={() => applyFormat('underline')} type="button" className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all"><Underline size={11} /></button>
-            <div className="w-px h-3 bg-black/10 dark:bg-white/10 mx-0.5" />
-            <button onClick={() => applyFormat('link')} type="button" className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all"><LinkIcon size={11} /></button>
+          <div className="flex items-center gap-1.5 p-1 bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl rounded-lg shadow-2xl animate-in fade-in zoom-in-95 duration-200 toolbar-pulse-glow">
+            <button onClick={() => applyFormat('bold')} type="button" className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-all"><Bold size={11} /></button>
+            <button onClick={() => applyFormat('italic')} type="button" className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-all"><Italic size={11} /></button>
+            <button onClick={() => applyFormat('underline')} type="button" className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-all"><Underline size={11} /></button>
+            <div className="w-px h-3 bg-black/10 dark:bg-white/20 mx-0.5" />
+            <button onClick={() => applyFormat('link')} type="button" className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-all"><LinkIcon size={11} /></button>
           </div>
         )}
       </div>
@@ -111,7 +115,15 @@ const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'te
       )}
 
       {textarea ? (
-        <textarea {...inputProps} rows={4} style={{ resize: 'vertical' }} />
+        <div className="relative group/textarea">
+          <textarea {...inputProps} rows={4} style={{ resize: 'vertical', minHeight: '120px' }} />
+          {/* Custom Premium Resize Grip */}
+          <div className="absolute bottom-2 right-2 pointer-events-none flex flex-col items-end gap-0.5 opacity-30 group-hover/textarea:opacity-100 transition-all duration-500 group-focus-within:text-blue-500">
+            <div className="w-4 h-0.5 bg-current rounded-full rotate-[-45deg] translate-y-1 translate-x-1" />
+            <div className="w-2.5 h-0.5 bg-current rounded-full rotate-[-45deg] translate-y-0.5 translate-x-0.5" />
+            <div className="w-1 h-0.5 bg-current rounded-full rotate-[-45deg]" />
+          </div>
+        </div>
       ) : (
         <input {...inputProps} type={type} />
       )}
