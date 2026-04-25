@@ -13,26 +13,63 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt', 'o-logo.png', 'manifest.json'],
+      includeAssets: ['favicon.ico', 'robots.txt', 'o-logo.png', 'manifest.json', 'pwa/*.png'],
       manifest: {
-        name: 'Resume',
-        short_name: 'Resume',
-        description: 'Resume Builder | QPKendra',
+        name: 'QPkendra AI Resume Builder',
+        short_name: 'QP | Resume Builder',
+        description: 'Build an interview-ready, ATS-compliant resume for free. AI-powered and privacy-first.',
         theme_color: '#ffffff',
-        background_color: '#000000',
+        background_color: '#ffffff',
         display: 'standalone',
         start_url: '/',
         scope: '/',
+        categories: ['productivity', 'business', 'utilities'],
         icons: [
           {
             src: 'o-logo.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any'
           },
           {
             src: 'o-logo.png',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: 'o-logo.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
+          }
+        ],
+        screenshots: [
+          {
+            src: 'pwa/desktop-wide.png',
+            sizes: '2560x1334',
+            type: 'image/png',
+            form_factor: 'wide',
+            label: 'QPkendra Desktop Editor'
+          },
+          {
+            src: 'pwa/mobile-narrow.png',
+            sizes: '390x844',
+            type: 'image/png',
+            form_factor: 'narrow',
+            label: 'QPkendra Mobile Editor'
+          }
+        ],
+        shortcuts: [
+          {
+            name: 'New Resume',
+            url: '/#/',
+            icons: [{ src: 'o-logo.png', sizes: '192x192' }]
+          },
+          {
+            name: 'About Us',
+            url: '/#/about',
+            icons: [{ src: 'o-logo.png', sizes: '192x192' }]
           }
         ]
       },

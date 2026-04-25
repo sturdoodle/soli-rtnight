@@ -1,12 +1,13 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import {
-  Menu, Download, Upload, Sun, Moon, Maximize2, X, Printer, Zap, FileText, Layout, Type, Settings, Braces
+  Menu, Download, Upload, Sun, Moon, Maximize2, X, Printer, Zap, FileText, Layout, Type, Settings, Braces, Smartphone
 } from 'lucide-react';
 import { useResume, ResumeProvider } from '../Modern/context/ResumeContext';
 import { useAtsScore } from '../hooks/useAtsScore';
 import { useResumeActions } from '../hooks/useResumeActions';
 import { useSplitPane } from '../hooks/useSplitPane';
 import { useNavigate } from 'react-router-dom';
+import { usePWAInstall } from '../hooks/usePWAInstall';
 
 import logo from '../assets/logo.png';
 import AdSenseAd from '../AdsenseAdsBlock.jsx';
@@ -64,6 +65,7 @@ const V5EditorContent = () => {
   const [adCountdown, setAdCountdown] = useState(7);
   const [downloadIntent, setDownloadIntent] = useState('print'); // 'print' | 'download'
   const [previewMode, setPreviewMode] = useState('preview');
+  const { isInstallable, handleInstallClick } = usePWAInstall();
 
   const navbarFileInputRef = React.useRef(null);
   const settingsFileInputRef = React.useRef(null);
@@ -217,6 +219,27 @@ const V5EditorContent = () => {
             ))}
           </div>
 
+          {/* Mobile Install Promotion */}
+          {isInstallable && (
+            <div className="px-8 pt-2 pb-4">
+               <button 
+                 onClick={() => { handleInstallClick(); setIsMobileMenuOpen(false); }}
+                 className="w-full p-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white flex items-center justify-between shadow-lg shadow-amber-500/20 group active:scale-95 transition-all"
+               >
+                 <div className="flex items-center gap-3">
+                   <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+                     <Smartphone size={20} />
+                   </div>
+                   <div className="text-left">
+                     <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1">Install App</p>
+                     <p className="text-[8px] font-medium opacity-80 leading-none">Access your resumes offline</p>
+                   </div>
+                 </div>
+                 <Zap size={16} className="opacity-50 animate-pulse" />
+               </button>
+            </div>
+          )}
+          
           {/* Premium Mobile Quick Actions Redesign */}
           <div className="px-8 py-6 border-t border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.01]">
             <div className="grid grid-cols-3 gap-6">
