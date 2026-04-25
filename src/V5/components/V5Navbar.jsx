@@ -17,7 +17,7 @@ const V5Navbar = ({
   setIsMobileMenuOpen
 }) => {
   const { resumeData, toggleAts, toggleTheme } = useResume();
-  const { isInstallable, handleInstallClick } = usePWAInstall();
+  const { isInstallable, isInstalled, handleInstallClick } = usePWAInstall();
 
   return (
     <nav className="h-16 border-b border-black/5 dark:border-white/5 bg-[var(--v5-card)]/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-50 print:hidden shadow-sm transition-all duration-500">
@@ -99,17 +99,17 @@ const V5Navbar = ({
         </div>
 
         <div className="flex items-center gap-3">
-          {isInstallable && (
+          {!isInstalled && isInstallable && (
             <button
               onClick={handleInstallClick}
               className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-widest hover:bg-amber-500/20 transition-all active:scale-95 group"
               aria-label="Install App"
             >
               <Smartphone size={14} className="group-hover:animate-bounce" />
-              <span className="hidden sm:inline">Install App</span>
+              <span className="hidden xs:inline">Install</span>
             </button>
           )}
-          
+
           <button
             onClick={toggleTheme}
             aria-label="Toggle dark/light mode"

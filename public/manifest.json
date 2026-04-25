@@ -1,7 +1,7 @@
 {
-  "name": "Resume 🗎",
-  "short_name": "Resume 🗎",
-  "description": "Resume Builder | QPKendra",
+  "name": "QPkendra AI Resume Builder",
+  "short_name": "QP | Resume Builder",
+  "description": "Build an interview-ready, ATS-compliant resume for free. AI-powered and privacy-first.",
   "start_url": "/",
   "theme_color": "#ffffff",
   "orientation": "any",

@@ -62,10 +62,10 @@ const V5EditorContent = () => {
 
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showPrintAd, setShowPrintAd] = useState(false);
-  const [adCountdown, setAdCountdown] = useState(7);
+  const [adCountdown, setAdCountdown] = useState(10);
   const [downloadIntent, setDownloadIntent] = useState('print'); // 'print' | 'download'
   const [previewMode, setPreviewMode] = useState('preview');
-  const { isInstallable, handleInstallClick } = usePWAInstall();
+  const { isInstallable, isInstalled, handleInstallClick } = usePWAInstall();
 
   const navbarFileInputRef = React.useRef(null);
   const settingsFileInputRef = React.useRef(null);
@@ -89,7 +89,7 @@ const V5EditorContent = () => {
       return;
     }
     setShowPrintAd(true);
-    setAdCountdown(7);
+    setAdCountdown(10);
   };
 
   const finalizePrintAction = () => {
@@ -220,7 +220,7 @@ const V5EditorContent = () => {
           </div>
 
           {/* Mobile Install Promotion */}
-          {isInstallable && (
+          {!isInstalled && isInstallable && (
             <div className="px-8 pt-2 pb-4">
                <button 
                  onClick={() => { handleInstallClick(); setIsMobileMenuOpen(false); }}
