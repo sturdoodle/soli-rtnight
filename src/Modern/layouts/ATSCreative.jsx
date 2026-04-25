@@ -122,8 +122,8 @@ export const ATSCreative = ({ data, themeColor, atsMode, sectionThemingEnabled }
       )}
       {/* Certifications Section */}
       {data.certifications && data.certifications.length > 0 && (
-        <section aria-label="Certifications" className="flex flex-col items-end text-right">
-          <h2 className="text-sm font-bold uppercase mb-3 transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>Certifications</h2>
+        <section aria-label="Certifications">
+          <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Certifications</h2>
           <ul className="text-[12px] space-y-1">
             {data.certifications?.map((cert) => (
               <li key={cert.id}>{cert.name} {cert.expiryDate && <span className="opacity-60 italic">| {cert.expiryDate}</span>}</li>

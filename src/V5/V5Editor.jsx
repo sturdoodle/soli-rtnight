@@ -47,18 +47,18 @@ const V5EditorContent = () => {
     resumeData, updateField, setResumeData, toggleAts, toggleTheme,
     updateStorageType, resetResume, setEditorStyle
   } = useResume();
-  
+
   const [activeTab, setActiveTab] = useState('content');
   const [isEnlarged, setIsEnlarged] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showWipeConfirm, setShowWipeConfirm] = useState(false);
   const navigate = useNavigate();
-  
+
   const atsScore = useAtsScore(resumeData);
   const { splitWidth, isResizing, setIsResizing, isDesktop } = useSplitPane(50, isSidebarCollapsed);
   const { handleExportJSON, handleImportJSON, handlePrint } = useResumeActions(resumeData, setResumeData);
-  
+
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showPrintAd, setShowPrintAd] = useState(false);
   const [adCountdown, setAdCountdown] = useState(7);
@@ -92,11 +92,11 @@ const V5EditorContent = () => {
 
   const finalizePrintAction = () => {
     setShowPrintAd(false);
-    
+
     // Increased timeout to ensure the buffer is fully visible to the browser's print engine
     setTimeout(async () => {
       const fileName = resumeData.fullName ? `${resumeData.fullName.replace(/\s+/g, '_')}_Resume` : 'Resume';
-      
+
       if (downloadIntent === 'download') {
         const { downloadPdf } = await import('../Modern/utils/pdfGenerator');
         const printBuffer = document.getElementById('print-buffer');
@@ -145,7 +145,7 @@ const V5EditorContent = () => {
   }, [showPrintAd, adCountdown]);
 
   const activeColor = resumeData.themeColor || '#0ea5e9';
-  
+
   // Helper to convert hex to rgb for glow effects
   const hexToRgb = (hex) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -153,9 +153,9 @@ const V5EditorContent = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:h-auto print:bg-white print:overflow-visible overflow-hidden" 
-         style={{ '--v5-accent': activeColor, '--v5-accent-rgb': hexToRgb(activeColor) }}>
-      
+    <div className="flex flex-col h-screen bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:h-auto print:bg-white print:overflow-visible overflow-hidden"
+      style={{ '--v5-accent': activeColor, '--v5-accent-rgb': hexToRgb(activeColor) }}>
+
       {showOnboarding && (
         <div className="fixed inset-0 z-[200] bg-[var(--v5-bg)]/80 backdrop-blur-2xl animate-in fade-in duration-1000 flex items-center justify-center p-4">
           <div className="max-w-2xl w-full p-8 sm:p-12 rounded-[3.5rem] bg-[var(--v5-card)] border border-black/5 dark:border-white/5 shadow-[0_50px_100px_rgba(0,0,0,0.3)] relative overflow-hidden">
@@ -175,16 +175,16 @@ const V5EditorContent = () => {
       )}
 
       <Suspense fallback={null}>
-        <PrintAdModal 
-          showPrintAd={showPrintAd} 
-          adCountdown={adCountdown} 
+        <PrintAdModal
+          showPrintAd={showPrintAd}
+          adCountdown={adCountdown}
           finalizePrintAction={finalizePrintAction}
           onClose={() => setShowPrintAd(false)}
           activeColor={activeColor}
         />
       </Suspense>
 
-      <V5Navbar 
+      <V5Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         activeColor={activeColor}
@@ -198,7 +198,7 @@ const V5EditorContent = () => {
 
       {isMobileMenuOpen && (
         <div className="lg:hidden absolute top-16 left-0 right-0 bg-[var(--v5-card)]/95 backdrop-blur-xl border-b border-black/5 dark:border-white/5 z-40 shadow-xl animate-in slide-in-from-top-2">
-          <div className="flex flex-col p-4 text-[11px] font-black uppercase tracking-[0.2em] space-y-1">
+          <div className="flex flex-col p-2 text-[10px] font-black uppercase tracking-[0.2em] space-y-0.5">
             {[
               { id: 'content', label: 'Editor' },
               { id: 'typography', label: 'Typeface' },
@@ -209,18 +209,55 @@ const V5EditorContent = () => {
               <button
                 key={item.id}
                 onClick={() => { setActiveTab(item.id); setIsMobileMenuOpen(false); }}
-                className={`py-4 text-left px-6 rounded-xl transition-all ${activeTab === item.id ? 'bg-black/5 dark:bg-white/5 font-bold shadow-sm' : ''}`}
+                className={`py-2.5 text-left px-6 rounded-xl transition-all ${activeTab === item.id ? 'bg-black/5 dark:bg-white/5 font-bold shadow-sm' : ''}`}
                 style={{ color: activeTab === item.id ? 'var(--v5-heading)' : 'var(--v5-text)' }}
               >
                 {item.label}
               </button>
             ))}
           </div>
+
+          {/* Mobile Import/Export Quick Actions */}
+          <div className="p-3 border-t border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]">
+            <h4 className="text-[6.5px] font-black uppercase tracking-[0.2em] text-slate-400 text-center mb-3 opacity-50">Resume Snapshot Ops</h4>
+            <div className="grid grid-cols-3 gap-1">
+              <button 
+                onClick={() => { handleExportJSON(); setIsMobileMenuOpen(false); }}
+                className="flex flex-col items-center gap-1.5 group"
+              >
+                <span className="text-[6px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 text-center h-3 flex items-center">Export</span>
+                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/20 dark:border-emerald-500/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-sm active:scale-95 transition-all">
+                  <Download size={16} />
+                </div>
+              </button>
+
+              <button 
+                onClick={() => { navbarFileInputRef.current?.click(); setIsMobileMenuOpen(false); }}
+                className="flex flex-col items-center gap-1.5 group"
+              >
+                <span className="text-[6px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 text-center h-3 flex items-center">Import</span>
+                <div className="w-9 h-9 rounded-xl bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/20 dark:border-blue-500/40 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm active:scale-95 transition-all">
+                  <Upload size={16} />
+                </div>
+              </button>
+
+              <button 
+                onClick={() => { triggerDownload(); setIsMobileMenuOpen(false); }}
+                className="flex flex-col items-center gap-1.5 group"
+              >
+                <span className="text-[6px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 text-center h-3 flex items-center">Resume</span>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white shadow-sm active:scale-95 transition-all"
+                  style={{ backgroundColor: activeColor, boxShadow: `0 0 15px ${activeColor}30` }}>
+                  <FileText size={16} />
+                </div>
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
       <div className="flex flex-1 print:h-auto print:block relative z-10 overflow-hidden">
-        <V5Sidebar 
+        <V5Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           activeColor={activeColor}
@@ -244,7 +281,7 @@ const V5EditorContent = () => {
                   description="This will erase all your resume data and reset the structural blueprint to factory defaults."
                 />
               </Suspense>
-              
+
               <Suspense fallback={<TabLoadingSkeleton />}>
                 {activeTab === 'content' && (
                   <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -264,7 +301,7 @@ const V5EditorContent = () => {
 
                 {activeTab === 'layout' && <TemplateSelector />}
                 {activeTab === 'typography' && <TypographyTab activeColor={activeColor} />}
-                
+
                 {activeTab === 'json' && (
                   <div className="h-full flex flex-col space-y-4 px-1 sm:px-6">
                     <V5JsonEditor data={resumeData} onUpdate={setResumeData} activeColor={activeColor} className="flex-1" />
@@ -272,7 +309,7 @@ const V5EditorContent = () => {
                 )}
 
                 {activeTab === 'snapshots' && (
-                  <SettingsTab 
+                  <SettingsTab
                     activeColor={activeColor}
                     handleExportJSON={handleExportJSON}
                     handleImportJSON={handleImportJSON}
@@ -336,21 +373,27 @@ const V5EditorContent = () => {
 
       {/* Synchronous Background Print Buffer: Ensures zero-latency printing from any tab */}
       <div id="print-buffer" className="hidden print:block bg-white" aria-hidden="true">
-         <ModernLivePreview />
+        <ModernLivePreview />
       </div>
 
       {isEnlarged && (
         <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-3xl flex flex-col print:bg-white print:backdrop-blur-none">
-          <div className="flex items-center justify-between p-6 border-b border-white/10 print:hidden">
-            <div className="flex items-center gap-4 text-white">
-              <Zap size={22} className="text-amber-400" />
-              <h3 className="text-lg font-black tracking-tight">Preview Mode</h3>
+          <div className="flex items-center justify-between py-1.5 px-6 border-b border-white/10 print:hidden">
+            <div className="flex items-center gap-3 text-white">
+              <Zap size={18} className="text-amber-400" />
+              <h3 className="text-sm font-black tracking-tight">Preview Mode</h3>
             </div>
             <div className="flex items-center gap-3">
-              <button onClick={() => triggerDownload('print')} className="px-6 py-2.5 bg-white text-black rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center gap-2">
-                <Printer size={16} /> Final Print
+              <button
+                onClick={() => triggerDownload('print')}
+                className="px-6 py-2 rounded-full text-white text-[10px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95 group relative overflow-hidden"
+                style={{ backgroundColor: activeColor, boxShadow: `0 0 20px ${activeColor}40` }}
+              >
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+                <Printer size={14} className="group-hover:rotate-12 transition-transform" />
+                Final Print
               </button>
-              <button onClick={() => setIsEnlarged(false)} className="p-3 bg-white/10 text-white rounded-full"><X size={20} /></button>
+              <button onClick={() => setIsEnlarged(false)} className="p-2 bg-white/10 text-white rounded-full"><X size={18} /></button>
             </div>
           </div>
           <div className="flex-1 overflow-y-auto p-4 sm:p-12 lg:max-w-6xl lg:mx-auto w-full print:p-0 print:max-w-none">

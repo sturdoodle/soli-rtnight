@@ -38,7 +38,7 @@ const TemplateSelector = () => {
               <span className="text-xs uppercase tracking-widest font-bold">Theme Colors</span>
             </div>
             {/* Minimalist Section Color Toggle */}
-            <button 
+            <button
               onClick={toggleSectionTheming}
               disabled={atsMode}
               aria-label={atsMode ? "Section coloring is disabled in ATS Mode" : `Turn Section Theme ${sectionThemingEnabled ? 'Off' : 'On'}`}
@@ -51,7 +51,7 @@ const TemplateSelector = () => {
               <div className={`w-8 h-4 rounded-full relative transition-all ${sectionThemingEnabled ? 'bg-white/20' : 'bg-slate-400/20'}`}
                 style={sectionThemingEnabled ? { backgroundColor: `${currentThemeColor}40` } : {}}>
                 <div className={`absolute top-0.5 w-3 h-3 rounded-full transition-all shadow-sm ${sectionThemingEnabled ? 'right-0.5 animate-pulse' : 'left-0.5'}`}
-                  style={{ 
+                  style={{
                     backgroundColor: sectionThemingEnabled ? currentThemeColor : '#94a3b8',
                     boxShadow: sectionThemingEnabled ? `0 0 8px ${currentThemeColor}` : 'none'
                   }} />
@@ -90,8 +90,8 @@ const TemplateSelector = () => {
                 onClick={() => updateTemplate(template.id)}
                 aria-label={`Select ${template.name} template`}
                 className={`p-3 rounded-2xl border-2 transition-all text-left flex items-start gap-2 group relative overflow-hidden ${currentTemplate === template.id
-                    ? 'bg-white/80 dark:bg-white/5 shadow-lg shadow-black/5 ring-4'
-                    : 'border-white dark:border-white/5 bg-white/40 dark:bg-zinc-900/5 hover:border-black/10 dark:hover:border-white/10 hover:bg-white/60 dark:hover:bg-zinc-900/10'
+                  ? 'bg-white/80 dark:bg-white/5 shadow-lg shadow-black/5 ring-4'
+                  : 'border-white dark:border-white/5 bg-white/40 dark:bg-zinc-900/5 hover:border-black/10 dark:hover:border-white/10 hover:bg-white/60 dark:hover:bg-zinc-900/10'
                   }`}
                 style={currentTemplate === template.id ? { borderColor: currentThemeColor, '--tw-ring-color': `${currentThemeColor}10` } : {}}
               >
@@ -140,8 +140,8 @@ const TemplateSelector = () => {
             <button
               onClick={() => updateStorageType('persistent')}
               className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-bold transition-all ${storageType === 'persistent'
-                  ? 'bg-white dark:bg-white/10 shadow-sm'
-                  : 'text-slate-400 hover:text-slate-500'
+                ? 'bg-white dark:bg-white/10 shadow-sm'
+                : 'text-slate-400 hover:text-slate-500'
                 }`}
               style={storageType === 'persistent' ? { color: currentThemeColor } : {}}
             >
@@ -151,8 +151,8 @@ const TemplateSelector = () => {
             <button
               onClick={() => updateStorageType('temporary')}
               className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-bold transition-all ${storageType === 'temporary'
-                  ? 'bg-white dark:bg-white/10 text-rose-500 shadow-sm'
-                  : 'text-sage-400 hover:text-sage-500'
+                ? 'bg-white dark:bg-white/10 text-rose-500 shadow-sm'
+                : 'text-sage-400 hover:text-sage-500'
                 }`}
             >
               <ShieldCheck size={14} />
@@ -170,9 +170,9 @@ const TemplateSelector = () => {
         </div>
       </div>
 
-      <V5WipeModal 
-        isOpen={showWipeConfirm} 
-        onClose={() => setShowWipeConfirm(false)} 
+      <V5WipeModal
+        isOpen={showWipeConfirm}
+        onClose={() => setShowWipeConfirm(false)}
         onConfirm={resetResume}
         title="Wipe Master Cache?"
         description="This will erase all your resume data and reset the structural blueprint to factory defaults. This action cannot be undone."

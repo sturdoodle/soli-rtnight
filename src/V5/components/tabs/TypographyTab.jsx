@@ -54,7 +54,7 @@ const TypographyTab = ({ activeColor }) => {
         {/* System Default Architecture */}
         <button
           onClick={() => updateField('fontFamily', 'Default')}
-          className={`py-8 px-7 transition-all group relative text-left bg-[var(--v5-card)]/40 backdrop-blur-sm ${resumeData.fontFamily === 'Default' || !resumeData.fontFamily ? 'font-tile-active bg-blue-500/5 dark:bg-blue-500/10' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
+          className={`py-8 px-7 transition-all group relative text-left bg-[var(--v5-card)]/40 backdrop-blur-sm rounded-tl-[2rem] ${resumeData.fontFamily === 'Default' || !resumeData.fontFamily ? 'font-tile-active bg-blue-500/5 dark:bg-blue-500/10' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
         >
           <div className="flex items-center justify-between mb-4">
             <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">System Default</h4>
@@ -74,7 +74,7 @@ const TypographyTab = ({ activeColor }) => {
           </div>
         </button>
 
-        {fontOptions.map((f) => {
+        {fontOptions.map((f, index) => {
           const isActive = resumeData.fontFamily === f.font;
           const fontKey = f.font.toLowerCase().split(' ')[0];
           const fontClass = `v5-font-${fontKey}`;
@@ -83,7 +83,11 @@ const TypographyTab = ({ activeColor }) => {
             <button
               key={f.name}
               onClick={() => updateField('fontFamily', f.font)}
-              className={`py-8 px-7 transition-all group relative text-left bg-[var(--v5-card)]/40 backdrop-blur-sm ${isActive ? 'font-tile-active bg-blue-500/5 dark:bg-blue-500/10' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
+              className={`py-8 px-7 transition-all group relative text-left bg-[var(--v5-card)]/40 backdrop-blur-sm 
+                ${index === 0 ? 'rounded-tr-[2rem]' : ''} 
+                ${index === fontOptions.length - 2 ? 'rounded-bl-[2rem]' : ''} 
+                ${index === fontOptions.length - 1 ? 'rounded-br-[2rem]' : ''}
+                ${isActive ? 'font-tile-active bg-blue-500/5 dark:bg-blue-500/10' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
             >
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">{f.name}</h4>

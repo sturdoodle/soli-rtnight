@@ -83,14 +83,14 @@ const V5Navbar = ({
           />
         </div>
 
-        <div className={`flex items-center gap-1.5 sm:gap-3 p-1.5 rounded-full border transition-all duration-300 group cursor-pointer ${resumeData.atsMode ? 'border-transparent shadow-lg' : 'bg-white/5 border-black/5 dark:border-white/10'}`}
+        <div className={`flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-3 p-1 sm:p-1.5 min-w-[32px] sm:min-w-[auto] rounded-xl sm:rounded-full border transition-all duration-300 group cursor-pointer ${resumeData.atsMode ? 'border-transparent shadow-lg' : 'bg-white/5 border-black/5 dark:border-white/10'}`}
           style={resumeData.atsMode ? { backgroundColor: activeColor } : {}}
           onClick={toggleAts}>
-          <span className={`pl-2 pr-0.5 text-[9px] font-black uppercase tracking-widest transition-all ${resumeData.atsMode ? 'text-white' : 'text-slate-500'} hidden sm:inline`}>
+          <span className={`text-[7px] sm:text-[9px] font-black uppercase tracking-widest transition-all ${resumeData.atsMode ? 'text-white' : 'text-slate-500'}`}>
             ATS
           </span>
-          <div className={`w-8 h-4 rounded-full relative transition-all ${resumeData.atsMode ? 'bg-white/20 shadow-inner' : 'bg-slate-700/20'}`}>
-            <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-all shadow-sm ${resumeData.atsMode ? 'right-0.5' : 'left-0.5'}`} />
+          <div className={`w-6 h-3 sm:w-8 sm:h-4 rounded-full relative transition-all ${resumeData.atsMode ? 'bg-white/20 shadow-inner' : 'bg-slate-700/20'}`}>
+            <div className={`absolute top-0.5 w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-white transition-all shadow-sm ${resumeData.atsMode ? 'right-0.5' : 'left-0.5'}`} />
           </div>
         </div>
 
@@ -115,11 +115,12 @@ const V5Navbar = ({
 
         <button
           onClick={triggerDownload}
-          className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-slate-100 text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95"
+          className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-slate-100 text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 group relative overflow-hidden"
           style={{ backgroundColor: activeColor, boxShadow: `0 10px 25px -5px ${activeColor}50` }}
         >
-          <Download size={14} />
-          <span className="hidden sm:inline">Resume</span>
+          <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+          <Download size={14} className="group-hover:translate-y-0.5 transition-transform" />
+          <span className="hidden sm:inline relative z-10">Resume</span>
         </button>
       </div>
     </nav>
