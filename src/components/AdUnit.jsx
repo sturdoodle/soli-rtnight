@@ -37,16 +37,19 @@ const AdUnit = ({
     if (!IS_PROD) {
         return (
             <div 
-                className={`flex items-center justify-center border-2 border-dashed border-slate-300 bg-slate-50 text-slate-400 rounded-2xl transition-all hover:border-slate-400 hover:bg-slate-100/80 ${className}`}
+                className={`flex items-center justify-center border border-black/5 dark:border-white/10 bg-slate-50/50 dark:bg-slate-900/40 backdrop-blur-md text-slate-400 rounded-[2.5rem] transition-all hover:bg-white dark:hover:bg-slate-900 shadow-sm group/ad ${className}`}
                 style={{ minHeight, ...style }}
             >
-                <div className="text-center select-none px-6">
-                    <p className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-500 mb-2">
-                        Dev Mode: Google AdSense
-                    </p>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/50 border border-slate-200 rounded-lg shadow-sm">
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Slot ID:</span>
-                        <code className="text-[10px] font-mono font-bold text-slate-600">{slot || 'undefined'}</code>
+                <div className="text-center select-none px-6 py-8">
+                    <div className="flex items-center justify-center gap-2 mb-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+                        <p className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-slate-500 group-hover/ad:text-blue-500 transition-colors">
+                            Development Ad Space
+                        </p>
+                    </div>
+                    <div className="inline-flex items-center gap-3 px-5 py-2 bg-white/80 dark:bg-black/40 border border-black/5 dark:border-white/5 rounded-full shadow-inner transition-transform group-hover/ad:scale-105 duration-500">
+                        <span className="text-[8px] font-black text-slate-400 dark:text-slate-600 uppercase tracking-widest">AdSense Slot</span>
+                        <code className="text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400">{slot || 'undefined'}</code>
                     </div>
                 </div>
             </div>

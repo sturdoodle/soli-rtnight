@@ -145,10 +145,16 @@ const V5EditorContent = () => {
   }, [showPrintAd, adCountdown]);
 
   const activeColor = resumeData.themeColor || '#0ea5e9';
+  
+  // Helper to convert hex to rgb for glow effects
+  const hexToRgb = (hex) => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '14, 165, 233';
+  };
 
   return (
     <div className="flex flex-col h-screen bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:h-auto print:bg-white print:overflow-visible overflow-hidden" 
-         style={{ '--v5-accent': activeColor }}>
+         style={{ '--v5-accent': activeColor, '--v5-accent-rgb': hexToRgb(activeColor) }}>
       
       {showOnboarding && (
         <div className="fixed inset-0 z-[200] bg-[var(--v5-bg)]/80 backdrop-blur-2xl animate-in fade-in duration-1000 flex items-center justify-center p-4">
@@ -310,11 +316,11 @@ const V5EditorContent = () => {
             </button>
           </div>
 
-          <div className="flex-1 min-h-0 relative">
+          <div className="flex-1 min-h-0 relative overflow-hidden">
             <Suspense fallback={<TabLoadingSkeleton />}>
               {previewMode === 'preview' ? (
-                <div className="h-full overflow-y-auto custom-scrollbar rounded-2xl shadow-inner bg-slate-200/20 dark:bg-black/20 p-4 border border-black/5 dark:border-white/5 print:hidden">
-                  <div className="w-full origin-top transition-transform duration-500 bg-white dark:bg-slate-900 shadow-2xl min-h-[1122px] print:hidden">
+                <div className="h-full overflow-y-auto custom-scrollbar print:hidden bg-[var(--v5-canvas)]/30">
+                  <div className="w-full min-h-full py-8 lg:py-12">
                     <ModernLivePreview contentRef={previewRef} />
                   </div>
                 </div>

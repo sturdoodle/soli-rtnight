@@ -27,12 +27,19 @@ export const formatMarkdown = (text) => {
     // Underline: __text__
     .replace(/__(.*?)__/g, '<u style="text-decoration-thickness: 1px; text-underline-offset: 2px;">$1</u>')
     
-    // Links: [text](url)
-    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline; opacity: 0.8;">$1</a>')
+    // Links: [text](url) - Ensuring URLs have protocols to prevent relative path issues
+    .replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
+      const href = url.match(/^(https?:\/\/|mailto:|tel:)/i) ? url : `https://${url}`;
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline; opacity: 0.8;">${text}</a>`;
+    })
     
     // Auto-highlight metrics: 40%, $500k, 5+ years (Common in resumes)
     .replace(/(\d+%|\$\d+(?:\.\d+)?(?:k|m|b)?|\d+\+?\s+years)/gi, '<span style="font-weight: 700; background-color: rgba(0,0,0,0.03); padding: 0 2px; border-radius: 2px;">$1</span>')
     
+    // Simple Auto-linking for bare URLs (if not already inside an <a> tag)
+    // This is a basic implementation to catch common patterns
+    .replace(/(?<!href=")(https?:\/\/[^\s<]+)/gi, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline; opacity: 0.8;">$1</a>')
+
     // Newlines
     .replace(/\n/g, '<br/>');
 
