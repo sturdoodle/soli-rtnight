@@ -221,14 +221,15 @@ const V5EditorContent = () => {
           <div className="px-8 py-6 border-t border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.01]">
             <div className="grid grid-cols-3 gap-6">
               {[
-                { label: 'Export', icon: Download, color: '#10b981', action: handleExportJSON },
-                { label: 'Import', icon: Upload, color: '#3b82f6', action: () => navbarFileInputRef.current?.click() },
-                { label: 'Resume', icon: FileText, color: activeColor, action: triggerDownload }
+                { label: 'Export', icon: Download, color: '#10b981', action: handleExportJSON, aria: 'Export resume backup as JSON' },
+                { label: 'Import', icon: Upload, color: '#3b82f6', action: () => navbarFileInputRef.current?.click(), aria: 'Import resume snapshot from JSON' },
+                { label: 'Resume', icon: FileText, color: activeColor, action: triggerDownload, aria: 'Download resume as PDF' }
               ].map((item, idx) => (
                 <button
                   key={idx}
                   onClick={() => { item.action(); setIsMobileMenuOpen(false); }}
                   className="flex flex-col items-center gap-2.5 group"
+                  aria-label={item.aria}
                 >
                   <div 
                     className="w-12 h-12 rounded-[1.1rem] flex items-center justify-center text-white shadow-xl transition-all duration-300 group-active:scale-90 group-hover:scale-105"

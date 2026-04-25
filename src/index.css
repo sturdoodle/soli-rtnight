@@ -5,6 +5,19 @@
 /* Force Tailwind to map the 'dark:' modifier precisely to the .dark class instead of OS media queries */
 @custom-variant dark (&:is(.dark *));
 
+/* SEO & Accessibility Utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .card-container {
   /* Apply the desired Tailwind utilities */
   @apply bg-white rounded-2xl shadow-sm border border-gray-300 p-3 mb-2 max-w-full overflow-hidden;

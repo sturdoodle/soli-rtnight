@@ -29,12 +29,13 @@ const V5Navbar = ({
           </button>
           <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 cursor-pointer"
             style={{ backgroundColor: activeColor, boxShadow: `0 8px 20px -4px ${activeColor}60` }}>
-            <img src={logo} alt="Logo" className="w-5 h-5 object-contain brightness-0 invert" />
+            <img src={logo} alt="QPkendra AI Resume Builder Logo" className="w-5 h-5 object-contain brightness-0 invert" />
           </div>
-          <h1 className="text-lg sm:text-xl font-black tracking-[-0.05em] text-[var(--v5-heading)] flex items-center gap-2 cursor-pointer">
+          <h1 className="sr-only">Free ATS Resume Builder 2026 | Professional CV Maker & AI Resume Creator</h1>
+          <div className="text-lg sm:text-xl font-black tracking-[-0.05em] text-[var(--v5-heading)] flex items-center gap-2 cursor-pointer" aria-hidden="true">
             <span className="hidden xs:inline">Resume Builder</span>
             <span className="hidden lg:inline font-light opacity-90">| QPkendra</span>
-          </h1>
+          </div>
         </div>
         <div className="hidden lg:flex items-center gap-8 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">
           {[
