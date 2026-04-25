@@ -43,7 +43,7 @@ const FormattingTip = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {tipItems.map((item, index) => (
-            <div key={index} className="bg-white/40 dark:bg-black/40 p-3 rounded-2xl border border-black/5 dark:border-white/10 flex flex-col items-center text-center backdrop-blur-sm shadow-sm transition-all hover:bg-white/60 dark:hover:bg-white/60 group/item">
+            <div key={index} className="bg-white/40 dark:bg-white/5 p-3 rounded-2xl border border-black/5 dark:border-white/10 flex flex-col items-center text-center backdrop-blur-sm shadow-sm transition-all hover:bg-white/60 dark:hover:bg-white/10 group/item">
               <item.icon size={16} className="mb-2 transition-colors" style={{ color: activeColor }} />
               <span className="text-[10px] font-black text-slate-800 dark:text-white mb-1 uppercase tracking-wider">{item.label}</span>
               <code className="text-[9px] px-1.5 py-0.5 rounded border transition-all font-bold"
@@ -62,7 +62,7 @@ const FormattingTip = () => {
           <div className="pt-4 border-t border-black/5 dark:border-white/5 flex items-center gap-3">
             <Info size={14} style={{ color: activeColor }} />
             <p className="text-[10px] text-slate-600 dark:text-slate-200 leading-relaxed italic font-medium flex-1">
-              Pro-tip: We automatically highlight <strong style={{ color: activeColor }}>metrics</strong> (40%, $500k) to make your wins pop!
+              Pro-tip: We automatically highlight <strong style={{ color: activeColor }} className="dark:brightness-125">metrics</strong> (40%, $500k) to make your wins pop!
             </p>
           </div>
           
@@ -72,9 +72,9 @@ const FormattingTip = () => {
             </div>
             <div className="flex-1">
               <h4 className="text-[9px] font-black uppercase tracking-widest text-slate-900 dark:text-white mb-1">Export Protocol</h4>
-              <p className="text-[10px] text-slate-600 dark:text-slate-300 leading-relaxed font-semibold">
+              <p className="text-[10px] text-slate-600 dark:text-slate-200 leading-relaxed font-semibold">
                 Click the <span className="font-black text-slate-900 dark:text-white">"Resume"</span> button to save as PDF. 
-                <span className="ml-1 opacity-60 italic text-slate-500 dark:text-slate-400">Standard shortcut: Ctrl+P</span>
+                <span className="ml-1 opacity-70 italic text-slate-500 dark:text-slate-400">Standard shortcut: Ctrl+P</span>
               </p>
             </div>
           </div>

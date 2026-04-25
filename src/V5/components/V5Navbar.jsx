@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, Sun, Moon, Download, Upload } from 'lucide-react';
+import { motion } from 'framer-motion';
 import logo from '../../assets/logo.png';
 import { useResume } from '../../Modern/context/ResumeContext';
 import { usePWAInstall } from '../../hooks/usePWAInstall';
@@ -50,7 +51,7 @@ const V5Navbar = ({
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`pb-5 pt-5 border-b-2 transition-all ${activeTab === item.id ? 'text-[var(--v5-heading)]' : 'text-slate-500 hover:text-[var(--v5-heading)]'}`}
+              className={`pb-5 pt-5 border-b-2 transition-all ${activeTab === item.id ? 'text-[var(--v5-heading)]' : 'text-slate-500 dark:text-slate-400 hover:text-[var(--v5-heading)]'}`}
               style={{ borderColor: activeTab === item.id ? activeColor : 'transparent' }}
             >
               {item.label}
@@ -100,14 +101,31 @@ const V5Navbar = ({
 
         <div className="flex items-center gap-3">
           {!isInstalled && isInstallable && (
-            <button
-              onClick={handleInstallClick}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-widest hover:bg-amber-500/20 transition-all active:scale-95 group"
-              aria-label="Install App"
-            >
-              <Smartphone size={14} className="group-hover:animate-bounce" />
-              <span className="hidden xs:inline">Install</span>
-            </button>
+            <div className="relative">
+              <motion.div
+                initial={{ y: 0 }}
+                animate={{ 
+                  x: [0, -2, 2, -2, 2, 0],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 3
+                }}
+                className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 bg-amber-500 text-white text-[7px] font-black rounded-full shadow-lg z-20 pointer-events-none whitespace-nowrap"
+              >
+                INSTALL
+              </motion.div>
+              <button
+                onClick={handleInstallClick}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-widest hover:bg-amber-500/20 transition-all active:scale-95 group relative"
+                aria-label="Install App"
+              >
+                <Smartphone size={14} className="group-hover:animate-bounce" />
+                <span className="hidden xs:inline">App</span>
+              </button>
+            </div>
           )}
 
           <button

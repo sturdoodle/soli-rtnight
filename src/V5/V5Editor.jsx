@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import {
   Menu, Download, Upload, Sun, Moon, Maximize2, X, Printer, Zap, FileText, Layout, Type, Settings, Braces, Smartphone
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useResume, ResumeProvider } from '../Modern/context/ResumeContext';
 import { useAtsScore } from '../hooks/useAtsScore';
 import { useResumeActions } from '../hooks/useResumeActions';
@@ -155,8 +156,8 @@ const V5EditorContent = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:h-auto print:bg-white print:overflow-visible overflow-hidden"
-      style={{ '--v5-accent': activeColor, '--v5-accent-rgb': hexToRgb(activeColor) }}>
+    <div className="flex flex-col h-[100dvh] bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:h-auto print:bg-white print:overflow-visible overflow-hidden"
+      style={{ '--v5-accent': activeColor, '--v5-accent-rgb': hexToRgb(activeColor), WebkitOverflowScrolling: 'touch' }}>
 
       {showOnboarding && (
         <div className="fixed inset-0 z-[200] bg-[var(--v5-bg)]/80 backdrop-blur-2xl animate-in fade-in duration-1000 flex items-center justify-center p-4">
@@ -168,7 +169,7 @@ const V5EditorContent = () => {
               </div>
               <div className="space-y-4">
                 <h2 className="text-4xl font-black tracking-tight text-[var(--v5-heading)]">Welcome to Resume Builder</h2>
-                <p className="text-slate-500 text-lg leading-relaxed">Experience our most advanced builder yet. Professional-grade resume builder with real-time ATS optimization.</p>
+                <p className="text-slate-500 dark:text-slate-300 text-lg leading-relaxed">Experience our most advanced builder yet. Professional-grade resume builder with real-time ATS optimization.</p>
               </div>
               <button onClick={completeOnboarding} className="px-12 py-5 rounded-full text-white font-black uppercase tracking-[0.2em] shadow-xl" style={{ backgroundColor: activeColor }}>Start Building</button>
             </div>
@@ -199,7 +200,7 @@ const V5EditorContent = () => {
       />
 
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-16 left-0 right-0 bg-[var(--v5-card)]/95 backdrop-blur-xl border-b border-black/5 dark:border-white/5 z-40 shadow-xl animate-in slide-in-from-top-2">
+        <div className="lg:hidden absolute top-16 left-0 right-0 bg-[var(--v5-card)]/95 backdrop-blur-xl border-b border-black/5 dark:border-white/5 z-40 shadow-xl animate-in slide-in-from-top-2 max-h-[calc(100dvh-64px)] overflow-y-auto custom-scrollbar">
           <div className="flex flex-col p-2 text-[10px] font-black uppercase tracking-[0.2em] space-y-0.5">
             {[
               { id: 'content', label: 'Editor' },
@@ -222,7 +223,10 @@ const V5EditorContent = () => {
           {/* Mobile Install Promotion */}
           {!isInstalled && isInstallable && (
             <div className="px-8 pt-2 pb-4">
-               <button 
+               <motion.button 
+                 initial={{ x: 0 }}
+                 animate={{ x: [0, -1, 1, -1, 1, 0] }}
+                 transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 5 }}
                  onClick={() => { handleInstallClick(); setIsMobileMenuOpen(false); }}
                  className="w-full p-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white flex items-center justify-between shadow-lg shadow-amber-500/20 group active:scale-95 transition-all"
                >
@@ -232,11 +236,11 @@ const V5EditorContent = () => {
                    </div>
                    <div className="text-left">
                      <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1">Install App</p>
-                     <p className="text-[8px] font-medium opacity-80 leading-none">Access your resumes offline</p>
+                     <p className="text-[8px] font-medium opacity-80 dark:opacity-100 dark:text-orange-100 leading-none">Access your resumes offline</p>
                    </div>
                  </div>
                  <Zap size={16} className="opacity-50 animate-pulse" />
-               </button>
+               </motion.button>
             </div>
           )}
           
@@ -284,8 +288,8 @@ const V5EditorContent = () => {
         />
 
         <main
-          className="flex-1 h-full overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-8 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-14 lg:pb-16 px-0 custom-scrollbar print:hidden lg:m-4 lg:rounded-[2.5rem] lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm"
-          style={isDesktop ? { width: `${splitWidth}%` } : { width: '100%' }}
+          className="flex-1 h-full overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-8 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-14 lg:pb-16 px-0 custom-scrollbar print:hidden lg:m-4 lg:rounded-[2.5rem] lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm overscroll-contain"
+          style={isDesktop ? { width: `${splitWidth}%`, WebkitOverflowScrolling: 'touch' } : { width: '100%', WebkitOverflowScrolling: 'touch' }}
         >
           <div className="max-w-[1400px] mx-auto min-h-full">
             <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] px-1.5 sm:px-6 lg:px-8 py-6 relative">
@@ -311,7 +315,7 @@ const V5EditorContent = () => {
                         <span className="text-3xl font-black" style={{ fontFamily: 'Absans, sans-serif', color: activeColor }}>qp</span>
                       </div>
                       <h3 className="text-3xl font-black text-[var(--v5-heading)] opacity-90" style={{ fontFamily: 'Absans, sans-serif' }}>qpkendra</h3>
-                      <p className="text-xs font-bold text-slate-500 mt-2 uppercase tracking-widest">Crafted with <span className="text-blue-500 text-sm inline-block animate-pulse mx-1">💙</span> in India</p>
+                      <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mt-2 uppercase tracking-widest">Crafted with <span className="text-blue-500 text-sm inline-block animate-pulse mx-1">💙</span> in India</p>
                     </div>
                   </div>
                 )}
@@ -413,7 +417,7 @@ const V5EditorContent = () => {
               <button onClick={() => setIsEnlarged(false)} className="p-2 bg-white/10 text-white rounded-full"><X size={18} /></button>
             </div>
           </div>
-          <div className="flex-1 overflow-y-auto p-4 sm:p-12 lg:max-w-6xl lg:mx-auto w-full print:p-0 print:max-w-none">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-12 lg:max-w-6xl lg:mx-auto w-full print:p-0 print:max-w-none overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
             <Suspense fallback={<TabLoadingSkeleton />}>
               <div className="print:block print:w-full">
                 <ModernLivePreview contentRef={previewRef} />

@@ -439,8 +439,8 @@ input:focus {
   --color-card-bg: rgba(10, 15, 13, 0.4);
   --color-card-border: rgba(255, 255, 255, 0.05);
   --color-text-primary: #f8fafc;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #475569;
+  --color-text-secondary: #cbd5e1; /* Lighter for better contrast */
+  --color-text-muted: #64748b; /* Better visibility than 475569 */
   --color-input-bg: rgba(15, 23, 20, 0.6);
   --color-input-border: rgba(255, 255, 255, 0.2);
 
@@ -451,10 +451,11 @@ input:focus {
 
   /* V5 Dark Theme System (Strictly Solid) */
   --v5-bg: #050a0f;
+  --v5-canvas: #0a1118;
   --v5-card: #0d151c;
-  --v5-border: rgba(255, 255, 255, 0.1);
-  --v5-heading: #f8fafc;
-  --v5-text: #94a3b8;
+  --v5-border: rgba(255, 255, 255, 0.15); /* Slightly more opaque */
+  --v5-text: #e2e8f0; /* Significantly lighter (slate-200) for mobile readability */
+  --v5-heading: #ffffff;
 }
 
 /* Global Container Respect & Stability */
@@ -1069,4 +1070,51 @@ textarea {
   animation: font-tile-glow 2.5s ease-in-out infinite;
   z-index: 10;
   border: 1.5px solid rgba(var(--v5-accent-rgb, 14, 165, 233), 0.5) !important;
+}
+
+/* --- Mobile & iOS Safari Optimization Layer --- */
+@layer base {
+  :root {
+    /* Support for older browsers using vh but aiming for dvh experience */
+    --viewport-height: 100vh;
+    --viewport-height: 100dvh;
+  }
+
+  html, body {
+    height: var(--viewport-height);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent elastic bounce on root */
+    position: fixed; /* Lock root to prevent iOS "dead scroll" */
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+  }
+
+  #root {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Utility for elements that SHOULD scroll */
+.ios-scroll-container {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+/* Fix for Tailwind h-screen not always mapping to dvh in all contexts */
+.h-screen-safe {
+  height: 100vh;
+  height: 100dvh;
+}
+
+@supports (-webkit-touch-callout: none) {
+  /* Specific target for iOS Safari */
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
 }
