@@ -217,40 +217,33 @@ const V5EditorContent = () => {
             ))}
           </div>
 
-          {/* Mobile Import/Export Quick Actions */}
-          <div className="p-3 border-t border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]">
-            <h4 className="text-[6.5px] font-black uppercase tracking-[0.2em] text-slate-400 text-center mb-3 opacity-50">Resume Snapshot Ops</h4>
-            <div className="grid grid-cols-3 gap-1">
-              <button 
-                onClick={() => { handleExportJSON(); setIsMobileMenuOpen(false); }}
-                className="flex flex-col items-center gap-1.5 group"
-              >
-                <span className="text-[6px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 text-center h-3 flex items-center">Export</span>
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/20 dark:border-emerald-500/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-sm active:scale-95 transition-all">
-                  <Download size={16} />
-                </div>
-              </button>
-
-              <button 
-                onClick={() => { navbarFileInputRef.current?.click(); setIsMobileMenuOpen(false); }}
-                className="flex flex-col items-center gap-1.5 group"
-              >
-                <span className="text-[6px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 text-center h-3 flex items-center">Import</span>
-                <div className="w-9 h-9 rounded-xl bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/20 dark:border-blue-500/40 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm active:scale-95 transition-all">
-                  <Upload size={16} />
-                </div>
-              </button>
-
-              <button 
-                onClick={() => { triggerDownload(); setIsMobileMenuOpen(false); }}
-                className="flex flex-col items-center gap-1.5 group"
-              >
-                <span className="text-[6px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 text-center h-3 flex items-center">Resume</span>
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white shadow-sm active:scale-95 transition-all"
-                  style={{ backgroundColor: activeColor, boxShadow: `0 0 15px ${activeColor}30` }}>
-                  <FileText size={16} />
-                </div>
-              </button>
+          {/* Premium Mobile Quick Actions Redesign */}
+          <div className="px-8 py-6 border-t border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.01]">
+            <div className="grid grid-cols-3 gap-6">
+              {[
+                { label: 'Export', icon: Download, color: '#10b981', action: handleExportJSON },
+                { label: 'Import', icon: Upload, color: '#3b82f6', action: () => navbarFileInputRef.current?.click() },
+                { label: 'Resume', icon: FileText, color: activeColor, action: triggerDownload }
+              ].map((item, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => { item.action(); setIsMobileMenuOpen(false); }}
+                  className="flex flex-col items-center gap-2.5 group"
+                >
+                  <div 
+                    className="w-12 h-12 rounded-[1.1rem] flex items-center justify-center text-white shadow-xl transition-all duration-300 group-active:scale-90 group-hover:scale-105"
+                    style={{ 
+                      backgroundColor: item.color,
+                      boxShadow: `0 10px 20px -5px ${item.color}60`
+                    }}
+                  >
+                    <item.icon size={20} className="drop-shadow-md" />
+                  </div>
+                  <span className="text-[9px] font-black uppercase tracking-[0.1em] text-slate-500 dark:text-slate-400 group-active:opacity-70 transition-opacity">
+                    {item.label}
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
         </div>
