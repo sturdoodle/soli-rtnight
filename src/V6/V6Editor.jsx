@@ -204,8 +204,7 @@ const V6Editor = () => {
 
       <div className="flex-1 flex flex-row min-w-0 h-full overflow-hidden print:h-auto print:overflow-visible relative z-10">
         <motion.div
-          layout
-          className="flex-1 flex flex-col h-full overflow-y-auto custom-scrollbar print:hidden overscroll-auto touch-pan-y"
+          className="flex-1 flex flex-col h-full overflow-y-auto custom-scrollbar print:hidden overscroll-auto touch-pan-y will-change-transform"
           style={isDesktop && showPreview ? { width: `${splitWidth}%` } : { width: '100%' }}
         >
           <V6Header

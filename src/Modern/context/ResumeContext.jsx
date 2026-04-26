@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useMemo, useCallback } from 'react';
 import { SAMPLE_JSON_DATA } from '../../utils/constants.js';
 
 const ResumeContext = createContext();
@@ -159,28 +159,30 @@ export function ResumeProvider({ children }) {
     }
   }, [state, state.themeMode, state.storageType]);
 
-  const updateField = (field, value) => dispatch({ type: 'UPDATE_FIELD', field, value });
-  const updateSection = (section, value) => dispatch({ type: 'UPDATE_SECTION', section, value });
-  const setResumeData = (data) => dispatch({ type: 'SET_RESUME_DATA', payload: data });
-  const toggleAts = () => dispatch({ type: 'TOGGLE_ATS' });
-  const resetResume = () => dispatch({ type: 'RESET_RESUME' });
-  const updateStorageType = (type) => dispatch({ type: 'UPDATE_STORAGE_TYPE', payload: type });
+  const updateField = useCallback((field, value) => dispatch({ type: 'UPDATE_FIELD', field, value }), []);
+  const updateSection = useCallback((section, value) => dispatch({ type: 'UPDATE_SECTION', section, value }), []);
+  const setResumeData = useCallback((data) => dispatch({ type: 'SET_RESUME_DATA', payload: data }), []);
+  const toggleAts = useCallback(() => dispatch({ type: 'TOGGLE_ATS' }), []);
+  const resetResume = useCallback(() => dispatch({ type: 'RESET_RESUME' }), []);
+  const updateStorageType = useCallback((type) => dispatch({ type: 'UPDATE_STORAGE_TYPE', payload: type }), []);
+
+  const contextValue = useMemo(() => ({
+    resumeData: state,
+    updateField,
+    updateSection,
+    setResumeData,
+    toggleAts,
+    updateTemplate: (templateId) => dispatch({ type: 'UPDATE_TEMPLATE', templateId }),
+    updateThemeColor: (color) => dispatch({ type: 'UPDATE_THEME_COLOR', color }),
+    toggleTheme: () => dispatch({ type: 'TOGGLE_THEME' }),
+    toggleSectionTheming: () => dispatch({ type: 'TOGGLE_SECTION_THEMING' }),
+    updateStorageType,
+    setEditorStyle: (style) => dispatch({ type: 'SET_EDITOR_STYLE', payload: style }),
+    resetResume
+  }), [state, updateField, updateSection, setResumeData, toggleAts, updateStorageType, resetResume]);
 
   return (
-    <ResumeContext.Provider value={{
-      resumeData: state,
-      updateField,
-      updateSection,
-      setResumeData,
-      toggleAts,
-      updateTemplate: (templateId) => dispatch({ type: 'UPDATE_TEMPLATE', templateId }),
-      updateThemeColor: (color) => dispatch({ type: 'UPDATE_THEME_COLOR', color }),
-      toggleTheme: () => dispatch({ type: 'TOGGLE_THEME' }),
-      toggleSectionTheming: () => dispatch({ type: 'TOGGLE_SECTION_THEMING' }),
-      updateStorageType,
-      setEditorStyle: (style) => dispatch({ type: 'SET_EDITOR_STYLE', payload: style }),
-      resetResume
-    }}>
+    <ResumeContext.Provider value={contextValue}>
       {children}
     </ResumeContext.Provider>
   );
