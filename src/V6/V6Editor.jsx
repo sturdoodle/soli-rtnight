@@ -177,7 +177,7 @@ const V6Editor = () => {
 
   return (
     <div
-      className={`flex min-h-[100dvh] h-[100dvh] bg-[#fcfcfc] dark:bg-[#08080a] font-sans selection:bg-blue-500/30 overflow-hidden print:h-auto print:overflow-visible text-slate-900 dark:text-slate-100 relative ${isResizing ? 'cursor-col-resize select-none' : ''}`}
+      className={`flex flex-col fixed inset-0 bg-[#fcfcfc] dark:bg-[#08080a] font-sans selection:bg-blue-500/30 overflow-hidden print:static print:h-auto print:overflow-visible text-slate-900 dark:text-slate-100 relative ${isResizing ? 'cursor-col-resize select-none' : ''}`}
       style={{ '--v6-primary': themeColor }}
     >
       <V6ConfirmModal
@@ -205,7 +205,7 @@ const V6Editor = () => {
       <div className="flex-1 flex flex-row min-w-0 h-full overflow-hidden print:h-auto print:overflow-visible relative z-10">
         <motion.div
           layout
-          className="flex-1 flex flex-col h-full overflow-y-auto custom-scrollbar print:hidden"
+          className="flex-1 flex flex-col h-full overflow-y-auto custom-scrollbar print:hidden overscroll-auto touch-pan-y"
           style={isDesktop && showPreview ? { width: `${splitWidth}%` } : { width: '100%' }}
         >
           <V6Header
@@ -218,7 +218,7 @@ const V6Editor = () => {
             onDownload={triggerDownload}
           />
 
-          <main className="flex-1 p-4 lg:p-10 max-w-4xl mx-auto w-full space-y-8 pb-32 sm:pb-24">
+          <main className="flex-1 p-3 sm:p-4 lg:p-10 max-w-4xl mx-auto w-full space-y-8 pb-32 sm:pb-24">
             <div className="min-h-[calc(100vh-200px)] relative">
               <AnimatePresence mode="wait">
                 <motion.div

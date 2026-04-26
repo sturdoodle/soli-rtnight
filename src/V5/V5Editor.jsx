@@ -156,7 +156,7 @@ const V5EditorContent = () => {
   };
 
   return (
-    <div className="flex flex-col h-[100dvh] bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:h-auto print:bg-white print:overflow-visible overflow-hidden"
+    <div className="flex flex-col fixed inset-0 bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:static print:h-auto print:bg-white print:overflow-visible overflow-hidden"
       style={{ '--v5-accent': activeColor, '--v5-accent-rgb': hexToRgb(activeColor), WebkitOverflowScrolling: 'touch' }}>
 
       {showOnboarding && (
@@ -288,7 +288,7 @@ const V5EditorContent = () => {
         />
 
         <main
-          className="flex-1 h-full overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-8 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-14 lg:pb-16 px-0 custom-scrollbar print:hidden lg:m-4 lg:rounded-[2.5rem] lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm overscroll-contain"
+          className="flex-1 h-full overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-8 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-14 lg:pb-16 px-0 custom-scrollbar print:hidden lg:m-4 lg:rounded-[2.5rem] lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm overscroll-auto touch-pan-y"
           style={isDesktop ? { width: `${splitWidth}%`, WebkitOverflowScrolling: 'touch' } : { width: '100%', WebkitOverflowScrolling: 'touch' }}
         >
           <div className="max-w-[1400px] mx-auto min-h-full">

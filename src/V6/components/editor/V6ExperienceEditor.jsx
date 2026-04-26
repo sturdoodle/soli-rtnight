@@ -100,9 +100,9 @@ const V6ExperienceEditor = () => {
       <div className="space-y-12">
         {experience.map((exp, expIndex) => (
           <React.Fragment key={exp.id}>
-            <div className="relative p-1 bg-gradient-to-br from-slate-200/50 to-transparent dark:from-white/5 dark:to-transparent rounded-[2.5rem]">
-              <div className="bg-white dark:bg-[#0c0c0e] p-6 sm:p-10 rounded-[2.4rem] shadow-sm border border-slate-200 dark:border-white/[0.05]">
-                <div className="space-y-8">
+            <div className="relative p-1 bg-gradient-to-br from-slate-200/50 to-transparent dark:from-white/5 dark:to-transparent rounded-[2rem] sm:rounded-[2.5rem]">
+              <div className="bg-white dark:bg-[#0c0c0e] p-4 sm:p-10 rounded-[1.8rem] sm:rounded-[2.4rem] shadow-sm border border-slate-200 dark:border-white/[0.05]">
+                <div className="space-y-6 sm:space-y-8">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 shadow-inner">
@@ -121,8 +121,8 @@ const V6ExperienceEditor = () => {
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-                    <div className="md:col-span-4 space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-8">
+                    <div className="md:col-span-4 space-y-5 sm:space-y-6">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2 ml-1">
                           <Globe size={12} className="text-slate-400" />
@@ -151,7 +151,7 @@ const V6ExperienceEditor = () => {
                       </div>
                     </div>
 
-                    <div className="md:col-span-8 space-y-8">
+                    <div className="md:col-span-8 space-y-6 sm:space-y-8">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2 ml-1">
                           <User size={12} className="text-slate-400" />

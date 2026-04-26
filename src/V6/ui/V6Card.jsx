@@ -10,9 +10,9 @@ const V6Card = ({ title, description, children, icon: Icon, action, className = 
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className={`group relative bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.08] rounded-[2rem] overflow-hidden transition-all duration-500 hover:border-blue-500/30 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] ${className}`}
+      className={`group relative bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.08] rounded-2xl sm:rounded-[2rem] overflow-hidden transition-all duration-500 hover:border-blue-500/30 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] ${className}`}
     >
-      <div className={`flex flex-col ${horizontal ? 'sm:flex-row sm:items-center justify-between' : ''} p-6 sm:p-8 gap-6`}>
+      <div className={`flex flex-col ${horizontal ? 'sm:flex-row sm:items-center justify-between' : ''} p-4 sm:p-8 gap-4 sm:gap-6`}>
         <div className={`flex items-start justify-between ${horizontal ? 'flex-1 min-w-0' : 'w-full'}`}>
           <div className="space-y-1.5 flex-1 min-w-0">
             <div className="flex items-center gap-2">
