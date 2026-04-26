@@ -170,7 +170,7 @@ const ModernEditorContent = () => {
       <main className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start px-4 sm:px-8 lg:px-12 pb-24 md:pb-12 print:block print:p-0 print:m-0 print:max-w-none print:overflow-visible">
 
         {/* Editor Column */}
-        <div className={`space-y-6 pb-20 overflow-y-auto max-h-[85vh] pr-6 custom-scrollbar ${mobileTab === 'preview' ? 'hidden md:block' : 'block'} print:hidden`}>
+        <div className={`space-y-6 pb-20 overflow-y-auto max-h-[85vh] pr-6 custom-scrollbar overscroll-contain ${mobileTab === 'preview' ? 'hidden md:block' : 'block'} print:hidden`} style={{ WebkitOverflowScrolling: 'touch' }}>
           <div className="flex items-center gap-2 text-sage-400 mb-2 ml-2">
             <WandSparkles size={16} />
             <span className="text-xs uppercase tracking-widest font-bold text-sage-500 dark:text-sage-400">Smart Editor</span>
@@ -191,7 +191,7 @@ const ModernEditorContent = () => {
             <span className="text-[10px] font-bold text-sage-300 uppercase tracking-tighter">Scroll to view all</span>
           </div>
 
-          <div className="flex-1 overflow-y-auto overflow-x-hidden print:overflow-visible print:p-0 rounded-3xl shadow-2xl transition-all hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] bg-white custom-scrollbar border border-white/20 print:shadow-none print:border-none print:rounded-none">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden print:overflow-visible print:p-0 rounded-3xl shadow-2xl transition-all hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] bg-white custom-scrollbar border border-white/20 overscroll-contain print:shadow-none print:border-none print:rounded-none" style={{ WebkitOverflowScrolling: 'touch' }}>
             <div ref={previewRef}>
               <ModernLivePreview />
             </div>

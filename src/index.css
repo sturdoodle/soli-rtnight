@@ -1085,8 +1085,8 @@ textarea {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Prevent elastic bounce on root */
-    position: fixed; /* Lock root to prevent iOS "dead scroll" */
+    overflow: auto; /* Allow scrolling but control bounce */
+    overscroll-behavior: none; /* Modern way to prevent elastic bounce */
     -webkit-text-size-adjust: 100%;
     touch-action: manipulation;
   }
