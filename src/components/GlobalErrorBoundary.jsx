@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertOctagon, RefreshCcw, Download, Trash2, Home, Terminal } from 'lucide-react';
+import { AlertTriangle, RefreshCcw, Download, Trash2, Home, Terminal, ShieldAlert } from 'lucide-react';
 import { useResume } from '../Modern/context/ResumeContext';
 
 // Functional UI Component to handle Hooks (Theme Sync)
@@ -7,10 +7,10 @@ const ErrorFallback = ({ error }) => {
   const { resumeData } = useResume();
   const themeMode = resumeData?.themeMode || 'light';
   const isDark = themeMode === 'dark';
-  const themeColor = resumeData?.themeColor || '#ef4444';
+  const themeColor = resumeData?.themeColor || '#3b82f6';
 
   const handleHardReset = () => {
-    if (confirm("ARCHITECTURAL WARNING: This will clear your career blueprint cache. This action is final. Proceed?")) {
+    if (confirm("DANGER ZONE: This will permanently delete your local resume data. This action cannot be undone. Proceed?")) {
       localStorage.clear();
       sessionStorage.clear();
       window.location.href = '/#/';
@@ -24,86 +24,86 @@ const ErrorFallback = ({ error }) => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `emergency_blueprint_backup_${new Date().getTime()}.json`;
+      link.download = `resume_emergency_backup_${new Date().getTime()}.json`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-      alert("Emergency blueprint exported. You can import this into a stable session.");
     } catch (e) {
-      alert("Emergency export failed. Database state might be corrupted.");
+      alert("Emergency export failed.");
     }
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-6 font-sans relative overflow-hidden transition-colors duration-700 ${isDark ? 'bg-[#050A0F] text-white' : 'bg-[#FDFDFD] text-slate-900'}`}>
-      {/* Background Glitch Effects - Synchronized with Theme Color */}
-      <div className={`absolute top-0 left-0 w-full h-1 opacity-20 animate-pulse`} style={{ backgroundColor: themeColor }} />
-      <div className={`absolute bottom-0 left-0 w-full h-1 opacity-20 animate-pulse`} style={{ backgroundColor: themeColor }} />
-      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] blur-[150px] ${isDark ? 'opacity-[0.1]' : 'opacity-[0.05]'}`} 
-           style={{ backgroundColor: themeColor }} />
+    <div className={`min-h-screen flex items-center justify-center p-4 sm:p-10 font-sans ${isDark ? 'bg-[#0d1117] text-white' : 'bg-[#f8fafc] text-slate-900'}`}>
+      <div className="max-w-2xl w-full space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+        <div className="flex flex-col items-center text-center space-y-4">
+          <div className="w-20 h-20 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 mb-4 shadow-xl shadow-red-500/10">
+            <ShieldAlert size={40} />
+          </div>
+          <h1 className="text-3xl font-bold tracking-tight">System Exception</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-md">
+            The application encountered an unexpected error. We've isolated the issue to prevent data loss.
+          </p>
+        </div>
 
-      <div className="max-w-3xl w-full relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        <div className={`backdrop-blur-3xl border rounded-[3.5rem] overflow-hidden ${isDark ? 'bg-[#0A0F14]/80 border-white/5 shadow-[0_50px_100px_rgba(0,0,0,0.5)]' : 'bg-white border-black/[0.03] shadow-[0_30px_70px_rgba(0,0,0,0.08)]'}`}>
-          {/* Header */}
-          <div className={`p-10 flex flex-col items-center text-center border-b`} 
-               style={{ backgroundColor: isDark ? `${themeColor}08` : `${themeColor}05`, borderColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }}>
-            <div className="w-24 h-24 rounded-[2.5rem] flex items-center justify-center mb-8 border animate-pulse"
-                 style={{ backgroundColor: `${themeColor}15`, borderColor: `${themeColor}30` }}>
-              <AlertOctagon size={48} style={{ color: themeColor }} />
+        <div className="bg-white dark:bg-[#161b22] border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+          <div className="p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+            <div className="flex items-center gap-2 mb-3">
+              <Terminal size={14} className="text-slate-400" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Error Details</span>
             </div>
-            <h1 className="text-4xl font-black tracking-tight mb-2" style={{ fontFamily: 'Absans, sans-serif' }}>System Overload</h1>
-            <p className="text-xs font-black uppercase tracking-[0.4em] mb-4 opacity-80" style={{ color: themeColor }}>Critical Runtime Exception</p>
-            <div className={`p-4 rounded-2xl border w-full max-w-xl overflow-hidden ${isDark ? 'bg-black/40 border-white/5' : 'bg-slate-50 border-black/5'}`}>
-              <div className="flex items-center gap-2 mb-2 opacity-40">
-                <Terminal size={12} style={{ color: themeColor }} />
-                <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: themeColor }}>Error Stack</span>
-              </div>
-              <p className={`text-[10px] font-mono text-left line-clamp-3 leading-relaxed whitespace-pre-wrap select-all ${isDark ? 'opacity-80' : 'text-slate-600 font-medium'}`}>
-                {error?.toString()}
-              </p>
+            <div className="bg-slate-900 rounded-xl p-4 overflow-x-auto">
+              <pre className="text-[10px] font-mono text-emerald-400 whitespace-pre-wrap leading-relaxed">
+                {error?.message || error?.toString() || 'Unknown runtime error'}
+              </pre>
             </div>
           </div>
 
-          {/* Body */}
-          <div className="p-10 space-y-8">
-            <p className={`text-center text-lg leading-relaxed font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-              The liquid engine encountered a structural failure. We've isolated the crash to protect your data integrity. Your blueprint might still be recoverable.
-            </p>
+          <div className="p-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <button
+              onClick={() => window.location.reload()}
+              className="flex items-center gap-4 p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-xl transition-all shadow-lg shadow-blue-500/20 active:scale-95 group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
+                <RefreshCcw size={20} className="group-hover:rotate-180 transition-transform duration-700" />
+              </div>
+              <div className="text-left">
+                <p className="text-xs font-bold uppercase tracking-widest">Reload App</p>
+                <p className="text-[9px] opacity-80 font-medium">Attempt recovery</p>
+              </div>
+            </button>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <button
-                onClick={() => window.location.reload()}
-                className={`flex flex-col items-center text-center p-6 border rounded-[2rem] transition-all group ${isDark ? 'bg-white/5 hover:bg-white/10 border-white/5' : 'bg-white hover:bg-slate-50 border-black/[0.06] shadow-sm'}`}
-              >
-                <RefreshCcw size={24} className="text-blue-500 mb-3 group-hover:rotate-180 transition-transform duration-700" />
-                <span className="text-xs font-black uppercase tracking-widest text-blue-500 mb-1">Relaunch Engine</span>
-                <span className={`text-[10px] font-medium ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Standard boot protocol</span>
-              </button>
+            <button
+              onClick={handleEmergencyExport}
+              className="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl transition-all hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm active:scale-95 group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0 text-emerald-500">
+                <Download size={20} />
+              </div>
+              <div className="text-left">
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white">Export Data</p>
+                <p className="text-[9px] text-slate-500 font-medium">Backup your resume</p>
+              </div>
+            </button>
+          </div>
 
-              <button
-                onClick={handleEmergencyExport}
-                className={`flex flex-col items-center text-center p-6 border rounded-[2rem] transition-all group ${isDark ? 'bg-white/5 hover:bg-white/10 border-white/5' : 'bg-white hover:bg-slate-50 border-black/[0.06] shadow-sm'}`}
-              >
-                <Download size={24} className="text-emerald-500 mb-3 group-hover:-translate-y-1 transition-transform" />
-                <span className="text-xs font-black uppercase tracking-widest text-emerald-500 mb-1">Emergency Snapshot</span>
-                <span className={`text-[10px] font-medium ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Download local database</span>
-              </button>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4">
-              <a href="/#/" className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors ${isDark ? 'text-slate-400 hover:text-white' : 'text-slate-400 hover:text-slate-900'}`}>
-                <Home size={14} /> Safe Zone Dashboard
-              </a>
-              <button 
-                onClick={handleHardReset}
-                className="flex items-center gap-2 px-6 py-3 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm active:scale-95"
-              >
-                <Trash2 size={14} /> Wipe & Factory Reset
-              </button>
-            </div>
+          <div className="px-8 pb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <a href="/#/" className="flex items-center gap-2 text-[10px] font-bold text-slate-400 hover:text-blue-500 transition-colors uppercase tracking-widest">
+              <Home size={14} /> Back to Dashboard
+            </a>
+            <button 
+              onClick={handleHardReset}
+              className="flex items-center gap-2 px-5 py-2.5 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all"
+            >
+              <Trash2 size={14} /> Wipe Local Cache
+            </button>
           </div>
         </div>
+        
+        <p className="text-center text-[10px] text-slate-400 font-medium uppercase tracking-[0.2em]">
+          qpkendra safe recovery mode
+        </p>
       </div>
     </div>
   );
@@ -121,7 +121,7 @@ class GlobalErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error("Global Catch Protocol Activated:", error, errorInfo);
+    console.error("Global Error Boundary caught an exception:", error, errorInfo);
   }
 
   render() {
