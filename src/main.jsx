@@ -11,6 +11,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import V5Editor from './V5/V5Editor.jsx';
+import V6Editor from './V6/V6Editor.jsx';
 import NotFoundPage from './NotFound.jsx';
 import GlobalErrorBoundary from './components/GlobalErrorBoundary.jsx';
 import { ResumeProvider } from './Modern/context/ResumeContext.jsx';
@@ -20,6 +21,10 @@ const router = createHashRouter([
   {
     path: "/",
     element: <V5Editor />
+  },
+  {
+    path: "/v6",
+    element: <V6Editor />
   },
   {
     path: "/v5",
