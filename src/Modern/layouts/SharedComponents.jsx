@@ -163,12 +163,12 @@ export const EducationItem = ({ edu, atsMode }) => {
   );
 };
 
-export const SkillCategory = ({ skill, themeColor, atsMode }) => {
+export const SkillCategory = ({ skill, themeColor, atsMode, vertical = false }) => {
   const { resumeData } = useResume();
   const sectionThemingEnabled = resumeData?.sectionThemingEnabled ?? true;
 
   return (
-    <div className={`mb-3 print:mb-1 last:mb-0 relative flex ${atsMode ? 'flex-row items-baseline gap-2' : 'flex-col md:flex-row md:items-baseline md:gap-3'}`}>
+    <div className={`mb-3 print:mb-1 last:mb-0 relative flex ${atsMode ? 'flex-row items-baseline gap-2' : (vertical ? 'flex-col gap-1' : 'flex-col md:flex-row md:items-baseline md:gap-3')}`}>
       <h3 className={`text-[11px] font-bold uppercase tracking-wider shrink-0 transition-colors ${atsMode ? 'text-black' : 'opacity-60 print:opacity-100'}`} style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'inherit' }}>
         <EditableText text={skill.category} />:
       </h3>

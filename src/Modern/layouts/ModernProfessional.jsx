@@ -61,7 +61,7 @@ export const ModernProfessional = ({ data, themeColor, atsMode }) => (
             <SectionTitle atsMode={atsMode} themeColor={themeColor}>Core Expertise</SectionTitle>
             <div className="space-y-6">
               {data.skills?.map((skill, idx) => (
-                <SkillCategory key={skill.id} skill={skill} path={`skills.${idx}`} themeColor={themeColor} atsMode={atsMode} />
+                <SkillCategory key={skill.id} skill={skill} path={`skills.${idx}`} themeColor={themeColor} atsMode={atsMode} vertical={true} />
               ))}
             </div>
           </section>

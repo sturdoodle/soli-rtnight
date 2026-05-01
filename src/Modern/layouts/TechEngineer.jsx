@@ -34,9 +34,9 @@ export const TechEngineer = ({ data, themeColor, atsMode }) => (
         {data.skills && data.skills.length > 0 && (
           <section>
             <SectionTitle atsMode={atsMode} themeColor={themeColor}>Skills</SectionTitle>
-            <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'} gap-6`}>
+            <div className={`grid ${atsMode ? 'grid-cols-1' : 'grid-cols-1'} gap-6`}>
               {data.skills?.map(skill => (
-                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} vertical={true} />
               ))}
             </div>
           </section>

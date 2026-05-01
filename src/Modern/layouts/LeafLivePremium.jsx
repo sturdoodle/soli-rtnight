@@ -52,7 +52,7 @@ export const LeafLivePremium = ({ data, themeColor, atsMode }) => {
             >
               Skills
             </SectionTitle>
-            <div className={`grid ${atsMode ? 'grid-cols-1 gap-1' : 'md:grid-cols-2 print:grid-cols-2 gap-4 print:gap-2'}`}>
+            <div className={`grid ${atsMode ? 'grid-cols-1 gap-1' : 'grid-cols-1 gap-4 print:gap-2'}`}>
               {data.skills?.map((skill, idx) => (
                 <SkillCategory key={skill.id} skill={skill} path={`skills.${idx}`} themeColor={themeColor} atsMode={atsMode} />
               ))}

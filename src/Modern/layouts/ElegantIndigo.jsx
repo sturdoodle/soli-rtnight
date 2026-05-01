@@ -59,7 +59,7 @@ export const ElegantIndigo = ({ data, themeColor, atsMode }) => (
             <SectionTitle className={atsMode ? '' : 'text-[10px] font-black uppercase tracking-[0.4em] mb-8 opacity-30'} themeColor={themeColor} atsMode={atsMode}>Core Skills</SectionTitle>
             <div className="grid grid-cols-1 gap-8">
               {data.skills.map(skill => (
-                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} vertical={true} />
               ))}
             </div>
           </section>

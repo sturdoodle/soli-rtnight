@@ -58,7 +58,7 @@ export const RefinedMinimalist = ({ data, themeColor, atsMode }) => (
             <SectionTitle themeColor={themeColor} atsMode={atsMode}>Core Skills</SectionTitle>
             <div className="space-y-6">
               {data.skills?.map(skill => (
-                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} />
+                <SkillCategory key={skill.id} skill={skill} themeColor={themeColor} atsMode={atsMode} vertical={true} />
               ))}
             </div>
           </section>
