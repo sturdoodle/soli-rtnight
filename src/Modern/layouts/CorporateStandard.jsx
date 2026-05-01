@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github, Linkedin, Briefcase, GraduationCap, Award, FolderCode, FileText } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const CorporateStandard = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white px-12 py-16 min-h-[1122px] w-full ${atsMode ? 'text-black' : 'text-slate-900 font-sans'}`}>
+  <main className={`bg-white px-12 py-16 min-h-[1122px] w-full ${atsMode ? 'text-black' : 'text-slate-900 '}`}>
     <header className={`text-center border-b-4 pb-8 mb-10 ${atsMode ? 'border-black' : ''}`} style={atsMode ? {} : { borderColor: themeColor }}>
       <h1 className="text-4xl font-bold tracking-tight mb-3 uppercase" style={atsMode ? { color: 'black' } : { color: themeColor }}>{data.fullName}</h1>
       <p className="text-xl font-semibold opacity-60 mb-6 tracking-widest">{data.jobTitle}</p>
@@ -85,3 +87,4 @@ export const CorporateStandard = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

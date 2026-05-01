@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const RefinedMinimalist = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white px-12 py-12 min-h-[1122px] w-full ${atsMode ? 'text-black print:p-0' : 'text-slate-800 font-sans leading-relaxed print:p-0 print:shadow-none'}`}>
+  <main className={`bg-white px-12 py-12 min-h-[1122px] w-full ${atsMode ? 'text-black print:p-0' : 'text-slate-800  leading-relaxed print:p-0 print:shadow-none'}`}>
     <header className={`${atsMode ? 'border-b-2 border-black pb-8 mb-8' : 'border-b-4 pb-6 mb-8'}`} style={atsMode ? {} : { borderColor: themeColor }}>
       <h1 className="text-5xl font-bold tracking-tight mb-3" style={atsMode ? { color: 'black' } : { color: themeColor }}>{data.fullName}</h1>
       <p className="text-2xl opacity-60 font-medium mb-6 uppercase tracking-widest">{data.jobTitle}</p>
@@ -87,3 +89,4 @@ export const RefinedMinimalist = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

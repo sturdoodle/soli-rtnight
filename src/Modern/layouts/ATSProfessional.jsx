@@ -1,8 +1,10 @@
+"use client";
+
 import React from 'react';
-import { FormattedText } from './SharedComponents';
+import { FormattedText, EducationItem, CertificationItem } from './SharedComponents';
 
 export const ATSProfessional = ({ data, themeColor, atsMode, sectionThemingEnabled }) => (
-  <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? 'font-sans' : 'font-serif'}`}>
+  <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? '' : ''}`}>
     {/* Centered Header */}
     <header className="text-center mb-8">
       <h1 className="text-3xl font-bold uppercase mb-2 tracking-widest transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>{data.fullName}</h1>
@@ -52,18 +54,8 @@ export const ATSProfessional = ({ data, themeColor, atsMode, sectionThemingEnabl
         <section aria-label="Education">
           <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Education</h2>
           <div className="space-y-4">
-            {data.education?.map((edu) => (
-              <div key={edu.id} className="text-[13px]">
-                <div className="flex justify-between font-bold">
-                  <span>{edu.institution}</span>
-                  <span>{edu.location || ''}</span>
-                </div>
-                <div className="flex justify-between italic">
-                  <span>{edu.degree}</span>
-                  <span>{edu.duration}</span>
-                </div>
-                {edu.description && <div className="mt-1 text-[12px]"><FormattedText text={edu.description} /></div>}
-              </div>
+            {data.education?.map((edu, idx) => (
+              <EducationItem key={edu.id || idx} edu={edu} atsMode={atsMode} path={`education.${idx}`} />
             ))}
           </div>
         </section>
@@ -137,13 +129,14 @@ export const ATSProfessional = ({ data, themeColor, atsMode, sectionThemingEnabl
       {data.certifications && data.certifications.length > 0 && (
         <section aria-label="Certifications">
           <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-0.5 tracking-wider transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Certifications</h2>
-          <ul className="list-disc ml-5 text-[12px] space-y-1">
-            {data.certifications?.map((cert) => (
-              <li key={cert.id}>{cert.name} {cert.expiryDate && `| Expires: ${cert.expiryDate}`}</li>
+          <div className="space-y-3">
+            {data.certifications?.map((cert, idx) => (
+              <CertificationItem key={cert.id || idx} cert={cert} atsMode={atsMode} path={`certifications.${idx}`} />
             ))}
-          </ul>
+          </div>
         </section>
       )}
     </div>
   </main>
 );
+

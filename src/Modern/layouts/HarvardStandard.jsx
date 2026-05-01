@@ -1,8 +1,10 @@
+"use client";
+
 import React from 'react';
 import { SectionTitle, ExperienceItem, EducationItem, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const HarvardStandard = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white p-10 max-w-[800px] mx-auto text-black min-h-[1122px] w-full ${atsMode ? 'font-sans' : 'font-serif'}`}>
+  <main className={`bg-white p-10 max-w-[800px] mx-auto text-black min-h-[1122px] w-full ${atsMode ? '' : ''}`}>
     <header className="text-center mb-8 border-b-2 border-black pb-4">
       <h1 className="text-3xl font-black mb-1">{data.fullName}</h1>
       <div className="text-[11px] leading-tight flex flex-wrap justify-center gap-x-3">
@@ -99,3 +101,4 @@ export const HarvardStandard = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef, useState, useEffect } from 'react';
 import { Share2, Sparkles, WandSparkles, ArrowLeft, FileDown, FileUp, Printer, Edit3, Eye, Zap } from 'lucide-react';
 import PersonalDetails from './components/editor/PersonalDetails';
@@ -14,7 +16,7 @@ import PillButton from './components/ui/PillButton';
 import { ResumeProvider, useResume } from './context/ResumeContext';
 import { useNotification } from '../context/NotificationContext';
 import { useResumeActions } from '../hooks/useResumeActions';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import ThemeToggle from './components/ui/ThemeToggle';
 import EditorForm from '../components/editor/EditorForm';
 import logo from '../assets/logo.png';
@@ -35,7 +37,7 @@ const ModernEditorContent = () => {
   const previewRef = useRef();
   const fileInputRef = useRef();
   const { handleExportJSON, handleImportJSON, handlePrint } = useResumeActions(resumeData, setResumeData);
-  const goInstead = useNavigate();
+  const goInstead = useRouter();
   const [mobileTab, setMobileTab] = useState('editor'); // 'editor' | 'preview'
 
   useEffect(() => {

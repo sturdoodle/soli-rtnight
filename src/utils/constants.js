@@ -9,8 +9,10 @@ export const SAMPLE_JSON_DATA = {
     "location": "Austin, Texas",
     "phone": "+1 (512) 555-0198",
     "email": "alex.sterling.dev@example.com",
-    "github": "github.com",
-    "summary": "Senior Frontend Engineer with 4+ years of experience in architecting scalable, high-performance web applications.",
+    "github": "https://github.com/alexsterling",
+    "linkedin": "https://linkedin.com/in/alexsterling",
+    "portfolio": "https://alexsterling.dev",
+    "summary": "Senior Frontend Engineer with 4+ years of experience in architecting scalable, high-performance web applications. Expert in React.js and Next.js, with a strong focus on UI/UX, performance optimization, and accessibility.",
     "GENERATED_BY": "https://resume-builder.qpkendra.com",
     "skills": [
         {
@@ -35,6 +37,7 @@ export const SAMPLE_JSON_DATA = {
             "company": "Global Tech Solutions Inc.",
             "role": "Lead Frontend Consultant",
             "duration": "Jan 2022 – Present",
+            "location": "Austin, TX (Remote)",
             "clients": [
                 {
                     "id": 1765133426476,
@@ -42,6 +45,7 @@ export const SAMPLE_JSON_DATA = {
                     "bulletPoints": [
                         "**Data Visualization Engine**: Orchestrated the integration of complex analytics into **React.js** applications, delivering real-time interactive dashboards for medical stakeholders.",
                         "**Workflow Automation**: Streamlined clinical reporting by architecting custom API connectors and automated flows, reducing manual data processing time by **40%**.",
+                        "**Performance Tuning**: Optimized render cycles and state management, achieving a **30% improvement** in page load speed for high-traffic patient portals."
                     ]
                 },
                 {
@@ -49,6 +53,7 @@ export const SAMPLE_JSON_DATA = {
                     "name": "FinTech Innovations Ltd",
                     "bulletPoints": [
                         "**Financial Application Development**: Developed a high-performance **React.js** application for financial operations, focusing on real-time data accuracy and secure transaction workflows.",
+                        "**Security Compliance**: Collaborated with security teams to implement robust authentication and authorization protocols, ensuring full **GDPR & SOC2** compliance."
                     ]
                 }
             ]
@@ -59,7 +64,10 @@ export const SAMPLE_JSON_DATA = {
             "id": 1,
             "degree": "B.S. in Computer Science",
             "institution": "University of Texas at Austin",
-            "duration": "2016–2020"
+            "duration": "2016–2020",
+            "location": "Austin, TX",
+            "gpaLabel": "CGPA",
+            "gpaValue": "3.8/4.0"
         }
     ],
     "projects": [
@@ -83,12 +91,25 @@ export const SAMPLE_JSON_DATA = {
     "certifications": [
         {
             "id": 1,
-            "name": "AWS Certified Solutions Architect"
+            "name": "AWS Certified Solutions Architect",
+            "issuer": "Amazon Web Services",
+            "expiryDate": "Never Expires",
+            "credentialId": "AWS-123456789",
+            "link": "https://credly.com/aws-cert"
         },
         {
             "id": 2,
-            "name": "Meta Front-End Developer Professional Certificate"
+            "name": "Meta Front-End Developer Professional Certificate",
+            "issuer": "Meta",
+            "expiryDate": "2025",
+            "credentialId": "META-CERT-7788",
+            "link": "https://coursera.org/verify/meta"
         }
+    ],
+    "achievements": [
+        "Recipient of the **Golden Pixel Award** for Excellence in UI/UX Design (2023).",
+        "Mentored **10+ junior developers**, helping them transition into senior roles within 18 months.",
+        "Authored a technical whitepaper on **Micro Frontends** with over 5,000 shares on LinkedIn."
     ],
     "storageType": "persistent",
     "themeMode": "light",

@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const ProfessionalSlate = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white flex flex-col ${atsMode ? 'px-12' : 'min-h-[1122px]'} py-12 w-full text-zinc-900 font-sans shadow-lg`}>
+  <main className={`bg-white flex flex-col ${atsMode ? 'px-12' : 'min-h-[1122px]'} py-12 w-full text-zinc-900  shadow-lg`}>
     {/* Header - In ATS mode, move header out of sidebar */}
     <header className={`${atsMode ? 'mb-10 text-center border-b-2 border-black pb-8' : 'w-1/3 p-10 pb-0'}`}>
       <h1 className="text-3xl font-black uppercase tracking-tighter leading-none mb-1" style={atsMode ? { color: 'black' } : { color: themeColor }}>{data.fullName}</h1>
@@ -110,3 +112,4 @@ export const ProfessionalSlate = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

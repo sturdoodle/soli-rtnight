@@ -19,7 +19,7 @@ const GlassCard = ({ children, className = '', title, icon: Icon, isCollapsible 
 
   return (
     <div
-      className={`${isLiquid ? 'v5-glass' : 'glass-panel'} mb-3 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-2px] border rounded-[2rem] sm:rounded-[2rem] overflow-hidden ${className} print:bg-white`}
+      className={`${isLiquid ? 'v5-glass' : 'glass-panel'} mb-3 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-2px] border rounded-xl sm:rounded-xl overflow-hidden ${className} print:bg-white`}
       style={isLiquid ? {
         borderColor: isOpen ? `${activeColor}40` : 'rgba(0, 0, 0, 0.15)',
         boxShadow: isOpen
@@ -32,18 +32,19 @@ const GlassCard = ({ children, className = '', title, icon: Icon, isCollapsible 
     >
       {title && (
         <div
-          className={`flex items-center justify-between px-3 sm:px-6 py-2.5 transition-all duration-200 ${isCollapsible ? 'cursor-pointer select-none group/card hover:bg-[var(--v5-canvas)]/50' : ''}`}
+          className={`flex items-center justify-between px-3 sm:px-5 py-1.5 transition-all duration-200 ${isCollapsible ? 'cursor-pointer select-none group/card hover:bg-[var(--v5-canvas)]/50' : ''}`}
           onClick={toggle}
         >
-          <div className="flex items-center gap-5">
-            <div className={`p-3 rounded-xl transition-all duration-500 ${isOpen ? '' : 'bg-black/5 dark:bg-white/5 shadow-inner'}`}
+          <div className="flex items-center gap-4">
+            <div className={`p-1.5 rounded-lg transition-all duration-500 ${isOpen ? '' : 'bg-black/5 dark:bg-white/5 shadow-inner'}`}
               style={isOpen ? { backgroundColor: activeColor, color: 'white', boxShadow: `0 10px 20px -5px ${activeColor}40` } : {}}>
-              {Icon && <Icon size={22} strokeWidth={2.5} />}
+              {Icon && <Icon size={18} strokeWidth={2.5} />}
             </div>
             <h3 className={`modern-heading text-xl font-bold tracking-[-0.03em] transition-colors duration-300 ${isOpen ? (isLiquid ? 'text-[var(--v5-heading)]' : 'text-slate-900 dark:text-white') : 'text-slate-400'}`}>
               {title}
             </h3>
           </div>
+
 
           {isCollapsible ? (
             <div className={`transition-all duration-500 p-2 rounded-xl ${isOpen ? 'rotate-180 bg-sage-50 dark:bg-sage-900/40 text-sage-600' : 'rotate-0 bg-transparent text-sage-300'} group-hover/card:bg-white dark:group-hover/card:bg-slate-800 shadow-sm border border-transparent group-hover/card:border-sage-100 dark:group-hover/card:border-white/10`}>
@@ -55,12 +56,13 @@ const GlassCard = ({ children, className = '', title, icon: Icon, isCollapsible 
         </div>
       )}
 
-      <div className={`grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${isOpen ? 'grid-rows-[1fr] opacity-100 pb-2 sm:pb-4' : 'grid-rows-[0fr] opacity-0 invisible overflow-hidden'}`}>
-        <div className="px-3 sm:px-6 relative z-10 overflow-hidden">
-          {isOpen && <div className="h-px bg-sage-100 dark:bg-white/5 mb-3 -mx-3 sm:-mx-6" />}
+      <div className={`grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${isOpen ? 'grid-rows-[1fr] opacity-100 pb-1.5 sm:pb-3' : 'grid-rows-[0fr] opacity-0 invisible overflow-hidden'}`}>
+        <div className="px-3 sm:px-5 relative z-10 overflow-hidden">
+          {isOpen && <div className="h-px bg-sage-100 dark:bg-white/5 mb-2 -mx-3 sm:-mx-5" />}
           {children}
         </div>
       </div>
+
     </div>
   );
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { Info, X, Bold, Italic, Underline, Link as LinkIcon, Sparkles, Download } from 'lucide-react';
 import { useResume } from '../../context/ResumeContext';
@@ -85,3 +87,4 @@ const FormattingTip = () => {
 };
 
 export default FormattingTip;
+

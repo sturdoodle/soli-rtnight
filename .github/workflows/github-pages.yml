@@ -26,14 +26,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build React App
+      - name: Build Next.js App
         run: npm run build
 
       # Upload build folder for the deploy job
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist'
+          path: 'out'
 
   deploy:
     needs: build

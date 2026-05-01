@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useResume } from '../Modern/context/ResumeContext';
 import V6Sidebar from './components/V6Sidebar';
@@ -11,9 +13,9 @@ import V6ExperienceEditor from './components/editor/V6ExperienceEditor';
 import V6EducationEditor from './components/editor/V6EducationEditor';
 import V6ProjectsEditor from './components/editor/V6ProjectsEditor';
 import V6CertificationsEditor from './components/editor/V6CertificationsEditor';
-import V6PrintAdModal from './components/V6PrintAdModal';
+import UniversalPrintModal from '../components/shared/UniversalPrintModal';
 import { templates } from '../Modern/layouts';
-import { isDevelopmentMode } from '../V5/V5Constants';
+import { isDevelopmentMode } from '../lib/env';
 import {
   Mail, Globe, Palette, Clock, Trash2, CheckCircle2, SplitSquareHorizontal,
   ChevronLeft, ChevronRight, Moon, Sun, RefreshCw, AlertTriangle, Download, Upload, FileCode, FileText,
@@ -456,12 +458,12 @@ const V6Editor = () => {
         )}
       </div>
 
-      <V6PrintAdModal
+      <UniversalPrintModal
         isOpen={showPrintAd}
-        adCountdown={adCountdown}
-        activeColor={themeColor}
+        countdown={adCountdown}
         onFinalize={finalizePrintAction}
         onClose={() => setShowPrintAd(false)}
+        accentColor={themeColor}
       />
 
       {/* Print Buffer (V5 Style) */}

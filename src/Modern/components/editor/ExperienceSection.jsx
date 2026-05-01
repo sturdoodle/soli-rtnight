@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Briefcase, Plus, Trash2, ChevronRight, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
@@ -201,3 +203,4 @@ const ExperienceSection = () => {
 };
 
 export default ExperienceSection;
+

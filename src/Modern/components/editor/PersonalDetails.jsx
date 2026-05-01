@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { User } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
@@ -62,9 +64,19 @@ const PersonalDetails = () => {
           onChange={handleChange}
           placeholder="e.g. github.com/janedoe"
         />
+        <MinimalistInput
+          id="v5-input-linkedin"
+          label="LinkedIn URL"
+          name="linkedin"
+          value={resumeData.linkedin}
+          onChange={handleChange}
+          placeholder="e.g. linkedin.com/in/janedoe"
+        />
+
       </div>
     </GlassCard>
   );
 };
 
 export default PersonalDetails;
+

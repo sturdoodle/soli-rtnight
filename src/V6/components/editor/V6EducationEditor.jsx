@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { GraduationCap, Plus, Trash2, School, Calendar, BookOpen } from 'lucide-react';
 import V6Card from '../../ui/V6Card';
@@ -128,3 +130,4 @@ const V6EducationEditor = () => {
 };
 
 export default V6EducationEditor;
+

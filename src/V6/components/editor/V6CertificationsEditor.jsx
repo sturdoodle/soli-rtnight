@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Award, Plus, Trash2, ShieldCheck, Landmark } from 'lucide-react';
 import V6Card from '../../ui/V6Card';
@@ -114,3 +116,4 @@ const V6CertificationsEditor = () => {
 };
 
 export default V6CertificationsEditor;
+

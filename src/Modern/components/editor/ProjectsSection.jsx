@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Briefcase, Plus, Trash2, FolderCode, Link as LinkIcon, Code, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
@@ -143,3 +145,4 @@ const ProjectsSection = () => {
 };
 
 export default ProjectsSection;
+

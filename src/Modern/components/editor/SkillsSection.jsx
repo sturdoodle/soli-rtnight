@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { Award, Plus, Trash2, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
@@ -94,3 +96,4 @@ const SkillsSection = () => {
 };
 
 export default SkillsSection;
+

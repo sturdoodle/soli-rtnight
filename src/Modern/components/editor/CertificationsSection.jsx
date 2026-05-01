@@ -1,8 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Award, Plus, Trash2, Calendar, ShieldCheck, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import MinimalistInput from '../ui/MinimalistInput';
 import PillButton from '../ui/PillButton';
+import SmartSectionNote from './SmartSectionNote';
 import { useResume } from '../../context/ResumeContext';
 import AdSenseAd from '../../../AdsenseAdsBlock.jsx';
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../../../MainConstant.js';
@@ -92,6 +95,31 @@ const CertificationsSection = () => {
                     </div>
                   </div>
                 </div>
+                <SmartSectionNote 
+                  text="Important: If Credential ID or Link left empty, they will not be shown in the PDF." 
+                  color="blue" 
+                />
+
+                <div className="xl:col-span-6">
+                  <MinimalistInput 
+                    id={`v5-cert-${cert.id}-credentialId`}
+                    label="Credential ID / Number" 
+                    icon={ShieldCheck}
+                    value={cert.credentialId || ''} 
+                    onChange={(e) => handleUpdateCert(cert.id, 'credentialId', e.target.value)} 
+                    placeholder="e.g. AWS-123456789"
+                  />
+                </div>
+                <div className="xl:col-span-6">
+                  <MinimalistInput 
+                    id={`v5-cert-${cert.id}-link`}
+                    label="Verification Link" 
+                    icon={Sparkles}
+                    value={cert.link || ''} 
+                    onChange={(e) => handleUpdateCert(cert.id, 'link', e.target.value)} 
+                    placeholder="e.g. Credly, LinkedIn, or direct URL"
+                  />
+                </div>
               </div>
             </div>
 
@@ -118,3 +146,4 @@ const CertificationsSection = () => {
 };
 
 export default CertificationsSection;
+

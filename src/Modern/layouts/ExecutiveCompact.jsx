@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github, ExternalLink, Award } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const ExecutiveCompact = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white ${atsMode ? 'px-12 py-16' : 'p-10 max-w-4xl mx-auto font-sans shadow-2xl border-t-[12px]'} min-h-[1122px] w-full text-slate-900`} style={atsMode ? {} : { borderColor: themeColor }}>
+  <main className={`bg-white ${atsMode ? 'px-12 py-16' : 'p-10 max-w-4xl mx-auto  shadow-2xl border-t-[12px]'} min-h-[1122px] w-full text-slate-900`} style={atsMode ? {} : { borderColor: themeColor }}>
     <header className={`${atsMode ? 'mb-10 text-center border-b-2 border-black pb-8' : 'flex justify-between items-start mb-8 gap-8'}`}>
       <div className="flex-1">
         <h1 className={`${atsMode ? 'text-4xl font-bold mb-2' : 'text-4xl font-black tracking-tight mb-2 uppercase tracking-tighter'}`} style={atsMode ? { color: 'black' } : { color: themeColor }}>{data.fullName}</h1>
@@ -109,3 +111,4 @@ export const ExecutiveCompact = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

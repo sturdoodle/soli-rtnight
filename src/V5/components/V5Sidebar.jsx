@@ -17,7 +17,7 @@ const V5Sidebar = ({
   const { resumeData } = useResume();
 
   return (
-    <aside className={`hidden lg:flex ${isCollapsed ? 'w-24' : 'w-72'} border-r border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col pt-6 print:hidden transition-all duration-300 relative`}>
+    <aside className={`hidden lg:flex ${isCollapsed ? 'w-24' : 'w-72'} border-r border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col pt-4 print:hidden transition-all duration-300 relative`}>
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         className="absolute -right-3 top-10 w-6 h-6 bg-[var(--v5-card)] border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.1)] hover:scale-110 transition-all z-10 hidden lg:flex text-slate-500 hover:text-[var(--v5-heading)]"
@@ -25,27 +25,28 @@ const V5Sidebar = ({
         {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
       </button>
 
-      <div className={`px-8 hidden lg:block transition-all duration-300 ease-in-out ${isCollapsed ? 'opacity-0 max-h-0 mb-0 overflow-hidden' : 'opacity-100 max-h-[200px] mb-6'}`}>
-        <h2 className="text-[10px] font-black text-slate-400 dark:text-slate-600 uppercase tracking-[0.3em] mb-4 whitespace-nowrap">Resume Editor</h2>
-        <div className="p-5 rounded-3xl border border-black/5 dark:border-white/5 flex items-center gap-4 shadow-sm group cursor-pointer hover:bg-black/5 transition-all w-full overflow-hidden"
+      <div className={`px-6 hidden lg:block transition-all duration-300 ease-in-out ${isCollapsed ? 'opacity-0 max-h-0 mb-0 overflow-hidden' : 'opacity-100 max-h-[200px] mb-4'}`}>
+        <h2 className="text-[10px] font-black text-slate-400 dark:text-slate-600 uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Resume Editor</h2>
+        <div className="p-3 rounded-xl border border-black/5 dark:border-white/5 flex items-center gap-4 shadow-sm group cursor-pointer hover:bg-black/5 transition-all w-full overflow-hidden"
           style={{ backgroundColor: `${activeColor}05` }}>
           <div className="p-2.5 rounded-2xl text-white shadow-lg shrink-0"
             style={{ backgroundColor: activeColor, boxShadow: `0 8px 20px -4px ${activeColor}40` }}>
             <Edit3 size={18} />
           </div>
           <div className="flex flex-col overflow-hidden whitespace-nowrap">
-            <span className="text-xs font-black text-[var(--v5-heading)] tracking-tight">Active Draft</span>
+            <span className="text-xs font-black text-[var(--v5-heading)] tracking-tight">Current Resume</span>
             <span className="text-[10px] font-bold uppercase tracking-widest leading-none mt-0.5"
-              style={{ color: activeColor }}>Editing Now</span>
+              style={{ color: activeColor }}>Live Editing</span>
           </div>
         </div>
       </div>
 
       <nav className="flex-1 space-y-1 px-4 transition-all">
-        <SidebarItem icon={FileText} label="Identity" active={activeTab === 'content'} onClick={() => setActiveTab('content')} activeColor={activeColor} collapsed={isCollapsed} />
-        <SidebarItem icon={Layout} label="Structure" active={activeTab === 'layout'} onClick={() => setActiveTab('layout')} activeColor={activeColor} collapsed={isCollapsed} />
-        <SidebarItem icon={Type} label="Typeface" active={activeTab === 'typography'} onClick={() => setActiveTab('typography')} activeColor={activeColor} collapsed={isCollapsed} />
+        <SidebarItem icon={FileText} label="Personal Info" active={activeTab === 'content'} onClick={() => setActiveTab('content')} activeColor={activeColor} collapsed={isCollapsed} />
+        <SidebarItem icon={Layout} label="Layout" active={activeTab === 'layout'} onClick={() => setActiveTab('layout')} activeColor={activeColor} collapsed={isCollapsed} />
+        <SidebarItem icon={Type} label="Fonts" active={activeTab === 'typography'} onClick={() => setActiveTab('typography')} activeColor={activeColor} collapsed={isCollapsed} />
         <SidebarItem icon={Settings} label="Settings" active={activeTab === 'snapshots'} onClick={() => setActiveTab('snapshots')} activeColor={activeColor} collapsed={isCollapsed} />
+
         <div className="h-px bg-black/5 dark:border-white/5 my-2 mx-4" />
         
         {[
@@ -79,7 +80,7 @@ const V5Sidebar = ({
 
       {!isCollapsed && (
         <div className="px-6 mb-4 animate-in fade-in duration-700 delay-500">
-          <div className="p-4 rounded-3xl bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 backdrop-blur-xl flex items-center justify-center overflow-hidden min-h-[100px] ads-block shadow-sm group">
+          <div className="p-2 rounded-xl bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 backdrop-blur-xl flex items-center justify-center overflow-hidden min-h-[100px] ads-block shadow-sm group">
             <AdSenseAd
               client={ADSENSE_CLIENT_ID}
               slot={ADSENSE_INBETWEEN_SLOT_ID}
@@ -90,7 +91,7 @@ const V5Sidebar = ({
         </div>
       )}
 
-      <div className={`mt-auto p-6 mb-4 flex flex-col items-center justify-center text-center transition-all duration-500 ${isCollapsed ? 'opacity-0 max-h-0 overflow-hidden scale-90' : 'opacity-100 max-h-[200px] scale-100'}`}>
+      <div className={`mt-auto p-4 mb-2 flex flex-col items-center justify-center text-center transition-all duration-500 ${isCollapsed ? 'opacity-0 max-h-0 overflow-hidden scale-90' : 'opacity-100 max-h-[200px] scale-100'}`}>
         <h3 className="text-xl font-black tracking-[-0.05em] text-[var(--v5-heading)] opacity-80 dark:opacity-90 transition-opacity" style={{ fontFamily: 'Absans, sans-serif' }}>
           qpkendra
         </h3>

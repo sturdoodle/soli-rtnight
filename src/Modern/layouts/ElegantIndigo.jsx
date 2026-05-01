@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const ElegantIndigo = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white px-12 py-12 min-h-[1122px] w-full ${atsMode ? 'text-black print:p-0' : 'text-indigo-950 font-sans print:p-0 print:shadow-none'}`}>
+  <main className={`bg-white px-12 py-12 min-h-[1122px] w-full ${atsMode ? 'text-black print:p-0' : 'text-indigo-950  print:p-0 print:shadow-none'}`}>
     <header className={`${atsMode ? 'mb-10 text-center border-b-2 border-black pb-8' : 'flex justify-between items-start gap-12 mb-10 border-b border-indigo-100 pb-10'}`}>
       <div className="flex-1">
         <h1 className={`${atsMode ? 'text-4xl font-bold mb-2' : 'text-6xl font-black tracking-tight mb-2'}`} style={atsMode ? { color: 'black' } : { color: themeColor }}>{data.fullName}</h1>

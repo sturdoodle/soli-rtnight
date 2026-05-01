@@ -5,7 +5,7 @@
  * This prevents data pollution in Analytics and accidental ad clicks during development.
  */
 
-const isProd = import.meta.env.PROD || (typeof process !== 'undefined' && process.env.NODE_ENV === 'production');
+const isProd = process.env.NODE_ENV === 'production';
 
 export const ANALYTICS_CONFIG = {
     // Google Analytics 4 Measurement ID

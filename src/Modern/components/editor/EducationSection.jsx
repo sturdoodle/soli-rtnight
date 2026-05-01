@@ -1,8 +1,11 @@
+"use client";
+
 import React from 'react';
 import { GraduationCap, Plus, Trash2, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import MinimalistInput from '../ui/MinimalistInput';
 import PillButton from '../ui/PillButton';
+import SmartSectionNote from './SmartSectionNote';
 import { useResume } from '../../context/ResumeContext';
 import AdSenseAd from '../../../AdsenseAdsBlock.jsx';
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../../../MainConstant.js';
@@ -77,6 +80,24 @@ const EducationSection = () => {
                   value={edu.duration} 
                   onChange={(e) => handleUpdateEdu(edu.id, 'duration', e.target.value)} 
                 />
+                <SmartSectionNote 
+                  text="Important: If marks left empty, they will not be shown in the PDF." 
+                  color="blue" 
+                />
+                <MinimalistInput 
+                  id={`v5-edu-${edu.id}-gpaLabel`}
+                  label="Mark Type" 
+                  value={edu.gpaLabel || ''} 
+                  placeholder="e.g. CGPA, Percentage"
+                  onChange={(e) => handleUpdateEdu(edu.id, 'gpaLabel', e.target.value)} 
+                />
+                <MinimalistInput 
+                  id={`v5-edu-${edu.id}-gpaValue`}
+                  label="Marks" 
+                  value={edu.gpaValue || ''} 
+                  placeholder="e.g. 8.5, 85%"
+                  onChange={(e) => handleUpdateEdu(edu.id, 'gpaValue', e.target.value)} 
+                />
               </div>
             </div>
             
@@ -103,3 +124,4 @@ const EducationSection = () => {
 };
 
 export default EducationSection;
+

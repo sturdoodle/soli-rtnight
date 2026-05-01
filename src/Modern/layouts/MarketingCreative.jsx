@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Target, TrendingUp, Users, Zap, Mail, Phone, MapPin, Github } from 'lucide-react';
 import { SectionTitle, ExperienceItem, EducationItem, FormattedText, ProjectItem, CertificationItem, ContactItem } from './SharedComponents';
 
 export const MarketingCreative = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white min-h-[1122px] w-full text-slate-800 font-sans ${atsMode ? 'text-black print:p-0' : 'shadow-2xl relative overflow-hidden print:p-0 print:shadow-none'}`}>
+  <main className={`bg-white min-h-[1122px] w-full text-slate-800  ${atsMode ? 'text-black print:p-0' : 'shadow-2xl relative overflow-hidden print:p-0 print:shadow-none'}`}>
     {!atsMode && <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-10 animate-pulse" style={{ backgroundColor: themeColor }}></div>}
     
     <header className={`${atsMode ? 'mb-10 text-center border-b-2 border-black pb-8 p-12' : 'p-8 pb-0 flex flex-col md:flex-row justify-between items-center gap-10'}`}>
@@ -96,3 +98,4 @@ export const MarketingCreative = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

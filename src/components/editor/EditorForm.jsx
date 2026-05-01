@@ -10,7 +10,7 @@ import FormattingTip from '../../Modern/components/editor/FormattingTip';
 
 const EditorForm = ({ showFormattingTip = true, className = "" }) => {
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`space-y-3 ${className}`}>
       {showFormattingTip && <FormattingTip />}
       <PersonalDetails />
       <SummarySection />

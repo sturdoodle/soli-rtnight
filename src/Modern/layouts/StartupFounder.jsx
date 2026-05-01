@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Rocket, Target, Globe, Github, Mail, Phone, MapPin } from 'lucide-react';
 import { SectionTitle, ExperienceItem, EducationItem, FormattedText, ProjectItem, CertificationItem, ContactItem } from './SharedComponents';
 
 export const StartupFounder = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-slate-50 min-h-[1122px] w-full text-slate-900 font-sans shadow-2xl relative overflow-hidden ${atsMode ? 'bg-white text-black' : ''}`}>
+  <main className={`bg-slate-50 min-h-[1122px] w-full text-slate-900  shadow-2xl relative overflow-hidden ${atsMode ? 'bg-white text-black' : ''}`}>
     {!atsMode && (
       <div className="absolute top-0 right-0 w-1/3 h-full bg-slate-900 skew-x-[-15deg] translate-x-32 z-0 hidden lg:block"></div>
     )}
@@ -99,3 +101,4 @@ export const StartupFounder = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

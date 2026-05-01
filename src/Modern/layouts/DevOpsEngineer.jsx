@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Terminal, Shield, Cpu, Activity, Mail, Phone, MapPin, Github } from 'lucide-react';
 import { SectionTitle, ExperienceItem, EducationItem, FormattedText, ProjectItem, CertificationItem, ContactItem } from './SharedComponents';
 
 export const DevOpsEngineer = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-slate-900 min-h-[1122px] w-full text-slate-100 font-mono shadow-2xl relative overflow-hidden ${atsMode ? 'bg-white text-black font-sans' : ''}`}>
+  <main className={`bg-slate-900 min-h-[1122px] w-full text-slate-100 font-mono shadow-2xl relative overflow-hidden ${atsMode ? 'bg-white text-black ' : ''}`}>
     {!atsMode && (
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 items-center justify-center flex">
         <div className="bg-slate-900 px-4 py-1 rounded-full text-[10px] font-black tracking-widest text-cyan-400 border border-cyan-500/30 uppercase animate-pulse">System Online</div>
@@ -113,3 +115,4 @@ export const DevOpsEngineer = ({ data, themeColor, atsMode }) => (
     )}
   </main>
 );
+

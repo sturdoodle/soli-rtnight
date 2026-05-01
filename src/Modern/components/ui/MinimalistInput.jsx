@@ -82,8 +82,8 @@ const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'te
   };
 
   return (
-    <div className="mb-2 relative group">
-      <div className="flex items-center justify-between mb-1 ml-1">
+    <div className="mb-1.5 relative group">
+      <div className="flex items-center justify-between mb-0.5 ml-1">
         {label && (
           <label 
             htmlFor={inputId} // Associate label with input

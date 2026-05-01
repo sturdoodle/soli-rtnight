@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Layout, Plus, Trash2, Link as LinkIcon, Code, Globe, Terminal } from 'lucide-react';
 import V6Card from '../../ui/V6Card';
@@ -138,3 +140,4 @@ const V6ProjectsEditor = () => {
 };
 
 export default V6ProjectsEditor;
+

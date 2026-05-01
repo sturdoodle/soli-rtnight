@@ -1,5 +1,6 @@
-import { HelpCircle, User, Zap, Menu, Moon, Sun, Eye, Check, SplitSquareHorizontal, Edit3, Settings, Download, RefreshCw } from 'lucide-react';
+import { Menu, Settings, Download, Edit3, Eye, Zap } from 'lucide-react';
 import { useResume } from '../../Modern/context/ResumeContext';
+import ThemeToggle from '../../components/shared/ThemeToggle';
 
 const V6Header = ({ onMenuClick, activeSection, onSectionChange, showPreview, onTogglePreview, isMobileView, onDownload }) => {
   const { resumeData, toggleTheme } = useResume();
@@ -30,12 +31,7 @@ const V6Header = ({ onMenuClick, activeSection, onSectionChange, showPreview, on
           <span className="text-[10px] font-black uppercase tracking-widest">Download PDF</span>
         </button>
 
-        <button 
-          onClick={toggleTheme}
-          className="p-2.5 hover:bg-slate-100 dark:hover:bg-white/[0.05] rounded-xl transition-colors text-slate-500"
-        >
-          {resumeData.themeMode === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+        <ThemeToggle />
         
         <button 
           onClick={onTogglePreview}

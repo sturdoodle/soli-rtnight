@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const CompactGrid = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white ${atsMode ? 'px-12 py-16' : 'px-8 py-12 min-h-[1122px] shadow-xl'} w-full text-slate-900 font-sans`}>
+  <main className={`bg-white ${atsMode ? 'px-12 py-16' : 'px-8 py-12 min-h-[1122px] shadow-xl'} w-full text-slate-900 `}>
     <div className={atsMode ? '' : 'bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-200'}>
       <header className={`${atsMode ? 'mb-10 text-center border-b-2 border-black pb-8' : 'bg-slate-900 text-white p-12'}`}>
         <div className={atsMode ? '' : 'flex flex-col md:flex-row md:items-end justify-between gap-8'}>
@@ -99,3 +101,4 @@ export const CompactGrid = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

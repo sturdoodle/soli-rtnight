@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { FileText } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
@@ -30,3 +32,4 @@ const SummarySection = () => {
 };
 
 export default SummarySection;
+

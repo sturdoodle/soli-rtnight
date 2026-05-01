@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Briefcase, Plus, Trash2, User, Calendar, Terminal, Globe } from 'lucide-react';
 import V6Card from '../../ui/V6Card';
@@ -248,3 +250,4 @@ const V6ExperienceEditor = () => {
 };
 
 export default V6ExperienceEditor;
+

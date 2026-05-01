@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const ProfessionalBold = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white px-12 py-16 min-h-[1122px] w-full ${atsMode ? 'text-black' : 'text-slate-900 font-sans shadow-2xl relative overflow-hidden'}`}>
+  <main className={`bg-white px-12 py-16 min-h-[1122px] w-full ${atsMode ? 'text-black' : 'text-slate-900  shadow-2xl relative overflow-hidden'}`}>
     {!atsMode && <div className="absolute top-0 right-0 w-32 h-full opacity-5 pointer-events-none" style={{ backgroundColor: themeColor }}></div>}
     
     <header className={`${atsMode ? 'mb-10 text-center border-b-2 border-black pb-8' : 'mb-16'}`}>
@@ -94,3 +96,4 @@ export const ProfessionalBold = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

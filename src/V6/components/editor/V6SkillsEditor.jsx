@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Code, Plus, Trash2, Award, Zap } from 'lucide-react';
 import V6Card from '../../ui/V6Card';
@@ -114,3 +116,4 @@ const V6SkillsEditor = () => {
 };
 
 export default V6SkillsEditor;
+

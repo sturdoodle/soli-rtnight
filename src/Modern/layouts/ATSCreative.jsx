@@ -1,8 +1,10 @@
+"use client";
+
 import React from 'react';
-import { FormattedText } from './SharedComponents';
+import { FormattedText, EducationItem, CertificationItem } from './SharedComponents';
 
 export const ATSCreative = ({ data, themeColor, atsMode, sectionThemingEnabled }) => (
-  <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? 'font-sans' : 'font-serif'}`}>
+  <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? '' : ''}`}>
     {/* Right-Aligned Header */}
     <header className="flex justify-between items-start mb-8 border-b-2 border-black pb-4 transition-colors" style={atsMode ? {} : { borderColor: sectionThemingEnabled ? themeColor : 'black' }}>
       <h1 className="text-4xl font-black mb-2 tracking-tight transition-colors" style={atsMode ? { color: '#111827' } : { color: sectionThemingEnabled ? themeColor : '#111827' }}>{data.fullName}</h1>
@@ -44,15 +46,8 @@ export const ATSCreative = ({ data, themeColor, atsMode, sectionThemingEnabled }
         <section aria-label="Education">
           <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Education</h2>
           <div className="space-y-4">
-            {data.education?.map((edu) => (
-              <div key={edu.id} className="text-[14px]">
-                <div className="flex justify-between font-bold">
-                  <span>{edu.institution}, <span className="font-normal">{edu.location || ''}</span></span>
-                  <span>{edu.duration}</span>
-                </div>
-                <div className="text-gray-700">{edu.degree}</div>
-                {edu.description && <div className="mt-2 text-[12px] text-gray-600 italic"><FormattedText text={edu.description} /></div>}
-              </div>
+            {data.education?.map((edu, idx) => (
+              <EducationItem key={edu.id || idx} edu={edu} atsMode={atsMode} />
             ))}
           </div>
         </section>
@@ -124,13 +119,14 @@ export const ATSCreative = ({ data, themeColor, atsMode, sectionThemingEnabled }
       {data.certifications && data.certifications.length > 0 && (
         <section aria-label="Certifications">
           <h2 className="text-sm font-black uppercase border-b-2 border-black mb-4 pb-1 tracking-[0.2em] transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Certifications</h2>
-          <ul className="text-[12px] space-y-1">
-            {data.certifications?.map((cert) => (
-              <li key={cert.id}>{cert.name} {cert.expiryDate && <span className="opacity-60 italic">| {cert.expiryDate}</span>}</li>
+          <div className="space-y-4">
+            {data.certifications?.map((cert, idx) => (
+              <CertificationItem key={cert.id || idx} cert={cert} atsMode={atsMode} />
             ))}
-          </ul>
+          </div>
         </section>
       )}
     </div>
   </main>
 );
+

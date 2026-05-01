@@ -1,17 +1,20 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useResume } from '../Modern/context/ResumeContext';
 import { templates } from '../Modern/layouts';
 import { 
   ChevronLeft, ChevronRight, Check, Eye, X, Moon, Sun, Settings, Printer, Maximize2,
-  Palette, User, Briefcase, GraduationCap, Code, Layout, Award, FileText, Trash2, Plus, Download, Upload, Monitor
+  Palette, User, Briefcase, GraduationCap, Code, Layout, Award, FileText, Trash2, Plus, Download, Upload, Monitor, Type
 } from 'lucide-react';
 import { useResumeActions } from '../hooks/useResumeActions';
 import { useNotification } from '../context/NotificationContext';
 import ModernLivePreview from '../Modern/components/preview/ModernLivePreview';
 import { useSplitPane } from '../hooks/useSplitPane';
 import { motion, AnimatePresence } from 'framer-motion';
-import V7PrintAdModal from './V7PrintAdModal';
+import UniversalPrintModal from '../components/shared/UniversalPrintModal';
 import { downloadPdf } from '../Modern/utils/pdfGenerator';
+import { isDevelopmentMode } from '../lib/env';
 
 // ─── Design Tokens ────────────────────────────────────────────────────────────
 // All spacing, typography, and color decisions live here.
@@ -161,12 +164,7 @@ const V7EditorContent = () => {
     setDownloadIntent(intent);
     
     // SKip ad countdown in development mode for faster iterations
-    const isDev = typeof window !== 'undefined' && (
-      window.location.hostname === 'localhost' || 
-      window.location.hostname === '127.0.0.1'
-    );
-
-    if (isDev) {
+    if (isDevelopmentMode) {
       finalizePrintAction();
       return;
     }
@@ -276,7 +274,7 @@ const V7EditorContent = () => {
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative print:hidden">
         {/* ── Side A: Editor Pane ── */}
         <div 
-          className="flex flex-none overflow-hidden bg-white dark:bg-[#0a0a0b]"
+          className="flex flex-1 lg:flex-none bg-white dark:bg-[#0a0a0b] min-h-0"
           style={isDesktop ? { width: `${splitWidth}%` } : { width: '100%' }}
         >
           {/* Vertical Navigation Rail */}
@@ -436,16 +434,15 @@ const V7EditorContent = () => {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="flex flex-col gap-3">
                       {Object.values(templates).map(t => {
                         const active = resumeData.selectedTemplate === t.id;
-                        // Meaningful Personality Tags
                         const getTag = (id) => {
-                          if (id.includes('ats')) return { label: 'Reliable', icon: 'Classic', color: 'slate' };
-                          if (id.includes('tech')) return { label: 'Modern', icon: 'Tech', color: 'blue' };
-                          if (id.includes('leaf')) return { label: 'Creative', icon: 'Leaf', color: 'emerald' };
-                          if (id.includes('indigo')) return { label: 'Sleek', icon: 'Indigo', color: 'indigo' };
-                          return { label: 'Professional', icon: 'Standard', color: 'slate' };
+                          if (id.includes('ats')) return { label: 'Reliable', color: 'slate' };
+                          if (id.includes('tech')) return { label: 'Modern', color: 'blue' };
+                          if (id.includes('leaf')) return { label: 'Creative', color: 'emerald' };
+                          if (id.includes('indigo')) return { label: 'Sleek', color: 'indigo' };
+                          return { label: 'Professional', color: 'slate' };
                         };
                         const tag = getTag(t.id);
 
@@ -453,62 +450,45 @@ const V7EditorContent = () => {
                           <button
                             key={t.id}
                             onClick={() => updateTemplate(t.id)}
-                            className="group relative text-left"
+                            className={`group relative flex items-center justify-between p-4 rounded-3xl border-2 transition-all duration-300 ${
+                              active 
+                                ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-500/10 shadow-lg shadow-blue-500/5' 
+                                : 'border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-white/[0.02] hover:border-slate-200 dark:hover:border-white/[0.1] hover:bg-slate-50 dark:hover:bg-white/[0.04]'
+                            }`}
                           >
-                            <motion.div 
-                              layout
-                              className={`relative aspect-[4/3] rounded-2xl overflow-hidden transition-all duration-500 ${
-                                active 
-                                  ? 'ring-4 ring-blue-500 shadow-2xl shadow-blue-500/20 scale-[1.02]' 
-                                  : 'bg-white dark:bg-white/5 border border-black/[0.05] dark:border-white/[0.05] group-hover:scale-[1.03] group-hover:shadow-xl'
-                              }`}
-                            >
-                              {/* Dense Mini-Skeleton */}
-                              <div className={`absolute inset-0 p-3 flex flex-col gap-2 transition-colors ${active ? 'bg-blue-50/30 dark:bg-blue-500/10' : ''}`}>
-                                <div className="flex gap-2">
-                                  <div className="w-6 h-6 rounded-md bg-slate-200 dark:bg-slate-700 flex-shrink-0" />
-                                  <div className="flex-1 space-y-1.5">
-                                    <div className="h-1.5 rounded-full w-2/3 bg-slate-200 dark:bg-slate-700" />
-                                    <div className="h-1 rounded-full w-1/3 bg-slate-100 dark:bg-slate-800" />
-                                  </div>
-                                </div>
-                                <div className="grid grid-cols-3 gap-1.5 flex-1">
-                                  <div className="col-span-1 flex flex-col gap-1">
-                                    <div className="h-1 rounded-full w-full bg-slate-100 dark:bg-slate-800" />
-                                    <div className="h-1 rounded-full w-4/5 bg-slate-100 dark:bg-slate-800" />
-                                    <div className="h-4 rounded-md w-full bg-slate-50 dark:bg-white/5 mt-auto" />
-                                  </div>
-                                  <div className="col-span-2 flex flex-col gap-1.5">
-                                    <div className="h-1.5 rounded-full w-full bg-slate-200 dark:bg-slate-700" />
-                                    <div className="space-y-1">
-                                      <div className="h-1 rounded-full w-full bg-slate-100 dark:bg-slate-800" />
-                                      <div className="h-1 rounded-full w-5/6 bg-slate-100 dark:bg-slate-800" />
-                                    </div>
-                                    <div className="h-1.5 rounded-full w-2/3 bg-slate-200 dark:bg-slate-700" />
-                                  </div>
-                                </div>
+                            <div className="flex items-center gap-4 flex-1">
+                              {/* Small Preview Icon Chip */}
+                              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 ${
+                                active ? 'bg-blue-500 text-white shadow-lg' : 'bg-slate-100 dark:bg-white/10 text-slate-400'
+                              }`}>
+                                <Layout size={20} />
                               </div>
-
-                              {/* Selected Checkmark Overlay */}
-                              {active && (
-                                <div className="absolute inset-0 bg-blue-500/10 backdrop-blur-[1px] flex items-center justify-center">
-                                  <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg">
-                                    <Check size={16} strokeWidth={3} />
-                                  </div>
-                                </div>
-                              )}
-                            </motion.div>
-
-                            <div className="mt-2 px-0.5">
-                              <div className="flex items-center justify-between gap-2">
-                                <h4 className={`text-[11px] font-bold truncate ${active ? 'text-blue-500' : 'text-slate-800 dark:text-slate-200'}`}>
-                                  {t.name.split(' ')[0]}
-                                </h4>
-                                <span className={`text-[8px] font-black uppercase tracking-tighter px-1.5 py-0.5 rounded-md ${
-                                  active ? 'bg-blue-500 text-white' : 'bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-slate-400'
-                                }`}>
-                                  {tag.label}
+                              
+                              <div className="flex flex-col text-left">
+                                <span className={`text-sm font-black tracking-tight ${active ? 'text-blue-600 dark:text-blue-400' : 'text-slate-700 dark:text-slate-200'}`}>
+                                  {t.name}
                                 </span>
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
+                                  {t.id === 'template-1' ? 'Classic Minimalist' : t.id === 'template-2' ? 'Visual Timeline' : 'Executive Layout'}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                              {/* Personality Chip */}
+                              <span className={`px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border transition-all ${
+                                active 
+                                  ? 'bg-blue-500 border-blue-400 text-white shadow-md' 
+                                  : 'bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 group-hover:bg-white dark:group-hover:bg-white/10'
+                              }`}>
+                                {tag.label}
+                              </span>
+                              
+                              {/* Selection Indicator */}
+                              <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all ${
+                                active ? 'bg-blue-500 text-white scale-100' : 'bg-slate-200 dark:bg-white/10 text-transparent scale-50 opacity-0'
+                              }`}>
+                                <Check size={14} strokeWidth={4} />
                               </div>
                             </div>
                           </button>
@@ -521,53 +501,96 @@ const V7EditorContent = () => {
                     {/* Section 2: Colors */}
                     <section className="space-y-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500">
-                          <Palette size={16} />
+                        <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 shadow-sm border border-indigo-500/10">
+                          <Palette size={18} />
                         </div>
-                        <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200">Theme Color</h3>
+                        <div>
+                          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200">Signature Color</h3>
+                          <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Define your brand accent</p>
+                        </div>
                       </div>
-                      <div className="flex flex-wrap gap-3">
+                      <div className="flex flex-wrap gap-3 p-1">
                         {[
                           '#0f172a', '#1e40af', '#7c3aed', '#0f766e', 
-                          '#b45309', '#be123c', '#166534', '#374151'
-                        ].map(color => (
-                          <button
-                            key={color}
-                            onClick={() => updateThemeColor(color)}
-                            className={`w-10 h-10 rounded-full transition-all duration-300 relative ${
-                              resumeData.themeColor === color ? 'scale-110 ring-4 ring-offset-2 ring-blue-500 dark:ring-offset-[#0a0a0b]' : 'hover:scale-105'
-                            }`}
-                            style={{ backgroundColor: color }}
-                          >
-                            {resumeData.themeColor === color && <Check size={16} className="text-white absolute inset-0 m-auto" />}
-                          </button>
-                        ))}
+                          '#b45309', '#be123c', '#166534', '#374151',
+                          '#4f46e5', '#0891b2', '#ea580c', '#db2777'
+                        ].map(color => {
+                          const active = resumeData.themeColor === color;
+                          return (
+                            <button
+                              key={color}
+                              onClick={() => updateThemeColor(color)}
+                              className={`group relative w-10 h-10 rounded-full transition-all duration-500 ${
+                                active 
+                                  ? 'scale-125 z-10 shadow-xl ring-4 ring-white dark:ring-[#0a0a0b] ring-offset-0' 
+                                  : 'hover:scale-110 hover:shadow-lg'
+                              }`}
+                              style={{ 
+                                backgroundColor: color,
+                                boxShadow: active ? `0 10px 25px -5px ${color}80` : 'none'
+                              }}
+                            >
+                              <div className={`absolute inset-0 rounded-full border-2 border-white/20 transition-opacity ${active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                              {active && (
+                                <motion.div 
+                                  initial={{ scale: 0 }}
+                                  animate={{ scale: 1 }}
+                                  className="absolute inset-0 flex items-center justify-center text-white"
+                                >
+                                  <Check size={16} strokeWidth={4} />
+                                </motion.div>
+                              )}
+                            </button>
+                          );
+                        })}
                       </div>
                     </section>
 
                     {/* Section 3: Fonts */}
                     <section className="space-y-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
-                          <FileText size={16} />
+                        <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shadow-sm border border-emerald-500/10">
+                          <Type size={18} />
                         </div>
-                        <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200">Select Font</h3>
+                        <div>
+                          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200">Typography Engine</h3>
+                          <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Curated high-fidelity typefaces</p>
+                        </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        {['Default', 'Inter', 'Lora', 'DM Sans'].map(font => (
-                          <button
-                            key={font}
-                            onClick={() => updateField('fontFamily', font)}
-                            className={`px-4 py-3 rounded-2xl border-2 text-sm font-semibold transition-all ${
-                              (resumeData.fontFamily || 'Default') === font 
-                                ? 'border-blue-500 bg-blue-50 dark:bg-blue-500/10 text-blue-600' 
-                                : 'border-transparent bg-slate-50 dark:bg-white/5 text-slate-500 hover:border-slate-200'
-                            }`}
-                            style={{ fontFamily: font === 'Default' ? 'inherit' : font }}
-                          >
-                            {font}
-                          </button>
-                        ))}
+                      <div className="grid grid-cols-2 gap-2.5 max-h-[320px] overflow-y-auto pr-3 custom-scrollbar group/fonts">
+                        {[
+                          'Default', 'Inter', 'Lora', 'DM Sans', 
+                          'Roboto', 'Poppins', 'Montserrat', 'Playfair Display',
+                          'Plus Jakarta Sans', 'Space Grotesk', 'Merriweather', 'Figtree', 'Outfit'
+                        ].map(font => {
+                          const active = (resumeData.fontFamily || 'Default') === font;
+                          return (
+                            <button
+                              key={font}
+                              onClick={() => updateField('fontFamily', font)}
+                              className={`relative px-4 py-3.5 rounded-2xl border-2 transition-all duration-300 text-left overflow-hidden ${
+                                active 
+                                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-500/10 shadow-lg shadow-blue-500/5' 
+                                  : 'border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-white/[0.02] hover:border-slate-200 dark:hover:border-white/[0.1] hover:bg-slate-50 dark:hover:bg-white/[0.04]'
+                              }`}
+                            >
+                              <div className="flex flex-col">
+                                <span 
+                                  className={`text-[11px] font-black uppercase tracking-widest transition-colors ${active ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}`}
+                                  style={{ fontFamily: font === 'Default' ? 'inherit' : font }}
+                                >
+                                  {font}
+                                </span>
+                                <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter mt-0.5">
+                                  {font === 'Default' ? 'System Standard' : 'Professional Face'}
+                                </span>
+                              </div>
+                              {active && (
+                                <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+                              )}
+                            </button>
+                          );
+                        })}
                       </div>
                     </section>
                   </div>
@@ -744,12 +767,12 @@ const V7EditorContent = () => {
       </div>
 
       {/* ── Print Ad Modal (V5 Inspired) ── */}
-      <V7PrintAdModal
-        show={showPrintAd}
+      <UniversalPrintModal
+        isOpen={showPrintAd}
         countdown={adCountdown}
         onFinalize={finalizePrintAction}
         onClose={() => setShowPrintAd(false)}
-        accentColor={activeColor}
+        accentColor={resumeData.themeColor}
       />
     </div>
   );

@@ -41,7 +41,10 @@ export const usePWAInstall = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      alert("App is being prepared for installation. If this persists, please use your browser's 'Add to Home Screen' option.");
+      return;
+    }
 
     // Show the install prompt
     deferredPrompt.prompt();

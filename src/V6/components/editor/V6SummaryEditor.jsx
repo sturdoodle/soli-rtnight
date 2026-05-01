@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import V6Card from '../../ui/V6Card';
 import { useResume } from '../../../Modern/context/ResumeContext';
@@ -44,3 +46,4 @@ const V6SummaryEditor = () => {
 };
 
 export default V6SummaryEditor;
+

@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { useResume } from '../../context/ResumeContext';
 import { templates } from '../../layouts';
@@ -182,3 +184,4 @@ const TemplateSelector = () => {
 };
 
 export default TemplateSelector;
+

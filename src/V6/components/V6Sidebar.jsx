@@ -1,16 +1,18 @@
+"use client";
+
 import React, { useState } from 'react';
 import {
   User, FileText, Code, Settings, Briefcase, GraduationCap, Layout, Award, ChevronLeft, ChevronRight, Zap, Search,
   History, X, Palette, Type, Grid
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import logo from '../../assets/logo.png';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useResume } from '../../Modern/context/ResumeContext';
 
 const V6Sidebar = ({ activeSection, onSectionChange, isCollapsed, onToggleCollapse, isMobile, onClose }) => {
   const { resumeData } = useResume();
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
@@ -55,7 +57,7 @@ const V6Sidebar = ({ activeSection, onSectionChange, isCollapsed, onToggleCollap
             onClick={() => navigate('/')}
             className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity whitespace-nowrap"
           >
-            <img src={logo} alt="Logo" className="w-6 h-6 object-contain" />
+            <img src={logo.src || logo} alt="Logo" className="w-6 h-6 object-contain" />
             <h2 className="font-black text-sm text-slate-900 dark:text-white tracking-tight uppercase">qpkendra</h2>
           </motion.div>
         )}

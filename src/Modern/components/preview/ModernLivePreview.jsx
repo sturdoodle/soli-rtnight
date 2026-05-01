@@ -1,3 +1,5 @@
+"use client";
+
 import React, { memo } from 'react';
 import { useResume } from '../../context/ResumeContext';
 import { useDebounce } from '../../../hooks/useDebounce';
@@ -16,8 +18,7 @@ const ModernLivePreview = memo(() => {
   const sectionThemingEnabled = debouncedResumeData.sectionThemingEnabled ?? true;
 
   const fontFamily = debouncedResumeData.fontFamily || 'Default';
-  const fontKey = fontFamily === 'Default' ? '' : fontFamily.toLowerCase().split(' ')[0];
-  const fontClass = fontKey ? `v5-font-${fontKey}` : '';
+  const fontClass = fontFamily !== 'Default' ? `font-${fontFamily.replace(/\s+/g, '-')}` : '';
 
   return (
     <div
@@ -39,3 +40,4 @@ const ModernLivePreview = memo(() => {
 });
 
 export default ModernLivePreview;
+

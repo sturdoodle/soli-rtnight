@@ -1,8 +1,10 @@
+"use client";
+
 import React from 'react';
 import { SectionTitle, ExperienceItem, EducationItem, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const GoogleDocsStyle = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full ${atsMode ? 'font-sans' : 'font-serif'}`}>
+  <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full ${atsMode ? '' : ''}`}>
     <header className="text-center mb-6">
       <h1 className="text-2xl font-bold uppercase mb-1">{data.fullName}</h1>
       <div className="text-[12px] flex flex-wrap justify-center gap-x-2">
@@ -121,3 +123,4 @@ export const GoogleDocsStyle = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

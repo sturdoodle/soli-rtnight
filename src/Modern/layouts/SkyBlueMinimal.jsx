@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const SkyBlueMinimal = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white ${atsMode ? 'px-12 py-16' : 'bg-[#f8fafc] px-16 py-20 min-h-[1122px] shadow-xl'} w-full text-slate-900 font-sans`}>
+  <main className={`bg-white ${atsMode ? 'px-12 py-16' : 'bg-[#f8fafc] px-16 py-20 min-h-[1122px] shadow-xl'} w-full text-slate-900 `}>
     <div className={`max-w-4xl mx-auto ${atsMode ? 'space-y-10' : 'space-y-16'}`}>
       <header className="flex flex-col items-center text-center">
         {!atsMode && (
@@ -91,3 +93,4 @@ export const SkyBlueMinimal = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

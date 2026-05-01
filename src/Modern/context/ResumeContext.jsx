@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useReducer, useEffect, useMemo, useCallback } from 'react';
+"use client";
+
+import React, { createContext, useContext, useReducer, useEffect, useMemo, useCallback, useState } from 'react';
 import { SAMPLE_JSON_DATA } from '../../utils/constants.js';
 
 const ResumeContext = createContext();
@@ -17,75 +19,42 @@ const ensureAbsoluteUrl = (url) => {
   return `https://${url}`;
 };
 
-const getInitialState = () => {
-  try {
-    // 1. Determine preference (default to persistent)
-    const type = localStorage.getItem(STORAGE_TYPE_KEY) || 'persistent';
-    
-    // 2. Check for expiration (3-day TTL)
-    const timestamp = localStorage.getItem(STORAGE_TIMESTAMP_KEY);
-    if (timestamp && Date.now() - parseInt(timestamp) > EXPIRATION_MS) {
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(STORAGE_TIMESTAMP_KEY);
-      localStorage.removeItem(STORAGE_TYPE_KEY);
-    }
-
-    // 3. Load from the preferred storage
-    const storage = type === 'persistent' ? localStorage : sessionStorage;
-    const savedData = storage.getItem(STORAGE_KEY);
-    
-    if (!savedData || savedData === 'undefined') return {
-      ...SAMPLE_JSON_DATA,
-      selectedTemplate: SAMPLE_JSON_DATA.selectedTemplate || 'template-2',
-      themeColor: SAMPLE_JSON_DATA.themeColor || '#0f172a',
-      themeMode: SAMPLE_JSON_DATA.themeMode || 'light',
-      atsMode: SAMPLE_JSON_DATA.atsMode ?? true,
-      storageType: type,
-      editorStyle: 'modern',
-      fontFamily: SAMPLE_JSON_DATA.fontFamily || 'Default',
-      predictiveScoreEnabled: false,
-      sectionThemingEnabled: true
-    };
-    
-    const parsedData = JSON.parse(savedData);
-    
-    // Normalize project links in the persisted data
-    if (parsedData.projects) {
-      parsedData.projects = parsedData.projects.map(p => ({
-        ...p,
-        link: ensureAbsoluteUrl(p.link)
-      }));
-    }
-
-    return { 
-      ...parsedData, 
-      storageType: type, 
-      editorStyle: parsedData.editorStyle || 'modern',
-      predictiveScoreEnabled: parsedData.predictiveScoreEnabled ?? false,
-      sectionThemingEnabled: parsedData.sectionThemingEnabled ?? true
-    };
-  } catch (error) {
-    console.error("Error loading saved resume data:", error);
-    return {
-      ...SAMPLE_JSON_DATA,
-      selectedTemplate: SAMPLE_JSON_DATA.selectedTemplate || 'template-2',
-      themeColor: SAMPLE_JSON_DATA.themeColor || '#0f172a',
-      themeMode: SAMPLE_JSON_DATA.themeMode || 'light',
-      atsMode: SAMPLE_JSON_DATA.atsMode ?? true,
-      storageType: 'persistent',
-      predictiveScoreEnabled: false,
-      sectionThemingEnabled: true
-    };
-  }
+const DEFAULT_STATE = {
+  ...SAMPLE_JSON_DATA,
+  selectedTemplate: SAMPLE_JSON_DATA.selectedTemplate || 'template-2',
+  themeColor: SAMPLE_JSON_DATA.themeColor || '#0f172a',
+  themeMode: SAMPLE_JSON_DATA.themeMode || 'light',
+  atsMode: SAMPLE_JSON_DATA.atsMode ?? true,
+  storageType: 'persistent',
+  editorStyle: 'modern',
+  fontFamily: SAMPLE_JSON_DATA.fontFamily || 'Default',
+  predictiveScoreEnabled: false,
+  sectionThemingEnabled: true
 };
-
-const initialState = getInitialState();
 
 function resumeReducer(state, action) {
   let newState;
   switch (action.type) {
+    case 'HYDRATE':
+      return { ...state, ...action.payload };
     case 'UPDATE_FIELD':
-      newState = { ...state, [action.field]: action.value };
+      if (action.field.includes('.')) {
+        const keys = action.field.split('.');
+        const lastKey = keys.pop();
+        newState = { ...state };
+        let current = newState;
+        keys.forEach(key => {
+          if (Array.isArray(current[key])) {
+            current[key] = [...current[key]];
+          } else {
+            current[key] = { ...current[key] };
+          }
+          current = current[key];
+        });
+        current[lastKey] = action.value;
+      } else {
+        newState = { ...state, [action.field]: action.value };
+      }
       break;
     case 'UPDATE_SECTION':
       newState = { ...state, [action.section]: action.value };
@@ -126,6 +95,43 @@ function resumeReducer(state, action) {
         sectionThemingEnabled: true
       };
       break;
+    case 'ADD_ITEM':
+      if (action.path) {
+        const keys = action.path.split('.');
+        newState = { ...state };
+        let current = newState;
+        keys.forEach(key => {
+          if (Array.isArray(current[key])) {
+            current[key] = [...current[key]];
+          } else {
+            current[key] = { ...current[key] };
+          }
+          current = current[key];
+        });
+        if (Array.isArray(current)) {
+          current.push(action.payload || {});
+        }
+      }
+      break;
+    case 'DELETE_ITEM':
+      if (action.path) {
+        const keys = action.path.split('.');
+        const indexToDelete = parseInt(keys.pop());
+        newState = { ...state };
+        let current = newState;
+        keys.forEach(key => {
+          if (Array.isArray(current[key])) {
+            current[key] = [...current[key]];
+          } else {
+            current[key] = { ...current[key] };
+          }
+          current = current[key];
+        });
+        if (Array.isArray(current)) {
+          current.splice(indexToDelete, 1);
+        }
+      }
+      break;
     default:
       return state;
   }
@@ -133,31 +139,68 @@ function resumeReducer(state, action) {
 }
 
 export function ResumeProvider({ children }) {
-  const [state, dispatch] = useReducer(resumeReducer, initialState);
+  const [state, dispatch] = useReducer(resumeReducer, DEFAULT_STATE);
+  const [isHydrated, setIsHydrated] = useState(false);
 
+  // 1. Initial Hydration from Storage
   useEffect(() => {
-    // 1. Sync current state with active storage
+    try {
+      if (typeof window === 'undefined') return;
+
+      const type = localStorage.getItem(STORAGE_TYPE_KEY) || 'persistent';
+      const timestamp = localStorage.getItem(STORAGE_TIMESTAMP_KEY);
+      
+      if (timestamp && Date.now() - parseInt(timestamp) > EXPIRATION_MS) {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(STORAGE_TIMESTAMP_KEY);
+        localStorage.removeItem(STORAGE_TYPE_KEY);
+      } else {
+        const storage = type === 'persistent' ? localStorage : sessionStorage;
+        const savedData = storage.getItem(STORAGE_KEY);
+        
+        if (savedData && savedData !== 'undefined') {
+          const parsedData = JSON.parse(savedData);
+          
+          if (parsedData.projects) {
+            parsedData.projects = parsedData.projects.map(p => ({
+              ...p,
+              link: ensureAbsoluteUrl(p.link)
+            }));
+          }
+
+          dispatch({ type: 'HYDRATE', payload: { ...parsedData, storageType: type } });
+        }
+      }
+    } catch (error) {
+      console.error("Error hydrating resume data:", error);
+    } finally {
+      setIsHydrated(true);
+    }
+  }, []);
+
+  // 2. Sync to Storage on Changes
+  useEffect(() => {
+    if (!isHydrated || typeof window === 'undefined') return;
+
     const storage = state.storageType === 'persistent' ? localStorage : sessionStorage;
     storage.setItem(STORAGE_KEY, JSON.stringify(state));
     
-    // 2. Update preference key and timestamp (3-day TTL tracker)
     localStorage.setItem(STORAGE_TYPE_KEY, state.storageType);
     localStorage.setItem(STORAGE_TIMESTAMP_KEY, Date.now().toString());
 
-    // 3. Cleanup logic: when switching, ensure the other storage is wiped
     if (state.storageType === 'persistent') {
       sessionStorage.removeItem(STORAGE_KEY);
     } else {
       localStorage.removeItem(STORAGE_KEY);
     }
 
-    // 4. Dark Mode Sync
+    // Theme Sync
     if (state.themeMode === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }, [state, state.themeMode, state.storageType]);
+  }, [state, isHydrated]);
 
   const updateField = useCallback((field, value) => dispatch({ type: 'UPDATE_FIELD', field, value }), []);
   const updateSection = useCallback((section, value) => dispatch({ type: 'UPDATE_SECTION', section, value }), []);
@@ -166,10 +209,15 @@ export function ResumeProvider({ children }) {
   const resetResume = useCallback(() => dispatch({ type: 'RESET_RESUME' }), []);
   const updateStorageType = useCallback((type) => dispatch({ type: 'UPDATE_STORAGE_TYPE', payload: type }), []);
 
+  const updateDeepField = useCallback((path, value) => {
+    dispatch({ type: 'UPDATE_FIELD', field: path, value }); // The reducer needs to handle path strings
+  }, []);
+
   const contextValue = useMemo(() => ({
     resumeData: state,
     updateField,
     updateSection,
+    updateDeepField,
     setResumeData,
     toggleAts,
     updateTemplate: (templateId) => dispatch({ type: 'UPDATE_TEMPLATE', templateId }),
@@ -178,8 +226,11 @@ export function ResumeProvider({ children }) {
     toggleSectionTheming: () => dispatch({ type: 'TOGGLE_SECTION_THEMING' }),
     updateStorageType,
     setEditorStyle: (style) => dispatch({ type: 'SET_EDITOR_STYLE', payload: style }),
-    resetResume
-  }), [state, updateField, updateSection, setResumeData, toggleAts, updateStorageType, resetResume]);
+    addItem: (path, payload) => dispatch({ type: 'ADD_ITEM', path, payload }),
+    deleteItem: (path) => dispatch({ type: 'DELETE_ITEM', path }),
+    resetResume,
+    isHydrated
+  }), [state, updateField, updateSection, updateDeepField, setResumeData, toggleAts, updateStorageType, resetResume, isHydrated]);
 
   return (
     <ResumeContext.Provider value={contextValue}>

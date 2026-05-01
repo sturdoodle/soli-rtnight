@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const ModernTimeline = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white px-12 py-16 min-h-[1122px] w-full shadow-2xl ${atsMode ? 'text-black' : 'text-slate-800 font-sans leading-relaxed'}`}>
+  <main className={`bg-white px-12 py-16 min-h-[1122px] w-full shadow-2xl ${atsMode ? 'text-black' : 'text-slate-800  leading-relaxed'}`}>
     <header className={`${atsMode ? 'mb-10 text-center border-b-2 border-black pb-8' : 'mb-16 border-l-8 pl-10 py-4'}`} style={atsMode ? {} : { borderColor: themeColor }}>
       <h1 className={`${atsMode ? 'text-4xl font-bold mb-2' : 'text-7xl font-black tracking-tighter mb-2'}`} style={atsMode ? { color: 'black' } : { color: themeColor }}>{data.fullName}</h1>
       <p className={`${atsMode ? 'text-xl font-bold' : 'text-2xl font-bold opacity-30 uppercase tracking-[0.3em] mb-10'}`}>{data.jobTitle}</p>
@@ -89,3 +91,4 @@ export const ModernTimeline = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

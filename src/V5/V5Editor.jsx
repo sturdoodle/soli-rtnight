@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import {
   Menu, Download, Upload, Sun, Moon, Maximize2, X, Printer, Zap, FileText, Layout, Type, Settings, Braces, Smartphone
@@ -7,13 +9,14 @@ import { useResume, ResumeProvider } from '../Modern/context/ResumeContext';
 import { useAtsScore } from '../hooks/useAtsScore';
 import { useResumeActions } from '../hooks/useResumeActions';
 import { useSplitPane } from '../hooks/useSplitPane';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 
 import logo from '../assets/logo.png';
-import AdSenseAd from '../AdsenseAdsBlock.jsx';
+const AdSenseAd = lazy(() => import('../AdsenseAdsBlock.jsx'));
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../MainConstant.js';
-import { isDevelopmentMode, TAB_META } from './V5Constants';
+import { TAB_META } from './V5Constants';
+import { isDevelopmentMode } from '../lib/env';
 
 import V5Navbar from './components/V5Navbar';
 import V5Sidebar from './components/V5Sidebar';
@@ -26,8 +29,9 @@ const AboutTab = lazy(() => import('./components/tabs/AboutTab'));
 const V5JsonEditor = lazy(() => import('./components/V5JsonEditor'));
 const EditorForm = lazy(() => import('../components/editor/EditorForm'));
 const TemplateSelector = lazy(() => import('../Modern/components/editor/TemplateSelector'));
-const PrintAdModal = lazy(() => import('./components/PrintAdModal'));
+import { UniversalPrintModal, OnboardingModal, PWAInstallBanner } from '../components/shared';
 const V5WipeModal = lazy(() => import('./components/V5WipeModal'));
+
 
 // Synchronous import specifically for the Print Buffer to avoid lazy-loading race conditions
 import ModernLivePreview from '../Modern/components/preview/ModernLivePreview';
@@ -44,18 +48,58 @@ const TabLoadingSkeleton = () => (
   </div>
 );
 
-const V5EditorContent = () => {
+const V5EditorContent = ({ initialTab }) => {
   const {
     resumeData, updateField, setResumeData, toggleAts, toggleTheme,
     updateStorageType, resetResume, setEditorStyle
   } = useResume();
 
-  const [activeTab, setActiveTab] = useState('content');
+  const navigate = useRouter();
+
+  // Map URL slugs to internal tab IDs
+  const tabMap = {
+    'editor': 'content',
+    'template': 'layout',
+    'setting': 'snapshots',
+    'help': 'help',
+    'aboutus': 'about'
+  };
+
+  const [activeTab, setActiveTab] = useState(tabMap[initialTab] || 'content');
+
+  // Reverse map for URL synchronization
+  const reverseTabMap = {
+    'content': 'editor',
+    'layout': 'template',
+    'snapshots': 'setting',
+    'help': 'help',
+    'about': 'aboutus'
+  };
+  
+  useEffect(() => {
+    if (initialTab && tabMap[initialTab]) {
+      setActiveTab(tabMap[initialTab]);
+    }
+  }, [initialTab]);
+
+  // Synchronize URL with activeTab
+  useEffect(() => {
+    const slug = reverseTabMap[activeTab];
+    if (slug) {
+      const currentPath = window.location.pathname;
+      const targetPath = `/${slug}`;
+      // Only navigate if we are on a tab route (not home / or /v5)
+      if (currentPath !== targetPath && !['/', '/v5'].includes(currentPath)) {
+        navigate.push(targetPath, { scroll: false });
+      }
+    }
+  }, [activeTab, navigate]);
+
+
   const [isEnlarged, setIsEnlarged] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showWipeConfirm, setShowWipeConfirm] = useState(false);
-  const navigate = useNavigate();
 
   const atsScore = useAtsScore(resumeData);
   const { splitWidth, isResizing, setIsResizing, isDesktop } = useSplitPane(50, isSidebarCollapsed);
@@ -159,33 +203,19 @@ const V5EditorContent = () => {
     <div className="flex flex-col fixed inset-0 bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:static print:h-auto print:bg-white print:overflow-visible overflow-hidden"
       style={{ '--v5-accent': activeColor, '--v5-accent-rgb': hexToRgb(activeColor), WebkitOverflowScrolling: 'touch' }}>
 
-      {showOnboarding && (
-        <div className="fixed inset-0 z-[200] bg-[var(--v5-bg)]/80 backdrop-blur-2xl animate-in fade-in duration-1000 flex items-center justify-center p-4">
-          <div className="max-w-2xl w-full p-8 sm:p-12 rounded-[3.5rem] bg-[var(--v5-card)] border border-black/5 dark:border-white/5 shadow-[0_50px_100px_rgba(0,0,0,0.3)] relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-2" style={{ backgroundColor: activeColor }} />
-            <div className="flex flex-col items-center text-center space-y-8">
-              <div className="w-24 h-24 rounded-[2.5rem] flex items-center justify-center bg-black/5 dark:bg-white/5 animate-bounce mb-4">
-                <Zap size={48} style={{ color: activeColor }} />
-              </div>
-              <div className="space-y-4">
-                <h2 className="text-4xl font-black tracking-tight text-[var(--v5-heading)]">Welcome to Resume Builder</h2>
-                <p className="text-slate-500 dark:text-slate-300 text-lg leading-relaxed">Experience our most advanced builder yet. Professional-grade resume builder with real-time ATS optimization.</p>
-              </div>
-              <button onClick={completeOnboarding} className="px-12 py-5 rounded-full text-white font-black uppercase tracking-[0.2em] shadow-xl" style={{ backgroundColor: activeColor }}>Start Building</button>
-            </div>
-          </div>
-        </div>
-      )}
+      <OnboardingModal
+        isOpen={showOnboarding}
+        onComplete={completeOnboarding}
+        accentColor={activeColor}
+      />
 
-      <Suspense fallback={null}>
-        <PrintAdModal
-          showPrintAd={showPrintAd}
-          adCountdown={adCountdown}
-          finalizePrintAction={finalizePrintAction}
-          onClose={() => setShowPrintAd(false)}
-          activeColor={activeColor}
-        />
-      </Suspense>
+      <UniversalPrintModal
+        isOpen={showPrintAd}
+        countdown={adCountdown}
+        onFinalize={finalizePrintAction}
+        onClose={() => setShowPrintAd(false)}
+        accentColor={activeColor}
+      />
 
       <V5Navbar
         activeTab={activeTab}
@@ -204,8 +234,8 @@ const V5EditorContent = () => {
           <div className="flex flex-col p-2 text-[10px] font-black uppercase tracking-[0.2em] space-y-0.5">
             {[
               { id: 'content', label: 'Editor' },
-              { id: 'typography', label: 'Typeface' },
-              { id: 'layout', label: 'Structure' },
+              { id: 'typography', label: 'Fonts' },
+              { id: 'layout', label: 'Layout' },
               { id: 'help', label: 'Help' },
               { id: 'about', label: 'About Us' }
             ].map((item) => (
@@ -221,7 +251,7 @@ const V5EditorContent = () => {
           </div>
 
           {/* Mobile Install Promotion */}
-          {!isInstalled && isInstallable && (
+          {!isInstalled && (
             <div className="px-8 pt-2 pb-4">
                <motion.button 
                  initial={{ x: 0 }}
@@ -288,30 +318,33 @@ const V5EditorContent = () => {
         />
 
         <main
-          className="flex-1 h-full overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-8 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-14 lg:pb-16 px-0 custom-scrollbar print:hidden lg:m-4 lg:rounded-[2.5rem] lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm overscroll-auto touch-pan-y"
+          className={`flex-1 h-full overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-4 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-6 lg:pb-8 px-0 custom-scrollbar print:hidden lg:m-2 lg:rounded-2xl lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm overscroll-auto touch-pan-y ${isResizing ? 'transition-none' : 'transition-all duration-500'}`}
           style={isDesktop ? { width: `${splitWidth}%`, WebkitOverflowScrolling: 'touch' } : { width: '100%', WebkitOverflowScrolling: 'touch' }}
         >
+
           <div className="max-w-[1400px] mx-auto min-h-full">
-            <div className="min-h-full rounded-2xl sm:rounded-[3rem] bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] px-1.5 sm:px-6 lg:px-8 py-6 relative">
+            <div className="min-h-full rounded-xl sm:rounded-2xl bg-[var(--v5-card)]/50 backdrop-blur-2xl border border-black/5 dark:border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.2)] px-1.5 sm:px-4 lg:px-6 py-4 relative">
               <Suspense fallback={null}>
                 <V5WipeModal
                   isOpen={showWipeConfirm}
                   onClose={() => setShowWipeConfirm(false)}
                   onConfirm={resetResume}
-                  title="Wipe Engine Cache?"
-                  description="This will erase all your resume data and reset the structural blueprint to factory defaults."
+                  title="Reset Resume Data?"
+                  description="This will erase all your resume data and reset the resume structure to factory defaults."
                 />
               </Suspense>
+              
+              <PWAInstallBanner />
 
               <Suspense fallback={<TabLoadingSkeleton />}>
                 {activeTab === 'content' && (
                   <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <div className="mb-4 p-4 sm:p-6 rounded-[2.5rem] bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block">
+                    <div className="mb-2 p-3 sm:p-4 rounded-2xl bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block">
                       <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
                     </div>
                     <EditorForm />
-                    <div className="p-10 rounded-[3rem] bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 flex flex-col items-center text-center justify-center min-h-[220px]">
-                      <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 bg-white/50 dark:bg-black/30 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-lg">
+                    <div className="p-6 rounded-2xl bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 flex flex-col items-center text-center justify-center min-h-[160px]">
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-white/50 dark:bg-black/30 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-lg">
                         <span className="text-3xl font-black" style={{ fontFamily: 'Absans, sans-serif', color: activeColor }}>qp</span>
                       </div>
                       <h3 className="text-3xl font-black text-[var(--v5-heading)] opacity-90" style={{ fontFamily: 'Absans, sans-serif' }}>qpkendra</h3>
@@ -348,15 +381,22 @@ const V5EditorContent = () => {
 
         <div
           onMouseDown={() => setIsResizing(true)}
-          className="hidden xl:flex w-1.5 hover:w-2 bg-transparent cursor-col-resize relative z-50 group items-center justify-center"
+          onTouchStart={() => setIsResizing(true)}
+          className={`hidden xl:flex w-2 hover:w-2.5 bg-transparent cursor-col-resize relative z-50 group items-center justify-center transition-all ${isResizing ? 'w-2.5' : ''}`}
         >
-          <div className="w-px h-10 bg-black/5 dark:bg-white/10 group-hover:bg-amber-500/50 rounded-full transition-colors" />
+          <div className={`w-1 h-12 rounded-full transition-all duration-300 ${isResizing ? 'bg-amber-500 scale-y-125' : 'bg-black/5 dark:bg-white/10 group-hover:bg-amber-500/50'}`} />
+          
+          {/* Subtle Glow when resizing */}
+          {isResizing && (
+            <div className="absolute inset-0 bg-amber-500/5 blur-md -z-10" />
+          )}
         </div>
 
         <section
-          className="hidden xl:flex border-l border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col p-4 lg:p-8 shadow-2xl overflow-hidden relative"
+          className={`hidden xl:flex border-l border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col p-4 lg:p-8 shadow-2xl overflow-hidden relative ${isResizing ? 'transition-none' : 'transition-all duration-500'}`}
           style={isDesktop ? { width: `${100 - splitWidth}%` } : {}}
         >
+
           <div className="flex items-center justify-between mb-4 px-4 h-12 print:hidden">
             <div className="flex bg-slate-100 dark:bg-slate-800/50 p-1 rounded-xl border border-black/5 dark:border-white/5">
               {['preview', 'json'].map((mode) => (
@@ -463,8 +503,8 @@ const V5EditorContent = () => {
   );
 };
 
-const V5Editor = () => (
-  <V5EditorContent />
+const V5Editor = ({ tab }) => (
+  <V5EditorContent initialTab={tab} />
 );
 
 export default V5Editor;

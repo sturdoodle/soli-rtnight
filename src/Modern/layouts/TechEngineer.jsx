@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github, Code, FileText, Briefcase, GraduationCap, Award, FolderCode } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const TechEngineer = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white px-12 py-16 min-h-[1122px] w-full ${atsMode ? 'text-black print:p-0' : 'text-slate-800 font-sans print:p-0 print:shadow-none'}`}>
+  <main className={`bg-white px-12 py-16 min-h-[1122px] w-full ${atsMode ? 'text-black print:p-0' : 'text-slate-800  print:p-0 print:shadow-none'}`}>
     <header className={`flex flex-col md:flex-row justify-between items-start border-b-2 pb-10 mb-10 ${atsMode ? 'border-black' : ''}`} style={atsMode ? {} : { borderColor: themeColor }}>
       <div className="flex-1">
         <h1 className="text-4xl font-extrabold tracking-tight mb-2" style={atsMode ? { color: 'black' } : { color: themeColor }}>{data.fullName}</h1>
@@ -89,3 +91,4 @@ export const TechEngineer = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+

@@ -1,3 +1,5 @@
+"use client";
+
 import { LeafLivePremium } from './LeafLivePremium';
 import { StandardATS } from './StandardATS';
 import { ModernProfessional } from './ModernProfessional';
@@ -11,6 +13,7 @@ import { ATSProfessional } from './ATSProfessional';
 import { ATSTech } from './ATSTech';
 import { ATSCreative } from './ATSCreative';
 import { ATSEngineering } from './ATSEngineering';
+import { LeafDesign2 } from './LeafDesign2';
 
 export const templates = {
   'template-1': { id: 'template-1', name: 'Leaf Live Premium', component: LeafLivePremium, thumbnail: '🌿' },
@@ -25,5 +28,6 @@ export const templates = {
   'template-10': { id: 'template-10', name: 'ATS Professional', component: ATSProfessional, thumbnail: '🏢' },
   'template-11': { id: 'template-11', name: 'ATS Tech', component: ATSTech, thumbnail: '⚡' },
   'template-12': { id: 'template-12', name: 'ATS Creative', component: ATSCreative, thumbnail: '🎭' },
-  'template-13': { id: 'template-13', name: 'ATS Engineering', component: ATSEngineering, thumbnail: '🛠️' }
+  'template-13': { id: 'template-13', name: 'ATS Engineering', component: ATSEngineering, thumbnail: '🛠️' },
+  'template-14': { id: 'template-14', name: 'Leaf Design 2', component: LeafDesign2, thumbnail: '🍀' }
 };

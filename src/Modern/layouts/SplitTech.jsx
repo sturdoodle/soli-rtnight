@@ -1,9 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, MapPin, Github, Code, Layout, Globe } from 'lucide-react';
 import { ContactItem, SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedText, ProjectItem, CertificationItem } from './SharedComponents';
 
 export const SplitTech = ({ data, themeColor, atsMode }) => (
-  <main className={`bg-white min-h-[1122px] w-full ${atsMode ? 'text-black' : 'text-slate-900 font-sans shadow-2xl'}`}>
+  <main className={`bg-white min-h-[1122px] w-full ${atsMode ? 'text-black' : 'text-slate-900  shadow-2xl'}`}>
     <header className={`${atsMode ? 'px-12 py-10 mb-8 pb-8 border-b-2 border-black text-center' : 'hidden'}`}>
       <h1 className="text-4xl font-bold tracking-tight mb-2 uppercase">{data.fullName}</h1>
       <p className="text-sm font-semibold tracking-widest text-slate-400 uppercase">{data.jobTitle}</p>
@@ -120,3 +122,4 @@ export const SplitTech = ({ data, themeColor, atsMode }) => (
     </div>
   </main>
 );
+
