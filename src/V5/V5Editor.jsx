@@ -251,7 +251,7 @@ const V5EditorContent = ({ initialTab }) => {
           </div>
 
           {/* Mobile Install Promotion */}
-          {!isInstalled && (
+          {(isInstallable && !isInstalled) && (
             <div className="px-8 pt-2 pb-4">
                <motion.button 
                  initial={{ x: 0 }}

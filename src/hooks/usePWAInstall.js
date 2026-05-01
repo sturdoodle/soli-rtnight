@@ -20,6 +20,7 @@ export const usePWAInstall = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(globalDeferredPrompt);
   const [isInstallable, setIsInstallable] = useState(!!globalDeferredPrompt);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
     // Check if the app is already installed
@@ -27,6 +28,12 @@ export const usePWAInstall = () => {
       setIsInstalled(true);
     }
 
+    // Detect iOS
+    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    setIsIOS(isIOSDevice);
+  }, []);
+
+  useEffect(() => {
     const handler = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -59,31 +66,32 @@ export const usePWAInstall = () => {
   }, [deferredPrompt]);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) {
-      // If we don't have a prompt, it's likely because the browser hasn't fired it yet
-      // or the app is already installed/not supported.
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // Check both local state and global stashed event for maximum reliability
+    const promptToUse = deferredPrompt || globalDeferredPrompt;
+
+    if (!promptToUse) {
+      const isMobile = /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       if (isMobile) {
-        alert("To install: Tap the browser menu (three dots or share icon) and select 'Add to Home Screen'.");
+        alert("To install: Tap your browser's menu (three dots) and select 'Install App' or 'Add to Home Screen'.");
       } else {
-        alert("Installation is being initialized. If you don't see a prompt, please check your browser's address bar for the install icon or use the browser menu.");
+        alert("Preparing installation... Please wait a moment and try again, or check your browser's address bar for the install icon.");
       }
       return;
     }
 
     try {
-      // Show the install prompt
-      await deferredPrompt.prompt();
+      // Show the install prompt using the most reliable available event
+      await promptToUse.prompt();
 
       // Wait for the user to respond to the prompt
-      const { outcome } = await deferredPrompt.userChoice;
+      const { outcome } = await promptToUse.userChoice;
       console.log(`User response to the install prompt: ${outcome}`);
 
       if (outcome === 'accepted') {
         setIsInstalled(true);
       }
 
-      // We've used the prompt, and can't use it again, throw it away
+      // Clear both local and global stashed events after use
       setDeferredPrompt(null);
       globalDeferredPrompt = null;
       setIsInstallable(false);
@@ -92,5 +100,13 @@ export const usePWAInstall = () => {
     }
   };
 
-  return { isInstallable, isInstalled, handleInstallClick };
+  // Show the UI immediately if not installed (excluding iOS)
+  const finalIsInstallable = isIOS ? false : !isInstalled;
+
+  return { 
+    isInstallable: finalIsInstallable, 
+    isInstalled, 
+    handleInstallClick, 
+    isIOS 
+  };
 };

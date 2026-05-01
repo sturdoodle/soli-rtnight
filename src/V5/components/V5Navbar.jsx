@@ -108,7 +108,7 @@ const V5Navbar = ({
         <AtsToggle accentColor={activeColor} />
 
         <div className="flex items-center gap-3">
-          {!isInstalled && (
+          {(isInstallable && !isInstalled) && (
             <div className="relative">
               <motion.div
                 initial={{ y: 0 }}
