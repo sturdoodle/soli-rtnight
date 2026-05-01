@@ -42,49 +42,55 @@ const V6CertificationsEditor = () => {
       <div className="space-y-6">
         {certifications.map((cert, index) => (
           <React.Fragment key={cert.id}>
-            <V6Card 
-              title={cert.name || "New Certification"} 
-              description={cert.issuer ? `Issued by: ${cert.issuer}` : "Detail the issuing organization and license name."}
-              icon={Award}
-              action={
-                <button 
-                  onClick={() => handleRemoveCert(cert.id)}
-                  className="p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all border border-transparent hover:border-red-100 dark:hover:border-red-900/30"
-                >
-                  <Trash2 size={18} />
-                </button>
-              }
-            >
-              <div className="space-y-5 w-full">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 ml-1">
-                    <ShieldCheck size={12} className="text-slate-400" />
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Certification Name</label>
+            <div className="relative p-1 bg-gradient-to-br from-slate-200/50 to-transparent dark:from-white/5 dark:to-transparent rounded-[2rem] sm:rounded-[2.5rem]">
+              <div className="bg-white dark:bg-[#0c0c0e] p-4 sm:p-10 rounded-[1.8rem] sm:rounded-[2.4rem] shadow-sm border border-slate-200 dark:border-white/[0.05]">
+                <div className="space-y-6 sm:space-y-8">
+                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/[0.05] pb-6 mb-8">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 shadow-inner">
+                        <Award size={22} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">{cert.name || 'New Certification'}</h3>
+                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em] mt-1">{cert.issuer || 'Issuing Organization'}</p>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => handleRemoveCert(cert.id)}
+                      className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-2xl transition-all border border-slate-100 dark:border-white/[0.05] hover:border-red-100 dark:hover:border-red-900/30 shadow-sm"
+                    >
+                      <Trash2 size={20} />
+                    </button>
                   </div>
-                  <input 
-                    type="text" 
-                    value={cert.name} 
-                    onChange={(e) => handleUpdateCert(cert.id, 'name', e.target.value)}
-                    placeholder="e.g. AWS Certified Solutions Architect"
-                    className={inputClasses}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 ml-1">
-                    <Landmark size={12} className="text-slate-400" />
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Issuing Organization</label>
+
+                  <div className="space-y-6">
+                    <V6Card title="Certification Name" description="Full title of the award or license." icon={ShieldCheck} horizontal={true}>
+                      <div className="w-full">
+                        <input 
+                          type="text" 
+                          value={cert.name} 
+                          onChange={(e) => handleUpdateCert(cert.id, 'name', e.target.value)}
+                          placeholder="e.g. AWS Certified Solutions Architect"
+                          className={inputClasses}
+                        />
+                      </div>
+                    </V6Card>
+
+                    <V6Card title="Issuing Organization" description="The authority that granted it." icon={Landmark} horizontal={true}>
+                      <div className="w-full">
+                        <input 
+                          type="text" 
+                          value={cert.issuer} 
+                          onChange={(e) => handleUpdateCert(cert.id, 'issuer', e.target.value)}
+                          placeholder="e.g. Amazon Web Services"
+                          className={inputClasses}
+                        />
+                      </div>
+                    </V6Card>
                   </div>
-                  <input 
-                    type="text" 
-                    value={cert.issuer} 
-                    onChange={(e) => handleUpdateCert(cert.id, 'issuer', e.target.value)}
-                    placeholder="e.g. Amazon Web Services"
-                    className={inputClasses}
-                  />
                 </div>
               </div>
-            </V6Card>
+            </div>
 
             {/* Dynamic Ad Injection: Show after EACH certification item */}
             <div className="py-2">

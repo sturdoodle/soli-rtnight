@@ -42,7 +42,7 @@ export const useResumeActions = (resumeData, setResumeData) => {
   }, [setResumeData, showNotification]);
 
   const handlePrint = useCallback((onBeforePrint) => {
-    if (onBeforePrint) {
+    if (typeof onBeforePrint === 'function') {
       onBeforePrint();
     } else {
       window.print();

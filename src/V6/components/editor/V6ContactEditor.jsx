@@ -19,7 +19,7 @@ const V6ContactEditor = () => {
       </div>
 
       <V6Card title="Full Name" description="Your name as it should appear." icon={User} horizontal={true}>
-        <div className="sm:w-[320px]">
+        <div className="w-full">
           <input 
             type="text" 
             value={resumeData.fullName || ''} 
@@ -31,7 +31,7 @@ const V6ContactEditor = () => {
       </V6Card>
 
       <V6Card title="Job Title" description="Your professional headline." icon={Briefcase} horizontal={true}>
-        <div className="sm:w-[320px]">
+        <div className="w-full">
           <input 
             type="text" 
             value={resumeData.jobTitle || ''} 
@@ -64,7 +64,7 @@ const V6ContactEditor = () => {
       </div>
 
       <V6Card title="Location" description="City, State, or Remote." icon={MapPin} horizontal={true}>
-        <div className="sm:w-[320px]">
+        <div className="w-full">
           <input 
             type="text" 
             value={resumeData.location || ''} 

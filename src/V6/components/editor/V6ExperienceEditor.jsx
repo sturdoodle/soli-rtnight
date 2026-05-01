@@ -103,60 +103,57 @@ const V6ExperienceEditor = () => {
             <div className="relative p-1 bg-gradient-to-br from-slate-200/50 to-transparent dark:from-white/5 dark:to-transparent rounded-[2rem] sm:rounded-[2.5rem]">
               <div className="bg-white dark:bg-[#0c0c0e] p-4 sm:p-10 rounded-[1.8rem] sm:rounded-[2.4rem] shadow-sm border border-slate-200 dark:border-white/[0.05]">
                 <div className="space-y-6 sm:space-y-8">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/[0.05] pb-6 mb-8">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 shadow-inner">
                         <Briefcase size={22} />
                       </div>
                       <div>
-                        <h3 className="text-lg font-black text-slate-900 dark:text-white tracking-tight">{exp.company || 'New Company'}</h3>
-                        <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">{exp.role || 'Role Title'}</p>
+                        <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">{exp.company || 'New Position'}</h3>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-[10px] text-blue-500 font-black uppercase tracking-[0.2em]">{exp.role || 'Designation'}</span>
+                          <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
+                          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em]">{exp.duration || 'Period'}</span>
+                        </div>
                       </div>
                     </div>
                     <button 
                       onClick={() => handleRemoveExp(exp.id)}
-                      className="p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all border border-transparent hover:border-red-100 dark:hover:border-red-900/30"
+                      className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-2xl transition-all border border-slate-100 dark:border-white/[0.05] hover:border-red-100 dark:hover:border-red-900/30 shadow-sm"
                     >
-                      <Trash2 size={18} />
+                      <Trash2 size={20} />
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-8">
-                    <div className="md:col-span-4 space-y-5 sm:space-y-6">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2 ml-1">
-                          <Globe size={12} className="text-slate-400" />
-                          <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Company Name</label>
+                  <div className="space-y-6 sm:space-y-8">
+                    <div className="grid grid-cols-1 @xl:grid-cols-2 gap-6">
+                      <V6Card title="Company Name" description="Employer or organization." icon={Globe} horizontal={true}>
+                        <div className="w-full">
+                          <input 
+                            type="text" 
+                            value={exp.company} 
+                            onChange={(e) => handleUpdateExp(exp.id, 'company', e.target.value)}
+                            placeholder="e.g. Google"
+                            className={inputClasses}
+                          />
                         </div>
-                        <input 
-                          type="text" 
-                          value={exp.company} 
-                          onChange={(e) => handleUpdateExp(exp.id, 'company', e.target.value)}
-                          placeholder="e.g. Google"
-                          className={inputClasses}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2 ml-1">
-                          <Calendar size={12} className="text-slate-400" />
-                          <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Period / Duration</label>
+                      </V6Card>
+
+                      <V6Card title="Period / Duration" description="Timeframe of employment." icon={Calendar} horizontal={true}>
+                        <div className="w-full">
+                          <input 
+                            type="text" 
+                            value={exp.duration} 
+                            onChange={(e) => handleUpdateExp(exp.id, 'duration', e.target.value)}
+                            placeholder="e.g. 2022 - Present"
+                            className={inputClasses}
+                          />
                         </div>
-                        <input 
-                          type="text" 
-                          value={exp.duration} 
-                          onChange={(e) => handleUpdateExp(exp.id, 'duration', e.target.value)}
-                          placeholder="e.g. 2022 - Present"
-                          className={inputClasses}
-                        />
-                      </div>
+                      </V6Card>
                     </div>
 
-                    <div className="md:col-span-8 space-y-6 sm:space-y-8">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2 ml-1">
-                          <User size={12} className="text-slate-400" />
-                          <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Professional Designation</label>
-                        </div>
+                    <V6Card title="Professional Designation" description="Your specific role or title." icon={User} horizontal={true}>
+                      <div className="w-full">
                         <input 
                           type="text" 
                           value={exp.role} 
@@ -165,25 +162,30 @@ const V6ExperienceEditor = () => {
                           className={inputClasses}
                         />
                       </div>
+                    </V6Card>
 
-                      <div className="space-y-6 pt-4 border-t border-slate-100 dark:border-white/[0.05]">
-                        <div className="flex items-center justify-between mb-2">
+                    <div className="space-y-6 pt-8 border-t border-slate-100 dark:border-white/[0.05]">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                          <Terminal size={14} className="text-blue-500" />
                           <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Projects & Contributions</h4>
                         </div>
-                        
+                      </div>
+                      
+                      <div className="grid grid-cols-1 gap-4">
                         {exp.clients.map((client, clientIdx) => (
                           <React.Fragment key={client.id}>
                             <V6Card 
-                              title={client.name || "Contribution Unit"} 
-                              description="Describe key achievements, technologies, or client impacts."
+                              title={client.name || "Contribution Name"} 
+                              description="Outline specific impact or technical achievements."
                               icon={Terminal}
-                              className="!shadow-none dark:!bg-white/[0.01] border-dashed border-slate-200 dark:border-white/[0.1] hover:border-blue-500/30"
+                              className="!shadow-none bg-slate-50/50 dark:bg-white/[0.01] border-dashed border-slate-200 dark:border-white/[0.08] hover:border-blue-500/30"
                               action={
                                 <button 
                                   onClick={() => handleRemoveClient(exp.id, client.id)}
-                                  className="p-1.5 text-slate-400 hover:text-red-500 rounded-lg transition-all"
+                                  className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all"
                                 >
-                                  <Trash2 size={14} />
+                                  <Trash2 size={16} />
                                 </button>
                               }
                             >
@@ -192,33 +194,32 @@ const V6ExperienceEditor = () => {
                                   type="text" 
                                   value={client.name} 
                                   onChange={(e) => handleUpdateClient(exp.id, client.id, 'name', e.target.value)}
-                                  placeholder="e.g. Enterprise Cloud Infrastructure Migration"
+                                  placeholder="e.g. System Performance Optimization"
                                   className={inputClasses}
                                 />
                                 <textarea 
                                   value={client.bulletPoints.join('\n')} 
                                   onChange={(e) => handleUpdateBullets(exp.id, client.id, e.target.value)}
-                                  placeholder="• Orchestrated transition of 50+ microservices to Kubernetes..."
+                                  placeholder="• Improved response times by 40% through lazy loading..."
                                   className={textareaClasses}
                                 />
                               </div>
                             </V6Card>
 
-                            {/* High-Density Ad Injection: Show after EACH project/client item */}
                             <div className="py-2">
                               <AdUnit slot="8331566456" minHeight="100px" className="rounded-[1.5rem]" />
                             </div>
                           </React.Fragment>
                         ))}
-
-                        <button 
-                          onClick={() => handleAddClient(exp.id)}
-                          className="w-full flex items-center justify-center gap-3 py-4 bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-white/[0.08] hover:border-blue-500/30 hover:text-blue-500 transition-all shadow-sm group"
-                        >
-                          <Plus size={16} className="group-hover:rotate-90 transition-transform" />
-                          Add New Contribution
-                        </button>
                       </div>
+
+                      <button 
+                        onClick={() => handleAddClient(exp.id)}
+                        className="w-full flex items-center justify-center gap-3 py-5 bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-[1.5rem] text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-white/[0.08] hover:border-blue-500/30 hover:text-blue-500 transition-all shadow-sm group"
+                      >
+                        <Plus size={16} className="group-hover:rotate-90 transition-transform" />
+                        Add New Contribution
+                      </button>
                     </div>
                   </div>
                 </div>

@@ -43,42 +43,52 @@ const V6SkillsEditor = () => {
       <div className="space-y-6">
         {skills.map((skill, index) => (
           <React.Fragment key={skill.id}>
-            <V6Card 
-              title={skill.category || "New Skill Category"} 
-              description={skill.items ? `Highlights: ${skill.items.substring(0, 50)}...` : "Define your tech stack or core competencies."}
-              icon={Code}
-              action={
-                <button 
-                  onClick={() => handleRemoveSkill(skill.id)}
-                  className="p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all border border-transparent hover:border-red-100 dark:hover:border-red-900/30"
-                >
-                  <Trash2 size={18} />
-                </button>
-              }
-            >
-              <div className="space-y-5 w-full">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 ml-1">Category Title</label>
-                  <input 
-                    type="text" 
-                    value={skill.category} 
-                    onChange={(e) => handleUpdateSkill(skill.id, 'category', e.target.value)}
-                    placeholder="e.g. Frontend Development"
-                    className={inputClasses}
-                  />
-                </div>
+            <div className="relative p-1 bg-gradient-to-br from-slate-200/50 to-transparent dark:from-white/5 dark:to-transparent rounded-[2rem] sm:rounded-[2.5rem]">
+              <div className="bg-white dark:bg-[#0c0c0e] p-4 sm:p-10 rounded-[1.8rem] sm:rounded-[2.4rem] shadow-sm border border-slate-200 dark:border-white/[0.05]">
+                <div className="space-y-6 sm:space-y-8">
+                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/[0.05] pb-6 mb-8">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 shadow-inner">
+                        <Code size={22} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">{skill.category || 'New Skill Category'}</h3>
+                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em] mt-1">{skill.items ? `${skill.items.split(',').length} Skills Listed` : 'Add specific skills'}</p>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => handleRemoveSkill(skill.id)}
+                      className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-2xl transition-all border border-slate-100 dark:border-white/[0.05] hover:border-red-100 dark:hover:border-red-900/30 shadow-sm"
+                    >
+                      <Trash2 size={20} />
+                    </button>
+                  </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 ml-1">Skill Set (Comma Separated)</label>
-                  <textarea 
-                    value={skill.items} 
-                    onChange={(e) => handleUpdateSkill(skill.id, 'items', e.target.value)}
-                    placeholder="e.g. React, TypeScript, Next.js, Tailwind CSS"
-                    className={textareaClasses}
-                  />
+                  <div className="space-y-6">
+                    <V6Card title="Category Title" description="e.g. Backend, Cloud, Soft Skills." icon={Zap} horizontal={true}>
+                      <div className="w-full">
+                        <input 
+                          type="text" 
+                          value={skill.category} 
+                          onChange={(e) => handleUpdateSkill(skill.id, 'category', e.target.value)}
+                          placeholder="e.g. Frontend Development"
+                          className={inputClasses}
+                        />
+                      </div>
+                    </V6Card>
+
+                    <V6Card title="Skill Set" description="List items separated by commas." icon={Award}>
+                      <textarea 
+                        value={skill.items} 
+                        onChange={(e) => handleUpdateSkill(skill.id, 'items', e.target.value)}
+                        placeholder="e.g. React, TypeScript, Next.js, Tailwind CSS"
+                        className={textareaClasses}
+                      />
+                    </V6Card>
+                  </div>
                 </div>
               </div>
-            </V6Card>
+            </div>
 
             {/* Intelligent Ad Injection Logic from V5: Show after the 2nd entry if more than 2 exist */}
             {index === 1 && skills.length > 2 && (

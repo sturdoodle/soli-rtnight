@@ -45,76 +45,76 @@ const V6ProjectsEditor = () => {
       <div className="space-y-8">
         {projects.map((project, index) => (
           <React.Fragment key={project.id}>
-            <V6Card 
-              title={project.name || "New Portfolio Project"} 
-              description={project.tech ? `Stack: ${project.tech}` : "Outline the technologies and core features."}
-              icon={Layout}
-              action={
-                <button 
-                  onClick={() => handleRemoveProject(project.id)}
-                  className="p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all border border-transparent hover:border-red-100 dark:hover:border-red-900/30"
-                >
-                  <Trash2 size={18} />
-                </button>
-              }
-            >
-              <div className="space-y-5 w-full">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 ml-1">
-                    <Terminal size={12} className="text-slate-400" />
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Project Title</label>
+            <div className="relative p-1 bg-gradient-to-br from-slate-200/50 to-transparent dark:from-white/5 dark:to-transparent rounded-[2rem] sm:rounded-[2.5rem]">
+              <div className="bg-white dark:bg-[#0c0c0e] p-4 sm:p-10 rounded-[1.8rem] sm:rounded-[2.4rem] shadow-sm border border-slate-200 dark:border-white/[0.05]">
+                <div className="space-y-6 sm:space-y-8">
+                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/[0.05] pb-6 mb-8">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 shadow-inner">
+                        <Layout size={22} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">{project.name || 'New Portfolio Project'}</h3>
+                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em] mt-1">{project.tech || 'Tech Stack'}</p>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => handleRemoveProject(project.id)}
+                      className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-2xl transition-all border border-slate-100 dark:border-white/[0.05] hover:border-red-100 dark:hover:border-red-900/30 shadow-sm"
+                    >
+                      <Trash2 size={20} />
+                    </button>
                   </div>
-                  <input 
-                    type="text" 
-                    value={project.name} 
-                    onChange={(e) => handleUpdateProject(project.id, 'name', e.target.value)}
-                    placeholder="e.g. EduMetric Platform"
-                    className={inputClasses}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 ml-1">
-                    <Code size={12} className="text-slate-400" />
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Tech Stack</label>
-                  </div>
-                  <input 
-                    type="text" 
-                    value={project.tech} 
-                    onChange={(e) => handleUpdateProject(project.id, 'tech', e.target.value)}
-                    placeholder="e.g. React.js, Tailwind CSS, Firebase"
-                    className={inputClasses}
-                  />
-                </div>
 
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 ml-1">
-                    <Globe size={12} className="text-slate-400" />
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Project Description</label>
-                  </div>
-                  <textarea 
-                    value={project.description} 
-                    onChange={(e) => handleUpdateProject(project.id, 'description', e.target.value)}
-                    placeholder="Describe your architectural decisions and key features..."
-                    className={textareaClasses}
-                  />
-                </div>
+                  <div className="space-y-6">
+                    <V6Card title="Project Title" description="Main name of the project." icon={Terminal} horizontal={true}>
+                      <div className="w-full">
+                        <input 
+                          type="text" 
+                          value={project.name} 
+                          onChange={(e) => handleUpdateProject(project.id, 'name', e.target.value)}
+                          placeholder="e.g. EduMetric Platform"
+                          className={inputClasses}
+                        />
+                      </div>
+                    </V6Card>
 
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 ml-1">
-                    <LinkIcon size={12} className="text-slate-400" />
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Live URL / Repo</label>
+                    <V6Card title="Tech Stack" description="Primary technologies used." icon={Code} horizontal={true}>
+                      <div className="w-full">
+                        <input 
+                          type="text" 
+                          value={project.tech} 
+                          onChange={(e) => handleUpdateProject(project.id, 'tech', e.target.value)}
+                          placeholder="e.g. React.js, Tailwind CSS, Firebase"
+                          className={inputClasses}
+                        />
+                      </div>
+                    </V6Card>
+
+                    <V6Card title="Project Description" description="Core features and achievements." icon={Globe}>
+                      <textarea 
+                        value={project.description} 
+                        onChange={(e) => handleUpdateProject(project.id, 'description', e.target.value)}
+                        placeholder="Describe your architectural decisions and key features..."
+                        className={textareaClasses}
+                      />
+                    </V6Card>
+
+                    <V6Card title="Live URL / Repo" description="Link to the work." icon={LinkIcon} horizontal={true}>
+                      <div className="w-full">
+                        <input 
+                          type="text" 
+                          value={project.link} 
+                          onChange={(e) => handleUpdateProject(project.id, 'link', e.target.value)}
+                          placeholder="https://github.com/username/project"
+                          className={inputClasses}
+                        />
+                      </div>
+                    </V6Card>
                   </div>
-                  <input 
-                    type="text" 
-                    value={project.link} 
-                    onChange={(e) => handleUpdateProject(project.id, 'link', e.target.value)}
-                    placeholder="https://github.com/username/project"
-                    className={inputClasses}
-                  />
                 </div>
               </div>
-            </V6Card>
+            </div>
 
             {/* Dynamic Ad Injection: Show after EACH project item (except the last one to avoid double spacing with button) */}
             <div className="py-2">

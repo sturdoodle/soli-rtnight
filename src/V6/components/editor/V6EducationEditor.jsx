@@ -43,64 +43,68 @@ const V6EducationEditor = () => {
       <div className="space-y-6">
         {education.map((edu, index) => (
           <React.Fragment key={edu.id}>
-            <V6Card 
-              title={edu.institution || "New Academic Institution"} 
-              description={edu.degree ? `Degree: ${edu.degree}` : "Specify your academic degree and major."}
-              icon={GraduationCap}
-              action={
-                <button 
-                  onClick={() => handleRemoveEdu(edu.id)}
-                  className="p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all border border-transparent hover:border-red-100 dark:hover:border-red-900/30"
-                >
-                  <Trash2 size={18} />
-                </button>
-              }
-            >
-              <div className="space-y-5 w-full">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 ml-1">
-                    <School size={12} className="text-slate-400" />
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Institution Name</label>
-                  </div>
-                  <input 
-                    type="text" 
-                    value={edu.institution} 
-                    onChange={(e) => handleUpdateEdu(edu.id, 'institution', e.target.value)}
-                    placeholder="e.g. Stanford University"
-                    className={inputClasses}
-                  />
-                </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 ml-1">
-                      <BookOpen size={12} className="text-slate-400" />
-                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Degree / Major</label>
+            <div className="relative p-1 bg-gradient-to-br from-slate-200/50 to-transparent dark:from-white/5 dark:to-transparent rounded-[2rem] sm:rounded-[2.5rem]">
+              <div className="bg-white dark:bg-[#0c0c0e] p-4 sm:p-10 rounded-[1.8rem] sm:rounded-[2.4rem] shadow-sm border border-slate-200 dark:border-white/[0.05]">
+                <div className="space-y-6 sm:space-y-8">
+                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/[0.05] pb-6 mb-8">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 shadow-inner">
+                        <GraduationCap size={22} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">{edu.institution || 'New Institution'}</h3>
+                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em] mt-1">{edu.degree || 'Degree'} • {edu.duration || 'Period'}</p>
+                      </div>
                     </div>
-                    <input 
-                      type="text" 
-                      value={edu.degree} 
-                      onChange={(e) => handleUpdateEdu(edu.id, 'degree', e.target.value)}
-                      placeholder="e.g. B.S. Computer Science"
-                      className={inputClasses}
-                    />
+                    <button 
+                      onClick={() => handleRemoveEdu(edu.id)}
+                      className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-2xl transition-all border border-slate-100 dark:border-white/[0.05] hover:border-red-100 dark:hover:border-red-900/30 shadow-sm"
+                    >
+                      <Trash2 size={20} />
+                    </button>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 ml-1">
-                      <Calendar size={12} className="text-slate-400" />
-                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Duration</label>
+
+                  <div className="space-y-6">
+                    <V6Card title="Institution Name" description="University or school name." icon={School} horizontal={true}>
+                      <div className="w-full">
+                        <input 
+                          type="text" 
+                          value={edu.institution} 
+                          onChange={(e) => handleUpdateEdu(edu.id, 'institution', e.target.value)}
+                          placeholder="e.g. Stanford University"
+                          className={inputClasses}
+                        />
+                      </div>
+                    </V6Card>
+
+                    <div className="grid grid-cols-1 @xl:grid-cols-2 gap-6">
+                      <V6Card title="Degree / Major" description="Your field of study." icon={BookOpen} horizontal={true}>
+                        <div className="w-full">
+                          <input 
+                            type="text" 
+                            value={edu.degree} 
+                            onChange={(e) => handleUpdateEdu(edu.id, 'degree', e.target.value)}
+                            placeholder="e.g. B.S. Computer Science"
+                            className={inputClasses}
+                          />
+                        </div>
+                      </V6Card>
+                      <V6Card title="Duration" description="Graduation year or period." icon={Calendar} horizontal={true}>
+                        <div className="w-full">
+                          <input 
+                            type="text" 
+                            value={edu.duration} 
+                            onChange={(e) => handleUpdateEdu(edu.id, 'duration', e.target.value)}
+                            placeholder="e.g. 2018 - 2022"
+                            className={inputClasses}
+                          />
+                        </div>
+                      </V6Card>
                     </div>
-                    <input 
-                      type="text" 
-                      value={edu.duration} 
-                      onChange={(e) => handleUpdateEdu(edu.id, 'duration', e.target.value)}
-                      placeholder="e.g. 2018 - 2022"
-                      className={inputClasses}
-                    />
                   </div>
                 </div>
               </div>
-            </V6Card>
+            </div>
 
             {/* Dynamic Ad Injection: Show after EACH education item */}
             <div className="py-2">

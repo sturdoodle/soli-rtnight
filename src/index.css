@@ -432,6 +432,14 @@ input:focus {
   --v5-border: rgba(0, 0, 0, 0.1);
   --v5-heading: #0f172a;
   --v5-text: #334155;
+
+  /* V7 Studio Tokens */
+  --v7-studio-bg: #ffffff;
+  --v7-canvas-bg: #fafafa;
+  --v7-accent: #3b82f6;
+  --v7-text-main: #020617;
+  --v7-text-muted: #94a3b8;
+  --v7-nav-bg: rgba(255, 255, 255, 0.8);
 }
 
 .dark {
@@ -456,6 +464,13 @@ input:focus {
   --v5-border: rgba(255, 255, 255, 0.15); /* Slightly more opaque */
   --v5-text: #e2e8f0; /* Significantly lighter (slate-200) for mobile readability */
   --v5-heading: #ffffff;
+
+  /* V7 Studio Dark Tokens */
+  --v7-studio-bg: #050507;
+  --v7-canvas-bg: #08080a;
+  --v7-text-main: #f8fafc;
+  --v7-text-muted: #475569;
+  --v7-nav-bg: rgba(15, 23, 42, 0.8);
 }
 
 /* Global Container Respect & Stability */
@@ -556,16 +571,39 @@ img, video, canvas, svg {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
+  height: 4px;
 }
 
+/* Hide scrollbar but keep scroll functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.dark .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* Dynamic Typography Injection: Universal Architecture Overrides */

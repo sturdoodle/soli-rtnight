@@ -3,13 +3,16 @@ import { useState, useEffect } from 'react';
 export const useSplitPane = (initialWidth = 50, sidebarState = false) => {
   const [splitWidth, setSplitWidth] = useState(initialWidth);
   const [isResizing, setIsResizing] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1280);
+  const [isDesktop, setIsDesktop] = useState(typeof window !== 'undefined' ? window.innerWidth >= 1024 : true);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1280);
+      const desktop = window.innerWidth >= 1024;
+      setIsDesktop(desktop);
     };
     window.addEventListener('resize', handleResize);
+    handleResize(); // Initialize on mount
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 

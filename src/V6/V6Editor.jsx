@@ -177,7 +177,7 @@ const V6Editor = () => {
 
   return (
     <div
-      className={`flex flex-col fixed inset-0 bg-[#fcfcfc] dark:bg-[#08080a] font-sans selection:bg-blue-500/30 overflow-hidden print:static print:h-auto print:overflow-visible text-slate-900 dark:text-slate-100 relative ${isResizing ? 'cursor-col-resize select-none' : ''}`}
+      className={`flex flex-row fixed inset-0 bg-[#fcfcfc] dark:bg-[#08080a] font-sans selection:bg-blue-500/30 overflow-hidden print:static print:h-auto print:overflow-visible text-slate-900 dark:text-slate-100 relative ${isResizing ? 'cursor-col-resize select-none' : ''}`}
       style={{ '--v6-primary': themeColor }}
     >
       <V6ConfirmModal
@@ -217,7 +217,7 @@ const V6Editor = () => {
             onDownload={triggerDownload}
           />
 
-          <main className="flex-1 p-3 sm:p-4 lg:p-10 max-w-4xl mx-auto w-full space-y-8 pb-32 sm:pb-24">
+          <main className="flex-1 p-3 sm:p-4 lg:p-10 max-w-4xl mx-auto w-full space-y-8 pb-32 sm:pb-24 @container">
             <div className="min-h-[calc(100vh-200px)] relative">
               <AnimatePresence mode="wait">
                 <motion.div
