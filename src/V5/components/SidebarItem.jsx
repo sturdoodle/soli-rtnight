@@ -14,7 +14,7 @@ const SidebarItem = ({ icon: Icon, label, active, onClick, disabled, activeColor
         layoutId="active-pill"
         className="absolute inset-0 rounded-xl z-0"
         style={{ backgroundColor: `${activeColor}15`, border: `1px solid ${activeColor}20` }}
-        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+        transition={{ type: "spring", bounce: 0.15, duration: 0.4 }}
       />
     )}
     

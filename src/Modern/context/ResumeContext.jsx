@@ -178,28 +178,38 @@ export function ResumeProvider({ children }) {
     }
   }, []);
 
-  // 2. Sync to Storage on Changes
+  // 2. Sync to Storage on Changes (Debounced to prevent performance lag)
   useEffect(() => {
     if (!isHydrated || typeof window === 'undefined') return;
 
-    const storage = state.storageType === 'persistent' ? localStorage : sessionStorage;
-    storage.setItem(STORAGE_KEY, JSON.stringify(state));
-    
-    localStorage.setItem(STORAGE_TYPE_KEY, state.storageType);
-    localStorage.setItem(STORAGE_TIMESTAMP_KEY, Date.now().toString());
+    const syncToStorage = () => {
+      try {
+        const storage = state.storageType === 'persistent' ? localStorage : sessionStorage;
+        storage.setItem(STORAGE_KEY, JSON.stringify(state));
+        
+        localStorage.setItem(STORAGE_TYPE_KEY, state.storageType);
+        localStorage.setItem(STORAGE_TIMESTAMP_KEY, Date.now().toString());
 
-    if (state.storageType === 'persistent') {
-      sessionStorage.removeItem(STORAGE_KEY);
-    } else {
-      localStorage.removeItem(STORAGE_KEY);
-    }
+        if (state.storageType === 'persistent') {
+          sessionStorage.removeItem(STORAGE_KEY);
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      } catch (e) {
+        console.error("Storage sync failed:", e);
+      }
+    };
 
-    // Theme Sync
+    const timeoutId = setTimeout(syncToStorage, 1000); // 1s debounce
+
+    // Theme Sync (Immediate, as it's cheap and affects UI directly)
     if (state.themeMode === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    return () => clearTimeout(timeoutId);
   }, [state, isHydrated]);
 
   const updateField = useCallback((field, value) => dispatch({ type: 'UPDATE_FIELD', field, value }), []);

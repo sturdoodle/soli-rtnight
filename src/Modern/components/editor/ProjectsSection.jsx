@@ -47,7 +47,7 @@ const ProjectsSection = () => {
   return (
     <GlassCard title="Personal Projects" icon={FolderCode} isCollapsible={true}>
       <div className="space-y-2">
-        <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-700">
+        <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-300">
           <Sparkles size={14} className="text-blue-500/50" />
           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
             Smart Section: This will be automatically removed from your CV if left empty.
@@ -55,7 +55,7 @@ const ProjectsSection = () => {
         </div>
         {(resumeData.projects || []).map((proj, index) => (
           <React.Fragment key={proj.id}>
-            <div className="p-3 sm:p-5 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-500">
+            <div className="p-3 sm:p-5 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm backdrop-blur-md group hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-200">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2 text-slate-400">
                   <FolderCode size={14} />
@@ -124,8 +124,8 @@ const ProjectsSection = () => {
 
             {/* In-Section Intelligent Ad Injection */}
             {index === 1 && (resumeData.projects || []).length > 2 && (
-              <div className="p-6 rounded-2xl bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-700 my-2 flex items-center justify-center">
-                 <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
+              <div className="p-6 rounded-2xl bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block animate-in fade-in zoom-in-95 duration-300 my-2 flex items-center justify-center min-h-[150px]">
+                 <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" minHeight="150px" />
               </div>
             )}
           </React.Fragment>

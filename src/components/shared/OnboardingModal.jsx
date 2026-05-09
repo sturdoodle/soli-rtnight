@@ -22,7 +22,7 @@ const OnboardingModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] bg-slate-900/60 dark:bg-black/80 backdrop-blur-2xl animate-in fade-in duration-1000 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[200] bg-slate-900/60 dark:bg-black/80 backdrop-blur-2xl animate-in fade-in duration-500 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full p-8 sm:p-12 rounded-[3.5rem] bg-white dark:bg-[#1a1a1b] border border-black/5 dark:border-white/5 shadow-[0_50px_100px_rgba(0,0,0,0.3)] relative overflow-hidden text-center">
         {/* Progress Line */}
         <div className="absolute top-0 left-0 w-full h-2" style={{ backgroundColor: accentColor }} />

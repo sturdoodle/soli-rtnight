@@ -34,7 +34,7 @@ const TypographyTab = ({ activeColor }) => {
         </p>
         
         {/* Enhanced ATS Priority Note */}
-        <div className={`p-4 rounded-2xl border transition-all duration-500 ${resumeData.atsMode ? 'bg-amber-500/10 border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.15)]' : 'bg-blue-500/5 border-blue-500/20 shadow-sm'}`}>
+        <div className={`p-4 rounded-2xl border transition-all duration-300 ${resumeData.atsMode ? 'bg-amber-500/10 border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.15)]' : 'bg-blue-500/5 border-blue-500/20 shadow-sm'}`}>
           <div className="flex items-center gap-2 mb-3">
             <div className={`p-1.5 rounded-lg ${resumeData.atsMode ? 'bg-amber-500/20 text-amber-600' : 'bg-blue-500/20 text-blue-600'}`}>
               <AlertCircle size={14} className={resumeData.atsMode ? 'animate-bounce' : ''} />

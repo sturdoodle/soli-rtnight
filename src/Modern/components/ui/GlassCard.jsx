@@ -36,7 +36,7 @@ const GlassCard = ({ children, className = '', title, icon: Icon, isCollapsible 
           onClick={toggle}
         >
           <div className="flex items-center gap-4">
-            <div className={`p-1.5 rounded-lg transition-all duration-500 ${isOpen ? '' : 'bg-black/5 dark:bg-white/5 shadow-inner'}`}
+            <div className={`p-1.5 rounded-lg transition-all duration-300 ${isOpen ? '' : 'bg-black/5 dark:bg-white/5 shadow-inner'}`}
               style={isOpen ? { backgroundColor: activeColor, color: 'white', boxShadow: `0 10px 20px -5px ${activeColor}40` } : {}}>
               {Icon && <Icon size={18} strokeWidth={2.5} />}
             </div>
@@ -47,7 +47,7 @@ const GlassCard = ({ children, className = '', title, icon: Icon, isCollapsible 
 
 
           {isCollapsible ? (
-            <div className={`transition-all duration-500 p-2 rounded-xl ${isOpen ? 'rotate-180 bg-sage-50 dark:bg-sage-900/40 text-sage-600' : 'rotate-0 bg-transparent text-sage-300'} group-hover/card:bg-white dark:group-hover/card:bg-slate-800 shadow-sm border border-transparent group-hover/card:border-sage-100 dark:group-hover/card:border-white/10`}>
+            <div className={`transition-all duration-300 p-2 rounded-xl ${isOpen ? 'rotate-180 bg-sage-50 dark:bg-sage-900/40 text-sage-600' : 'rotate-0 bg-transparent text-sage-300'} group-hover/card:bg-white dark:group-hover/card:bg-slate-800 shadow-sm border border-transparent group-hover/card:border-sage-100 dark:group-hover/card:border-white/10`}>
               <ChevronDown size={18} strokeWidth={3} />
             </div>
           ) : (

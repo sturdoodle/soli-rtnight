@@ -33,7 +33,7 @@ const Notification = () => {
 
   return (
     <div
-      className={`fixed top-6 right-6 z-[9999] transition-all duration-500 ease-out transform ${
+      className={`fixed top-6 right-6 z-[9999] transition-all duration-300 ease-out transform ${
         isVisible ? 'translate-y-0 opacity-100 scale-100' : '-translate-y-4 opacity-0 scale-95 pointer-events-none'
       }`}
     >

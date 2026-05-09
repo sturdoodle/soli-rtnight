@@ -22,7 +22,7 @@ const ModernLivePreview = memo(() => {
 
   return (
     <div
-      className={`bg-white print:shadow-none shadow-2xl w-full max-w-[800px] print:max-w-none mx-auto relative transition-all duration-700 printable-area ${fontClass} rounded-[2.5rem] overflow-hidden print:rounded-none print:overflow-visible`}
+      className={`bg-white print:shadow-none shadow-2xl w-full max-w-[800px] print:max-w-none mx-auto relative transition-all duration-300 printable-area ${fontClass} rounded-[2.5rem] overflow-hidden print:rounded-none print:overflow-visible`}
       data-pdf-content="resume"
     >
       <TemplateComponent 

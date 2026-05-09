@@ -38,11 +38,21 @@ import ModernLivePreview from '../Modern/components/preview/ModernLivePreview';
 
 // Premium Shimmer Loading Skeleton
 const TabLoadingSkeleton = () => (
-  <div className="w-full h-full p-4 sm:p-6 space-y-8 animate-pulse text-center flex flex-col items-center justify-center">
-    <div className="w-full h-32 bg-slate-200/20 dark:bg-white/5 rounded-[3rem]" />
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-      {[1, 2, 3, 4].map((i) => (
-        <div key={i} className="h-32 bg-slate-200/10 dark:bg-white/5 rounded-[2.5rem]" />
+  <div className="w-full h-full p-4 sm:p-8 space-y-10 animate-pulse flex flex-col">
+    <div className="space-y-4">
+      <div className="h-10 w-48 bg-slate-200/30 dark:bg-white/10 rounded-2xl" />
+      <div className="h-4 w-full max-w-md bg-slate-200/20 dark:bg-white/5 rounded-xl" />
+    </div>
+    <div className="space-y-6 w-full">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="p-8 rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-slate-200/10 dark:bg-white/5 space-y-4">
+          <div className="h-6 w-1/4 bg-slate-200/20 dark:bg-white/10 rounded-lg" />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="h-12 bg-slate-200/10 dark:bg-white/5 rounded-xl" />
+            <div className="h-12 bg-slate-200/10 dark:bg-white/5 rounded-xl" />
+          </div>
+          <div className="h-24 bg-slate-200/10 dark:bg-white/5 rounded-2xl" />
+        </div>
       ))}
     </div>
   </div>
@@ -318,7 +328,7 @@ const V5EditorContent = ({ initialTab }) => {
         />
 
         <main
-          className={`flex-1 h-full overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-4 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-6 lg:pb-8 px-0 custom-scrollbar print:hidden lg:m-2 lg:rounded-2xl lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm overscroll-auto touch-pan-y ${isResizing ? 'transition-none' : 'transition-all duration-500'}`}
+          className={`flex-1 h-full overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-4 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-6 lg:pb-8 px-0 custom-scrollbar print:hidden lg:m-2 lg:rounded-2xl lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm overscroll-auto touch-pan-y ${isResizing ? 'transition-none' : 'transition-[width] duration-300'}`}
           style={isDesktop ? { width: `${splitWidth}%`, WebkitOverflowScrolling: 'touch' } : { width: '100%', WebkitOverflowScrolling: 'touch' }}
         >
 
@@ -338,9 +348,9 @@ const V5EditorContent = ({ initialTab }) => {
 
               <Suspense fallback={<TabLoadingSkeleton />}>
                 {activeTab === 'content' && (
-                  <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <div className="mb-2 p-3 sm:p-4 rounded-2xl bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block">
-                      <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" />
+                  <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <div className="mb-2 p-3 sm:p-4 rounded-2xl bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block min-h-[150px]">
+                      <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" minHeight="150px" />
                     </div>
                     <EditorForm />
                     <div className="p-6 rounded-2xl bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 flex flex-col items-center text-center justify-center min-h-[160px]">
@@ -393,7 +403,7 @@ const V5EditorContent = ({ initialTab }) => {
         </div>
 
         <section
-          className={`hidden xl:flex border-l border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col p-4 lg:p-8 shadow-2xl overflow-hidden relative ${isResizing ? 'transition-none' : 'transition-all duration-500'}`}
+          className={`hidden xl:flex border-l border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col p-4 lg:p-8 shadow-2xl overflow-hidden relative ${isResizing ? 'transition-none' : 'transition-[width] duration-300'}`}
           style={isDesktop ? { width: `${100 - splitWidth}%` } : {}}
         >
 
@@ -468,7 +478,7 @@ const V5EditorContent = ({ initialTab }) => {
       )}
 
       {/* Mobile Bottom Navigation - Liquid Dock */}
-      <div className="lg:hidden fixed bottom-6 left-6 right-6 z-[60] print:hidden animate-in slide-in-from-bottom-8 duration-500">
+      <div className="lg:hidden fixed bottom-6 left-6 right-6 z-[60] print:hidden animate-in slide-in-from-bottom-4 duration-300">
         <div className="bg-black/80 dark:bg-black/40 backdrop-blur-3xl border border-white/10 rounded-full p-2 flex items-center justify-around shadow-2xl">
           {[
             { id: 'content', icon: FileText, label: 'Content' },
@@ -491,7 +501,7 @@ const V5EditorContent = ({ initialTab }) => {
             </button>
           ))}
           <div className="w-px h-8 bg-white/10 mx-1" />
-          <button onClick={() => triggerDownload('print')} className="p-2 xs:p-3 rounded-full text-white hover:bg-white/10 transition-colors" title="Print/Download PDF">
+          <button onClick={() => triggerDownload('print')} className="p-2 xs:p-3 rounded-full text-white hover:bg-white/10 transition-colors" title="Print/Download PDF" aria-label="Print or Download PDF">
             <Printer size={20} />
           </button>
           <button onClick={() => setIsEnlarged(true)} className="p-2 xs:p-3 rounded-full text-white bg-white/10 ml-1 hover:scale-110 transition-transform">

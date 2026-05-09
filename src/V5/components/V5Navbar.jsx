@@ -23,7 +23,7 @@ const V5Navbar = ({
   const { isInstallable, isInstalled, handleInstallClick } = usePWAInstall();
 
   return (
-    <nav className="h-16 border-b border-black/5 dark:border-white/5 bg-[var(--v5-card)]/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-50 print:hidden shadow-sm transition-all duration-500">
+    <nav className="h-16 border-b border-black/5 dark:border-white/5 bg-[var(--v5-card)]/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-50 print:hidden shadow-sm transition-colors duration-200">
       <div className="flex items-center gap-8">
         <div className="flex items-center gap-3 font-bold group">
           <button
@@ -69,7 +69,7 @@ const V5Navbar = ({
                   layoutId="active-tab"
                   className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full z-0"
                   style={{ backgroundColor: activeColor }}
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  transition={{ type: "spring", bounce: 0.15, duration: 0.4 }}
                 />
               )}
             </button>
@@ -144,7 +144,7 @@ const V5Navbar = ({
           className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-slate-100 text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 group relative overflow-hidden"
           style={{ backgroundColor: activeColor, boxShadow: `0 10px 25px -5px ${activeColor}50` }}
         >
-          <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+          <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
           <Download size={14} className="group-hover:translate-y-0.5 transition-transform" />
           <span className="hidden sm:inline relative z-10">Resume</span>
         </button>

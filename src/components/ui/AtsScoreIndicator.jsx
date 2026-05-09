@@ -19,7 +19,7 @@ const AtsScoreIndicator = ({ score, activeColor, collapsed = false }) => {
       </div>
       <div className="h-2 w-full bg-slate-800/10 dark:bg-slate-800/40 rounded-full overflow-hidden">
         <div
-          className="h-full transition-all duration-1000 ease-out shadow-lg"
+          className="h-full transition-all duration-500 ease-out shadow-lg"
           style={{
             width: `${score}%`,
             backgroundColor: activeColor,
