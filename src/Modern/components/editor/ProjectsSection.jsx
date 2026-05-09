@@ -49,7 +49,7 @@ const ProjectsSection = () => {
       <div className="space-y-2">
         <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-300">
           <Sparkles size={14} className="text-blue-500/50" />
-          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+          <p className="text-[8.5px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
             Smart Section: This will be automatically removed from your CV if left empty.
           </p>
         </div>

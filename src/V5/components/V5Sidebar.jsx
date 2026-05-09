@@ -17,7 +17,7 @@ const V5Sidebar = ({
   const { resumeData } = useResume();
 
   return (
-    <aside className={`hidden lg:flex ${isCollapsed ? 'w-24' : 'w-72'} border-r border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col pt-4 print:hidden transition-[width] duration-300 relative h-full max-h-screen sticky top-0 overflow-y-auto custom-scrollbar`}>
+    <aside className={`hidden lg:flex ${isCollapsed ? 'w-20' : 'w-72'} border-r border-black/5 dark:border-white/5 bg-[var(--v5-bg)] flex-col pt-4 print:hidden transition-[width] duration-300 relative h-full max-h-screen sticky top-0 overflow-y-auto custom-scrollbar`}>
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         className="absolute -right-3 top-10 w-6 h-6 bg-[var(--v5-card)] border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.1)] hover:scale-110 transition-all z-10 hidden lg:flex text-slate-500 hover:text-[var(--v5-heading)]"

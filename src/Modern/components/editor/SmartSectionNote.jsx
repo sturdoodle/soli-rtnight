@@ -42,7 +42,7 @@ const SmartSectionNote = ({ text, color = 'blue', className = '' }) => {
   return (
     <div className={`xl:col-span-12 mt-4 px-3 py-2 rounded-xl border flex items-center gap-2 animate-pulse ${theme.bg} ${theme.border} ${className}`}>
       <Sparkles size={14} className={`${theme.icon} animate-bounce`} />
-      <p className={`text-[10px] font-black uppercase tracking-widest ${theme.text}`}>
+      <p className={`text-[8.5px] font-black uppercase tracking-widest ${theme.text}`}>
         {text}
       </p>
     </div>
