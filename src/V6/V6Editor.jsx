@@ -179,7 +179,7 @@ const V6Editor = () => {
 
   return (
     <div
-      className={`flex flex-row fixed inset-0 bg-[#fcfcfc] dark:bg-[#08080a] font-sans selection:bg-blue-500/30 overflow-hidden print:static print:h-auto print:overflow-visible text-slate-900 dark:text-slate-100 relative ${isResizing ? 'cursor-col-resize select-none' : ''}`}
+      className={`flex flex-row h-[100dvh] w-full fixed inset-0 bg-[#fcfcfc] dark:bg-[#08080a] font-sans selection:bg-blue-500/30 overflow-hidden print:static print:h-auto print:overflow-visible text-slate-900 dark:text-slate-100 relative ${isResizing ? 'cursor-col-resize select-none' : ''}`}
       style={{ '--v6-primary': themeColor }}
     >
       <V6ConfirmModal
@@ -204,9 +204,9 @@ const V6Editor = () => {
         />
       </div>
 
-      <div className="flex-1 flex flex-row min-w-0 h-full overflow-hidden print:h-auto print:overflow-visible relative z-10">
+      <div className="flex-1 flex flex-row min-w-0 min-h-0 overflow-hidden print:h-auto print:overflow-visible relative z-10">
         <motion.div
-          className="flex-1 flex flex-col h-full overflow-y-auto custom-scrollbar print:hidden overscroll-auto touch-pan-y will-change-transform"
+          className="flex-1 flex flex-col min-h-0 overflow-y-auto custom-scrollbar print:hidden overscroll-auto touch-pan-y will-change-transform"
           style={isDesktop && showPreview ? { width: `${splitWidth}%` } : { width: '100%' }}
         >
           <V6Header
@@ -219,8 +219,8 @@ const V6Editor = () => {
             onDownload={triggerDownload}
           />
 
-          <main className="flex-1 p-3 sm:p-4 lg:p-10 max-w-4xl mx-auto w-full space-y-8 pb-32 sm:pb-24 @container">
-            <div className="min-h-[calc(100vh-200px)] relative">
+          <main className="flex-1 pt-4 sm:pt-6 lg:pt-10 px-3 sm:px-4 lg:px-10 max-w-4xl mx-auto w-full space-y-8 pb-20 @container">
+            <div className="min-h-0 relative">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeSection}
@@ -444,7 +444,7 @@ const V6Editor = () => {
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto custom-scrollbar p-10 z-10">
+              <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar p-10 z-10">
                 <AnimatePresence mode="wait">
                   {previewMode === 'preview' ? (
                     <motion.div key="preview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full max-w-[800px] mx-auto shadow-2xl"><ModernLivePreview /></motion.div>
@@ -505,7 +505,7 @@ const V6Editor = () => {
                   Close <X size={18} />
                 </button>
               </div>
-              <div className="flex-1 overflow-y-auto p-4 sm:p-10 bg-slate-50 dark:bg-black/20">
+              <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-10 bg-slate-50 dark:bg-black/20">
                 <div className="w-full max-w-[800px] mx-auto shadow-2xl rounded-sm overflow-hidden bg-white">
                   <ModernLivePreview />
                 </div>

@@ -47,7 +47,7 @@ const V6Sidebar = ({ activeSection, onSectionChange, isCollapsed, onToggleCollap
       initial={false}
       animate={{ width: isCollapsed && !isMobile ? 64 : isMobile ? '100%' : 256 }}
       transition={{ type: 'spring', damping: 20, stiffness: 100 }}
-      className={`border-r border-slate-200 dark:border-white/[0.06] bg-[#f9fafb] dark:bg-[#08080a] h-full flex flex-col overflow-y-auto shrink-0 z-50 shadow-xl shadow-black/[0.02] ${isMobile ? 'w-full' : ''}`}
+      className={`border-r border-slate-200 dark:border-white/[0.06] bg-[#f9fafb] dark:bg-[#08080a] min-h-0 flex flex-col overflow-y-auto shrink-0 z-50 shadow-xl shadow-black/[0.02] ${isMobile ? 'w-full' : ''}`}
     >
       <div className={`p-4 border-b border-slate-200 dark:border-white/[0.06] flex items-center ${isCollapsed && !isMobile ? 'justify-center' : 'justify-between'}`}>
         {(!isCollapsed || isMobile) && (
