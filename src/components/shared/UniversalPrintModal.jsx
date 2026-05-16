@@ -41,7 +41,7 @@ const UniversalPrintModal = ({
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-2xl bg-white dark:bg-[#0c0c0e] rounded-[3rem] border border-slate-200 dark:border-white/[0.08] shadow-[0_50px_100px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[90vh]"
+            className="relative w-full max-w-2xl bg-white dark:bg-[#0c0c0e] rounded-[3rem] border border-slate-200 dark:border-white/[0.08] shadow-[0_50px_100px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[90vh] print:hidden"
           >
             {/* Header Bar */}
             <div className="px-8 py-6 border-b border-slate-100 dark:border-white/[0.05] flex items-center justify-between shrink-0">

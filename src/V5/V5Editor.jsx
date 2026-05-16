@@ -22,6 +22,7 @@ import V5Navbar from './components/V5Navbar';
 import V5Sidebar from './components/V5Sidebar';
 
 // Lazy Loaded Components for Tree Shaking & Performance Optimization
+const ModernLivePreview = lazy(() => import('../Modern/components/preview/ModernLivePreview'));
 const TypographyTab = lazy(() => import('./components/tabs/TypographyTab'));
 const SettingsTab = lazy(() => import('./components/tabs/SettingsTab'));
 const HelpTab = lazy(() => import('./components/tabs/HelpTab'));
@@ -29,12 +30,11 @@ const AboutTab = lazy(() => import('./components/tabs/AboutTab'));
 const V5JsonEditor = lazy(() => import('./components/V5JsonEditor'));
 const EditorForm = lazy(() => import('../components/editor/EditorForm'));
 const TemplateSelector = lazy(() => import('../Modern/components/editor/TemplateSelector'));
-import { UniversalPrintModal, OnboardingModal, PWAInstallBanner } from '../components/shared';
+// Heavy UI Components - Lazy Loaded for 4G performance
+const UniversalPrintModal = lazy(() => import('../components/shared/UniversalPrintModal'));
+const OnboardingModal = lazy(() => import('../components/shared/OnboardingModal'));
+const PWAInstallBanner = lazy(() => import('../components/shared/PWAInstallBanner'));
 const V5WipeModal = lazy(() => import('./components/V5WipeModal'));
-
-
-// Synchronous import specifically for the Print Buffer to avoid lazy-loading race conditions
-import ModernLivePreview from '../Modern/components/preview/ModernLivePreview';
 
 // Premium Shimmer Loading Skeleton
 const TabLoadingSkeleton = () => (
@@ -213,6 +213,42 @@ const V5EditorContent = ({ initialTab }) => {
     <div className="flex flex-col fixed inset-0 bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:static print:h-auto print:bg-white print:overflow-visible overflow-hidden"
       style={{ '--v5-accent': activeColor, '--v5-accent-rgb': hexToRgb(activeColor), WebkitOverflowScrolling: 'touch' }}>
 
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media print {
+          /* 1. Surgical Hiding: Hide the entire document body */
+          body {
+            visibility: hidden !important;
+            background: white !important;
+          }
+
+          /* 2. Precision Reveal: Only show the intended printable resume content */
+          #print-buffer, 
+          .printable-area {
+            visibility: visible !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            display: block !important;
+          }
+
+          /* 3. Recursive Reveal: Ensure all children of the resume are visible */
+          #print-buffer *, 
+          .printable-area * {
+            visibility: visible !important;
+          }
+
+          /* 4. Absolute Suppression: Force-hide ads and UI elements even if they are children */
+          .print-hidden, .ads-block, .adsense-wrapper, .print\\:hidden, .adsbygoogle, .no-print {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+        }
+      `}} />
+
       <OnboardingModal
         isOpen={showOnboarding}
         onComplete={completeOnboarding}
@@ -317,7 +353,7 @@ const V5EditorContent = ({ initialTab }) => {
         </div>
       )}
 
-      <div className="flex flex-1 print:h-auto print:block relative z-10 overflow-hidden">
+      <div className="flex flex-1 print:h-auto print:block relative z-20 min-h-0 overflow-hidden">
         <V5Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -328,7 +364,7 @@ const V5EditorContent = ({ initialTab }) => {
         />
 
         <main
-          className={`flex-1 h-full overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-4 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-6 lg:pb-8 px-0 custom-scrollbar print:hidden lg:m-2 lg:rounded-2xl lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm overscroll-auto touch-pan-y ${isResizing ? 'transition-none' : 'transition-[width] duration-300'}`}
+          className={`flex-1 min-h-0 overflow-y-auto bg-[var(--v5-canvas)]/10 lg:bg-[var(--v5-canvas)]/25 pt-4 pb-[calc(110px+env(safe-area-inset-bottom))] lg:pt-6 lg:pb-8 px-0 custom-scrollbar print:hidden lg:m-2 lg:rounded-2xl lg:border lg:border-black/5 dark:lg:border-white/5 shadow-sm overscroll-auto touch-pan-y ${isResizing ? 'transition-none' : 'transition-[width] duration-300'}`}
           style={isDesktop ? { width: `${splitWidth}%`, WebkitOverflowScrolling: 'touch' } : { width: '100%', WebkitOverflowScrolling: 'touch' }}
         >
 
@@ -344,16 +380,16 @@ const V5EditorContent = ({ initialTab }) => {
                 />
               </Suspense>
               
-              <PWAInstallBanner />
+              <PWAInstallBanner className="print:hidden" />
 
               <Suspense fallback={<TabLoadingSkeleton />}>
                 {activeTab === 'content' && (
                   <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                    <div className="mb-2 p-3 sm:p-4 rounded-2xl bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block min-h-[150px]">
+                    <div className="mb-2 p-3 sm:p-4 rounded-2xl bg-[var(--v5-card)]/30 border border-black/5 dark:border-white/5 overflow-hidden ads-block min-h-[150px] print:hidden no-print">
                       <AdSenseAd client={ADSENSE_CLIENT_ID} slot={ADSENSE_INBETWEEN_SLOT_ID} format="auto" minHeight="150px" />
                     </div>
                     <EditorForm />
-                    <div className="p-6 rounded-2xl bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 flex flex-col items-center text-center justify-center min-h-[160px]">
+                    <div className="p-6 rounded-2xl bg-[var(--v5-card)]/40 border border-black/5 dark:border-white/5 flex flex-col items-center text-center justify-center min-h-[160px] print:hidden no-print">
                       <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-white/50 dark:bg-black/30 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-lg">
                         <span className="text-3xl font-black" style={{ fontFamily: 'Absans, sans-serif', color: activeColor }}>qp</span>
                       </div>
@@ -444,7 +480,9 @@ const V5EditorContent = ({ initialTab }) => {
 
       {/* Synchronous Background Print Buffer: Ensures zero-latency printing from any tab */}
       <div id="print-buffer" className="hidden print:block bg-white" aria-hidden="true">
-        <ModernLivePreview />
+        <Suspense fallback={null}>
+          <ModernLivePreview />
+        </Suspense>
       </div>
 
       {isEnlarged && (

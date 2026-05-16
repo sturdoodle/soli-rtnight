@@ -1,12 +1,21 @@
-import React, { useRef, useState } from 'react';
-import { useResume } from '../../context/ResumeContext';
+import React, { useRef, useState, memo } from 'react';
 import { Bold, Italic, Underline, Link as LinkIcon, Info } from 'lucide-react';
 
-const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'text', textarea = false, className = '', variant, showFormatTip = false, id }) => {
-  const { resumeData } = useResume();
-  const activeVariant = variant || resumeData.editorStyle || 'glass';
-  const activeColor = resumeData.themeColor || '#0ea5e9';
-  const isLiquid = activeVariant === 'liquid';
+const MinimalistInput = memo(({ 
+  label, 
+  name, 
+  value, 
+  onChange, 
+  placeholder, 
+  type = 'text', 
+  textarea = false, 
+  className = '', 
+  variant = 'glass', 
+  activeColor = '#0ea5e9',
+  showFormatTip = false, 
+  id 
+}) => {
+  const isLiquid = variant === 'liquid';
   const inputRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
   
@@ -78,7 +87,7 @@ const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'te
     onFocus: () => setIsFocused(true),
     onBlur: () => setTimeout(() => setIsFocused(false), 200),
     placeholder,
-    className: `${isLiquid ? 'liquid-input w-full' : 'glass-input w-full focus:ring-2 focus:ring-sage-200 focus:border-sage-400 placeholder-sage-300 dark:placeholder-sage-500 text-sage-900 dark:text-sage-50'} transition-all ${className}`
+    className: `${isLiquid ? 'liquid-input w-full !rounded-2xl' : 'glass-input w-full !rounded-2xl focus:ring-4 focus:ring-sage-500/10 focus:border-sage-500/50 placeholder-sage-300 dark:placeholder-sage-600 text-sage-900 dark:text-sage-50'} transition-all duration-300 ${className}`
   };
 
   return (
@@ -87,7 +96,7 @@ const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'te
         {label && (
           <label 
             htmlFor={inputId} // Associate label with input
-            className={`block text-[7px] font-black uppercase tracking-[0.2em] opacity-80 cursor-pointer ${isLiquid ? 'text-[var(--v5-heading)]' : 'text-sage-700 dark:text-sage-300'}`}
+            className={`block text-[7px] font-black uppercase tracking-[0.2em] opacity-80 cursor-pointer whitespace-nowrap ${isLiquid ? 'text-[var(--v5-heading)]' : 'text-sage-700 dark:text-sage-300'}`}
           >
             {label}
           </label>
@@ -129,6 +138,6 @@ const MinimalistInput = ({ label, name, value, onChange, placeholder, type = 'te
       )}
     </div>
   );
-};
+});
 
 export default MinimalistInput;

@@ -24,21 +24,22 @@ export const PWAInstallBanner = () => {
     sessionStorage.setItem('pwa_banner_dismissed', 'true');
   };
 
-  // We show the banner if:
-  // 1. It's not already installed
-  // 2. The user hasn't dismissed it in this session
-  // 3. Local visibility state is true
-  // 4. The browser/device supports installation (isInstallable is false on iOS)
-  if (isInstalled || hasDismissed || !isVisible || !isInstallable) return null;
+  const showBanner = !isInstalled && !hasDismissed && isVisible && isInstallable;
 
   return (
-    <>
-      <AnimatePresence>
+    <AnimatePresence>
+      {showBanner && (
         <motion.div
           key="pwa-install-banner"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.98 }}
+          initial={{ opacity: 0, y: -20, scale: 0.95, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          exit={{ 
+            opacity: 0, 
+            scale: 0.9, 
+            y: 20, 
+            filter: 'blur(15px)',
+            transition: { duration: 0.4, ease: [0.32, 0, 0.67, 0] } 
+          }}
           className="mb-4 relative group"
         >
           <div className="w-full bg-gradient-to-r from-[#ff8a00] to-[#ff5c00] rounded-2xl sm:rounded-3xl p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between shadow-xl shadow-orange-500/20 gap-3 overflow-hidden relative">
@@ -68,13 +69,14 @@ export const PWAInstallBanner = () => {
 
           <button 
             onClick={handleDismiss}
-            className="absolute -top-2 -right-1 w-6 h-6 rounded-full bg-white text-slate-400 hover:text-slate-600 shadow-lg flex items-center justify-center border border-black/5 transition-all z-20 hover:scale-110"
+            className="absolute -top-2 -right-1 w-6 h-6 rounded-full bg-white text-slate-400 hover:text-slate-600 shadow-lg flex items-center justify-center border border-black/5 transition-all z-20 hover:scale-110 active:scale-90"
             title="Dismiss"
           >
             <X size={12} />
           </button>
         </motion.div>
-      </AnimatePresence>
-    </>
+      )}
+    </AnimatePresence>
   );
 };
+export default PWAInstallBanner;

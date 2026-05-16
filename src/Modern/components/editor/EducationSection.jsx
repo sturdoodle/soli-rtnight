@@ -1,6 +1,4 @@
-"use client";
-
-import React from 'react';
+import React, { memo } from 'react';
 import { GraduationCap, Plus, Trash2, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import MinimalistInput from '../ui/MinimalistInput';
@@ -10,8 +8,11 @@ import { useResume } from '../../context/ResumeContext';
 import AdSenseAd from '../../../AdsenseAdsBlock.jsx';
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../../../MainConstant.js';
 
-const EducationSection = () => {
+const EducationSection = memo(() => {
   const { resumeData, updateSection } = useResume();
+  const themeColor = resumeData.themeColor || '#0ea5e9';
+  const themeMode = resumeData.themeMode || 'light';
+  const variant = resumeData.editorStyle || 'glass';
 
   const handleUpdateEdu = (id, field, value) => {
     const updatedEdu = resumeData.education.map(edu => 
@@ -35,7 +36,14 @@ const EducationSection = () => {
   };
 
   return (
-    <GlassCard title="Education" icon={GraduationCap} isCollapsible={true}>
+    <GlassCard 
+      title="Education" 
+      icon={GraduationCap} 
+      isCollapsible={true}
+      themeColor={themeColor}
+      themeMode={themeMode}
+      variant={variant}
+    >
       <div className="space-y-2">
         <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-300">
           <Sparkles size={14} className="text-blue-500/50" />
@@ -59,45 +67,71 @@ const EducationSection = () => {
                 />
               </div>
               
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-6 gap-y-2">
-                <div className="xl:col-span-2">
+              <div className="grid grid-cols-1 xl:grid-cols-12 gap-x-4 gap-y-3">
+                <div className="xl:col-span-8">
                   <MinimalistInput 
-                    id={`v5-edu-${edu.id}-degree`}
-                    label="Degree / Course" 
-                    value={edu.degree} 
-                    onChange={(e) => handleUpdateEdu(edu.id, 'degree', e.target.value)} 
+                    id={`v5-edu-${edu.id}-institution`}
+                    label="Institution / University" 
+                    value={edu.institution} 
+                    placeholder="e.g. Stanford University"
+                    onChange={(e) => handleUpdateEdu(edu.id, 'institution', e.target.value)} 
+                    activeColor={themeColor}
+                    variant={variant}
                   />
                 </div>
-                <MinimalistInput 
-                  id={`v5-edu-${edu.id}-institution`}
-                  label="Institution" 
-                  value={edu.institution} 
-                  onChange={(e) => handleUpdateEdu(edu.id, 'institution', e.target.value)} 
-                />
-                <MinimalistInput 
-                  id={`v5-edu-${edu.id}-duration`}
-                  label="Duration" 
-                  value={edu.duration} 
-                  onChange={(e) => handleUpdateEdu(edu.id, 'duration', e.target.value)} 
-                />
-                <SmartSectionNote 
-                  text="Important: If marks left empty, they will not be shown in the PDF." 
-                  color="blue" 
-                />
-                <MinimalistInput 
-                  id={`v5-edu-${edu.id}-gpaLabel`}
-                  label="Mark Type" 
-                  value={edu.gpaLabel || ''} 
-                  placeholder="e.g. CGPA, Percentage"
-                  onChange={(e) => handleUpdateEdu(edu.id, 'gpaLabel', e.target.value)} 
-                />
-                <MinimalistInput 
-                  id={`v5-edu-${edu.id}-gpaValue`}
-                  label="Marks" 
-                  value={edu.gpaValue || ''} 
-                  placeholder="e.g. 8.5, 85%"
-                  onChange={(e) => handleUpdateEdu(edu.id, 'gpaValue', e.target.value)} 
-                />
+                <div className="xl:col-span-4">
+                  <MinimalistInput 
+                    id={`v5-edu-${edu.id}-duration`}
+                    label="Duration" 
+                    value={edu.duration} 
+                    placeholder="e.g. 2018 - 2022"
+                    onChange={(e) => handleUpdateEdu(edu.id, 'duration', e.target.value)} 
+                    activeColor={themeColor}
+                    variant={variant}
+                  />
+                </div>
+                
+                <div className="xl:col-span-12">
+                  <MinimalistInput 
+                    id={`v5-edu-${edu.id}-degree`}
+                    label="Degree / Field of Study" 
+                    value={edu.degree} 
+                    placeholder="e.g. Bachelor of Science in Computer Science"
+                    onChange={(e) => handleUpdateEdu(edu.id, 'degree', e.target.value)} 
+                    activeColor={themeColor}
+                    variant={variant}
+                  />
+                </div>
+
+                <div className="xl:col-span-12">
+                  <SmartSectionNote 
+                    text="Important: If marks left empty, they will not be shown in the PDF." 
+                    color="blue" 
+                  />
+                </div>
+
+                <div className="xl:col-span-6">
+                  <MinimalistInput 
+                    id={`v5-edu-${edu.id}-gpaLabel`}
+                    label="Grade Type" 
+                    value={edu.gpaLabel || ''} 
+                    placeholder="e.g. CGPA, Percentage, GPA"
+                    onChange={(e) => handleUpdateEdu(edu.id, 'gpaLabel', e.target.value)} 
+                    activeColor={themeColor}
+                    variant={variant}
+                  />
+                </div>
+                <div className="xl:col-span-6">
+                  <MinimalistInput 
+                    id={`v5-edu-${edu.id}-gpaValue`}
+                    label="Score / Marks" 
+                    value={edu.gpaValue || ''} 
+                    placeholder="e.g. 3.9/4.0, 95%"
+                    onChange={(e) => handleUpdateEdu(edu.id, 'gpaValue', e.target.value)} 
+                    activeColor={themeColor}
+                    variant={variant}
+                  />
+                </div>
               </div>
             </div>
             
@@ -121,7 +155,7 @@ const EducationSection = () => {
       </div>
     </GlassCard>
   );
-};
+});
 
 export default EducationSection;
 

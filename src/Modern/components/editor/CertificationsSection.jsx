@@ -1,6 +1,4 @@
-"use client";
-
-import React from 'react';
+import React, { memo } from 'react';
 import { Award, Plus, Trash2, Calendar, ShieldCheck, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import MinimalistInput from '../ui/MinimalistInput';
@@ -10,8 +8,11 @@ import { useResume } from '../../context/ResumeContext';
 import AdSenseAd from '../../../AdsenseAdsBlock.jsx';
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../../../MainConstant.js';
 
-const CertificationsSection = () => {
+const CertificationsSection = memo(() => {
   const { resumeData, updateSection } = useResume();
+  const themeColor = resumeData.themeColor || '#0ea5e9';
+  const themeMode = resumeData.themeMode || 'light';
+  const variant = resumeData.editorStyle || 'glass';
 
   const handleUpdateCert = (id, field, value) => {
     const updatedCerts = (resumeData.certifications || []).map(cert => 
@@ -34,7 +35,14 @@ const CertificationsSection = () => {
   };
 
   return (
-    <GlassCard title="Certifications" icon={Award} isCollapsible={true}>
+    <GlassCard 
+      title="Certifications" 
+      icon={Award} 
+      isCollapsible={true}
+      themeColor={themeColor}
+      themeMode={themeMode}
+      variant={variant}
+    >
       <div className="space-y-2">
         <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-700">
           <Sparkles size={14} className="text-blue-500/50" />
@@ -67,6 +75,8 @@ const CertificationsSection = () => {
                     value={cert.name} 
                     onChange={(e) => handleUpdateCert(cert.id, 'name', e.target.value)} 
                     placeholder="AWS Certified Solutions Architect"
+                    activeColor={themeColor}
+                    variant={variant}
                   />
                 </div>
                 <div className="xl:col-span-5">
@@ -79,17 +89,26 @@ const CertificationsSection = () => {
                         value={cert.expiryDate === null ? 'Never Expires' : cert.expiryDate} 
                         onChange={(e) => handleUpdateCert(cert.id, 'expiryDate', e.target.value === 'Never Expires' ? null : e.target.value)} 
                         placeholder="Never Expires"
+                        activeColor={themeColor}
+                        variant={variant}
                       />
                     </div>
-                    <div className="flex items-center gap-2 mt-[-8px]">
-                      <input 
-                        type="checkbox" 
-                        id={`never-expires-${cert.id}`}
-                        checked={cert.expiryDate === null}
-                        onChange={(e) => handleUpdateCert(cert.id, 'expiryDate', e.target.checked ? null : 'Present')}
-                        className="w-4 h-4 rounded-md text-sage-600 border-sage-300 focus:ring-sage-400 bg-white dark:bg-zinc-800"
-                      />
-                      <label htmlFor={`never-expires-${cert.id}`} className="text-[10px] font-bold text-sage-500 uppercase tracking-widest cursor-pointer hover:text-sage-700 transition-colors">
+                    <div className="flex items-center gap-2 mt-1 ml-1 group/never-expires">
+                      <div className="relative flex items-center justify-center">
+                        <input 
+                          type="checkbox" 
+                          id={`never-expires-${cert.id}`}
+                          checked={cert.expiryDate === null}
+                          onChange={(e) => handleUpdateCert(cert.id, 'expiryDate', e.target.checked ? null : 'Present')}
+                          className="peer w-3.5 h-3.5 rounded border-slate-300 dark:border-white/10 text-blue-500 focus:ring-blue-500/20 bg-white dark:bg-white/5 transition-all cursor-pointer appearance-none checked:bg-blue-500 checked:border-blue-500"
+                        />
+                        <div className="absolute pointer-events-none opacity-0 peer-checked:opacity-100 text-white transition-opacity">
+                          <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                      </div>
+                      <label htmlFor={`never-expires-${cert.id}`} className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest cursor-pointer hover:text-blue-500 transition-colors select-none">
                         Never Expires
                       </label>
                     </div>
@@ -108,6 +127,8 @@ const CertificationsSection = () => {
                     value={cert.credentialId || ''} 
                     onChange={(e) => handleUpdateCert(cert.id, 'credentialId', e.target.value)} 
                     placeholder="e.g. AWS-123456789"
+                    activeColor={themeColor}
+                    variant={variant}
                   />
                 </div>
                 <div className="xl:col-span-6">
@@ -118,6 +139,8 @@ const CertificationsSection = () => {
                     value={cert.link || ''} 
                     onChange={(e) => handleUpdateCert(cert.id, 'link', e.target.value)} 
                     placeholder="e.g. Credly, LinkedIn, or direct URL"
+                    activeColor={themeColor}
+                    variant={variant}
                   />
                 </div>
               </div>
@@ -143,7 +166,7 @@ const CertificationsSection = () => {
       </div>
     </GlassCard>
   );
-};
+});
 
 export default CertificationsSection;
 

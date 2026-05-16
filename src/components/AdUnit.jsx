@@ -63,7 +63,7 @@ const AdUnit = ({
     if (!IS_PROD) {
         return (
             <div 
-                className={`flex items-center justify-center border border-dashed border-slate-300 dark:border-white/10 bg-slate-50/50 dark:bg-slate-900/40 backdrop-blur-md text-slate-400 rounded-2xl transition-all hover:bg-white dark:hover:bg-slate-900 shadow-sm group/ad ${className}`}
+                className={`flex items-center justify-center border border-dashed border-slate-300 dark:border-white/10 bg-slate-50/50 dark:bg-slate-900/40 backdrop-blur-md text-slate-400 rounded-2xl transition-all hover:bg-white dark:hover:bg-slate-900 shadow-sm group/ad print:hidden ${className}`}
                 style={{ minHeight, ...style }}
             >
                 <div className="text-center select-none px-6 py-4">
@@ -85,7 +85,7 @@ const AdUnit = ({
     return (
         <div 
             ref={adRef}
-            className={`adsense-wrapper w-full overflow-hidden ${className}`}
+            className={`adsense-wrapper w-full overflow-hidden print:hidden ${className}`}
             style={{ minHeight, ...style }}
         >
             <ins

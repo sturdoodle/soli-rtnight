@@ -1,14 +1,15 @@
-"use client";
-
-import React, { useState } from 'react';
+import React, { memo } from 'react';
 import { Award, Plus, Trash2, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import MinimalistInput from '../ui/MinimalistInput';
 import PillButton from '../ui/PillButton';
 import { useResume } from '../../context/ResumeContext';
 
-const SkillsSection = () => {
+const SkillsSection = memo(() => {
   const { resumeData, updateSection } = useResume();
+  const themeColor = resumeData.themeColor || '#0ea5e9';
+  const themeMode = resumeData.themeMode || 'light';
+  const variant = resumeData.editorStyle || 'glass';
 
   const handleUpdateSkill = (id, field, value) => {
     const updatedSkills = (resumeData.skills || []).map((skill) =>
@@ -32,7 +33,14 @@ const SkillsSection = () => {
   };
 
   return (
-    <GlassCard title="Skills" icon={Award} isCollapsible={true}>
+    <GlassCard 
+      title="Skills" 
+      icon={Award} 
+      isCollapsible={true}
+      themeColor={themeColor}
+      themeMode={themeMode}
+      variant={variant}
+    >
       <div className="space-y-2">
         <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-300">
           <Sparkles size={14} className="text-blue-500/50" />
@@ -65,6 +73,8 @@ const SkillsSection = () => {
                     value={skill.category}
                     onChange={(e) => handleUpdateSkill(skill.id, 'category', e.target.value)}
                     placeholder="e.g. Programming Languages"
+                    activeColor={themeColor}
+                    variant={variant}
                   />
                 </div>
                 <div className="lg:col-span-8">
@@ -75,6 +85,8 @@ const SkillsSection = () => {
                     value={skill.items}
                     onChange={(e) => handleUpdateSkill(skill.id, 'items', e.target.value)}
                     placeholder="e.g. React, Tailwind CSS, Framer Motion, JavaScript"
+                    activeColor={themeColor}
+                    variant={variant}
                   />
                 </div>
               </div>
@@ -93,7 +105,7 @@ const SkillsSection = () => {
       </div>
     </GlassCard>
   );
-};
+});
 
 export default SkillsSection;
 

@@ -1,6 +1,4 @@
-"use client";
-
-import React from 'react';
+import React, { memo } from 'react';
 import { Briefcase, Plus, Trash2, FolderCode, Link as LinkIcon, Code, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import MinimalistInput from '../ui/MinimalistInput';
@@ -9,8 +7,11 @@ import { useResume } from '../../context/ResumeContext';
 import AdSenseAd from '../../../AdsenseAdsBlock.jsx';
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../../../MainConstant.js';
 
-const ProjectsSection = () => {
+const ProjectsSection = memo(() => {
   const { resumeData, updateSection } = useResume();
+  const themeColor = resumeData.themeColor || '#0ea5e9';
+  const themeMode = resumeData.themeMode || 'light';
+  const variant = resumeData.editorStyle || 'glass';
 
   const ensureAbsoluteUrl = (url) => {
     if (!url) return '';
@@ -45,7 +46,14 @@ const ProjectsSection = () => {
   };
 
   return (
-    <GlassCard title="Personal Projects" icon={FolderCode} isCollapsible={true}>
+    <GlassCard 
+      title="Personal Projects" 
+      icon={FolderCode} 
+      isCollapsible={true}
+      themeColor={themeColor}
+      themeMode={themeMode}
+      variant={variant}
+    >
       <div className="space-y-2">
         <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-300">
           <Sparkles size={14} className="text-blue-500/50" />
@@ -76,6 +84,8 @@ const ProjectsSection = () => {
                     label="Project Title" 
                     value={proj.name} 
                     onChange={(e) => handleUpdateProject(proj.id, 'name', e.target.value)} 
+                    activeColor={themeColor}
+                    variant={variant}
                   />
                 </div>
                 <div className="xl:col-span-4">
@@ -85,6 +95,8 @@ const ProjectsSection = () => {
                     icon={Code}
                     value={proj.tech} 
                     onChange={(e) => handleUpdateProject(proj.id, 'tech', e.target.value)} 
+                    activeColor={themeColor}
+                    variant={variant}
                   />
                 </div>
               </div>
@@ -99,6 +111,8 @@ const ProjectsSection = () => {
                     onChange={(e) => handleUpdateProject(proj.id, 'description', e.target.value)} 
                     showFormatTip={true}
                     placeholder="Tell us about the project..."
+                    activeColor={themeColor}
+                    variant={variant}
                   />
                 </div>
               </div>
@@ -111,6 +125,8 @@ const ProjectsSection = () => {
                   value={proj.link || ''} 
                   onChange={(e) => handleUpdateProject(proj.id, 'link', e.target.value)} 
                   placeholder="https://github.com/..."
+                  activeColor={themeColor}
+                  variant={variant}
                 />
                 <MinimalistInput 
                   id={`v5-proj-${proj.id}-icon`}
@@ -118,6 +134,8 @@ const ProjectsSection = () => {
                   value={proj.icon || ''} 
                   onChange={(e) => handleUpdateProject(proj.id, 'icon', e.target.value)} 
                   placeholder="Leave empty for default Briefcase"
+                  activeColor={themeColor}
+                  variant={variant}
                 />
               </div>
             </div>
@@ -142,7 +160,7 @@ const ProjectsSection = () => {
       </div>
     </GlassCard>
   );
-};
+});
 
 export default ProjectsSection;
 

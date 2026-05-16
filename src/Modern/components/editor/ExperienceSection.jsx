@@ -1,6 +1,4 @@
-"use client";
-
-import React from 'react';
+import React, { memo } from 'react';
 import { Briefcase, Plus, Trash2, ChevronRight, Sparkles } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import MinimalistInput from '../ui/MinimalistInput';
@@ -9,8 +7,11 @@ import { useResume } from '../../context/ResumeContext';
 import AdSenseAd from '../../../AdsenseAdsBlock.jsx';
 import { ADSENSE_CLIENT_ID, ADSENSE_INBETWEEN_SLOT_ID } from '../../../MainConstant.js';
 
-const ExperienceSection = () => {
+const ExperienceSection = memo(() => {
   const { resumeData, updateSection } = useResume();
+  const themeColor = resumeData.themeColor || '#0ea5e9';
+  const themeMode = resumeData.themeMode || 'light';
+  const variant = resumeData.editorStyle || 'glass';
 
   const handleUpdateExp = (id, field, value) => {
     const updatedExp = resumeData.experience.map(exp => 
@@ -90,7 +91,14 @@ const ExperienceSection = () => {
   };
 
   return (
-    <GlassCard title="Work Experience" icon={Briefcase} isCollapsible={true}>
+    <GlassCard 
+      title="Work Experience" 
+      icon={Briefcase} 
+      isCollapsible={true}
+      themeColor={themeColor}
+      themeMode={themeMode}
+      variant={variant}
+    >
       <div className="space-y-4">
         <div className="px-4 py-3 rounded-2xl bg-blue-500/5 border border-blue-500/10 flex items-center gap-3 mb-2 animate-in fade-in duration-300">
           <Sparkles size={14} className="text-blue-500/50" />
@@ -120,18 +128,24 @@ const ExperienceSection = () => {
                   label="Company" 
                   value={exp.company} 
                   onChange={(e) => handleUpdateExp(exp.id, 'company', e.target.value)} 
+                  activeColor={themeColor}
+                  variant={variant}
                 />
                 <MinimalistInput 
                   id={`v5-exp-${exp.id}-role`}
                   label="Role" 
                   value={exp.role} 
                   onChange={(e) => handleUpdateExp(exp.id, 'role', e.target.value)} 
+                  activeColor={themeColor}
+                  variant={variant}
                 />
                 <MinimalistInput 
                   id={`v5-exp-${exp.id}-duration`}
                   label="Duration" 
                   value={exp.duration} 
                   onChange={(e) => handleUpdateExp(exp.id, 'duration', e.target.value)} 
+                  activeColor={themeColor}
+                  variant={variant}
                 />
               </div>
 
@@ -157,6 +171,8 @@ const ExperienceSection = () => {
                       value={client.name} 
                       onChange={(e) => handleUpdateClient(exp.id, client.id, 'name', e.target.value)}
                       placeholder="Global Fintech Alliance"
+                      activeColor={themeColor}
+                      variant={variant}
                     />
                     <MinimalistInput 
                       id={`v5-exp-client-${client.id}-bullets`}
@@ -166,6 +182,8 @@ const ExperienceSection = () => {
                       onChange={(e) => handleUpdateBullets(exp.id, client.id, e.target.value)}
                       showFormatTip={true}
                       placeholder="Architected a micro-frontend architecture..."
+                      activeColor={themeColor}
+                      variant={variant}
                     />
                   </div>
                 ))}
@@ -200,7 +218,7 @@ const ExperienceSection = () => {
       </div>
     </GlassCard>
   );
-};
+});
 
 export default ExperienceSection;
 
