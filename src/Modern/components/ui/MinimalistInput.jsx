@@ -1,4 +1,4 @@
-import React, { useRef, useState, memo } from 'react';
+import React, { useRef, useState, useEffect, useCallback, memo } from 'react';
 import { Bold, Italic, Underline, Link as LinkIcon, Info } from 'lucide-react';
 
 const MinimalistInput = memo(({ 
@@ -18,18 +18,45 @@ const MinimalistInput = memo(({
   const isLiquid = variant === 'liquid';
   const inputRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
+  const [localValue, setLocalValue] = useState(value || '');
+  const timeoutRef = useRef(null);
+
+  // Sync local state when external value changes
+  useEffect(() => {
+    setLocalValue(value || '');
+  }, [value]);
   
   // Generate a unique ID if none is provided for accessibility mapping
   const inputId = id || `v5-input-${name || Math.random().toString(36).substr(2, 9)}`;
+
+  const handleLocalChange = useCallback((e) => {
+    const newValue = e.target.value;
+    setLocalValue(newValue);
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    const mockEvent = {
+      target: {
+        name: e.target.name,
+        value: newValue
+      }
+    };
+
+    timeoutRef.current = setTimeout(() => {
+      onChange(mockEvent);
+    }, 400); // 400ms debounce
+  }, [name, onChange]);
   
   const applyFormat = (formatType) => {
     if (!inputRef.current) return;
     
     const start = inputRef.current.selectionStart;
     const end = inputRef.current.selectionEnd;
-    const selectedText = value.substring(start, end);
-    let beforeText = value.substring(0, start);
-    let afterText = value.substring(end);
+    const selectedText = localValue.substring(start, end);
+    let beforeText = localValue.substring(0, start);
+    let afterText = localValue.substring(end);
     
     let replacement = '';
     switch(formatType) {
@@ -45,6 +72,7 @@ const MinimalistInput = memo(({
     }
     
     const newValue = beforeText + replacement + afterText;
+    setLocalValue(newValue);
     
     // Simulate an event to match the standard onChange pattern
     const mockEvent = {
@@ -81,8 +109,8 @@ const MinimalistInput = memo(({
     id: inputId, // Map the ID for accessibility
     ref: inputRef,
     name,
-    value,
-    onChange,
+    value: localValue,
+    onChange: handleLocalChange,
     onKeyDown: handleKeyDown,
     onFocus: () => setIsFocused(true),
     onBlur: () => setTimeout(() => setIsFocused(false), 200),
