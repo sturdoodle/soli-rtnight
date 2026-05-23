@@ -98,7 +98,7 @@ const V6Editor = () => {
       return;
     }
     setShowPrintAd(true);
-    setAdCountdown(10);
+    setAdCountdown(5);
   };
 
   const finalizePrintAction = () => {
@@ -258,8 +258,8 @@ const V6Editor = () => {
                             key={template.id}
                             onClick={() => updateTemplate(template.id)}
                             className={`group relative p-5 sm:p-6 rounded-3xl border-2 text-left transition-all overflow-hidden ${resumeData.selectedTemplate === template.id
-                                ? 'border-slate-900 dark:border-white shadow-2xl'
-                                : 'border-slate-100 dark:border-white/[0.05] hover:border-slate-200 dark:hover:border-white/[0.1] bg-white dark:bg-white/[0.02]'
+                              ? 'border-slate-900 dark:border-white shadow-2xl'
+                              : 'border-slate-100 dark:border-white/[0.05] hover:border-slate-200 dark:hover:border-white/[0.1] bg-white dark:bg-white/[0.02]'
                               }`}
                           >
                             {resumeData.selectedTemplate === template.id && (
@@ -294,8 +294,8 @@ const V6Editor = () => {
                             key={font.id}
                             onClick={() => updateField('fontFamily', font.id)}
                             className={`p-5 sm:p-6 rounded-3xl border-2 text-left transition-all relative overflow-hidden ${resumeData.fontFamily === font.id
-                                ? 'border-slate-900 dark:border-white shadow-2xl bg-slate-50 dark:bg-white/5'
-                                : 'border-slate-100 dark:border-white/[0.05] hover:border-slate-200 dark:hover:border-white/[0.1] bg-white dark:bg-white/[0.02]'
+                              ? 'border-slate-900 dark:border-white shadow-2xl bg-slate-50 dark:bg-white/5'
+                              : 'border-slate-100 dark:border-white/[0.05] hover:border-slate-200 dark:hover:border-white/[0.1] bg-white dark:bg-white/[0.02]'
                               }`}
                           >
                             <h3 className={`text-base sm:text-lg mb-1 text-slate-900 dark:text-white ${font.class}`}>{font.name}</h3>

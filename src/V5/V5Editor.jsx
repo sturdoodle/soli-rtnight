@@ -85,7 +85,7 @@ const V5EditorContent = ({ initialTab }) => {
     'help': 'help',
     'about': 'aboutus'
   };
-  
+
   useEffect(() => {
     if (initialTab && tabMap[initialTab]) {
       setActiveTab(tabMap[initialTab]);
@@ -144,7 +144,7 @@ const V5EditorContent = ({ initialTab }) => {
       return;
     }
     setShowPrintAd(true);
-    setAdCountdown(10);
+    setAdCountdown(5);
   };
 
   const finalizePrintAction = () => {
@@ -213,7 +213,8 @@ const V5EditorContent = ({ initialTab }) => {
     <div className="flex flex-col fixed inset-0 bg-[var(--v5-bg)] text-[var(--v5-text)] selection:bg-blue-500/30 font-sans print:static print:h-auto print:bg-white print:overflow-visible overflow-hidden"
       style={{ '--v5-accent': activeColor, '--v5-accent-rgb': hexToRgb(activeColor), WebkitOverflowScrolling: 'touch' }}>
 
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @media print {
           /* 1. Surgical Hiding: Hide the entire document body */
           body {
@@ -299,27 +300,27 @@ const V5EditorContent = ({ initialTab }) => {
           {/* Mobile Install Promotion */}
           {(isInstallable && !isInstalled) && (
             <div className="px-8 pt-2 pb-4">
-               <motion.button 
-                 initial={{ x: 0 }}
-                 animate={{ x: [0, -1, 1, -1, 1, 0] }}
-                 transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 5 }}
-                 onClick={() => { handleInstallClick(); setIsMobileMenuOpen(false); }}
-                 className="w-full p-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white flex items-center justify-between shadow-lg shadow-amber-500/20 group active:scale-95 transition-all"
-               >
-                 <div className="flex items-center gap-3">
-                   <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
-                     <Smartphone size={20} />
-                   </div>
-                   <div className="text-left">
-                     <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1">Install App</p>
-                     <p className="text-[8px] font-medium opacity-80 dark:opacity-100 dark:text-orange-100 leading-none">Access your resumes offline</p>
-                   </div>
-                 </div>
-                 <Zap size={16} className="opacity-50 animate-pulse" />
-               </motion.button>
+              <motion.button
+                initial={{ x: 0 }}
+                animate={{ x: [0, -1, 1, -1, 1, 0] }}
+                transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 5 }}
+                onClick={() => { handleInstallClick(); setIsMobileMenuOpen(false); }}
+                className="w-full p-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white flex items-center justify-between shadow-lg shadow-amber-500/20 group active:scale-95 transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+                    <Smartphone size={20} />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1">Install App</p>
+                    <p className="text-[8px] font-medium opacity-80 dark:opacity-100 dark:text-orange-100 leading-none">Access your resumes offline</p>
+                  </div>
+                </div>
+                <Zap size={16} className="opacity-50 animate-pulse" />
+              </motion.button>
             </div>
           )}
-          
+
           {/* Premium Mobile Quick Actions Redesign */}
           <div className="px-8 py-6 border-t border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.01]">
             <div className="grid grid-cols-3 gap-6">
@@ -334,9 +335,9 @@ const V5EditorContent = ({ initialTab }) => {
                   className="flex flex-col items-center gap-2.5 group"
                   aria-label={item.aria}
                 >
-                  <div 
+                  <div
                     className="w-12 h-12 rounded-[1.1rem] flex items-center justify-center text-white shadow-xl transition-all duration-300 group-active:scale-90 group-hover:scale-105"
-                    style={{ 
+                    style={{
                       backgroundColor: item.color,
                       boxShadow: `0 10px 20px -5px ${item.color}60`
                     }}
@@ -379,7 +380,7 @@ const V5EditorContent = ({ initialTab }) => {
                   description="This will erase all your resume data and reset the resume structure to factory defaults."
                 />
               </Suspense>
-              
+
               <PWAInstallBanner className="print:hidden" />
 
               <Suspense fallback={<TabLoadingSkeleton />}>
@@ -431,7 +432,7 @@ const V5EditorContent = ({ initialTab }) => {
           className={`hidden xl:flex w-2 hover:w-2.5 bg-transparent cursor-col-resize relative z-50 group items-center justify-center transition-all ${isResizing ? 'w-2.5' : ''}`}
         >
           <div className={`w-1 h-12 rounded-full transition-all duration-300 ${isResizing ? 'bg-amber-500 scale-y-125' : 'bg-black/5 dark:bg-white/10 group-hover:bg-amber-500/50'}`} />
-          
+
           {/* Subtle Glow when resizing */}
           {isResizing && (
             <div className="absolute inset-0 bg-amber-500/5 blur-md -z-10" />
