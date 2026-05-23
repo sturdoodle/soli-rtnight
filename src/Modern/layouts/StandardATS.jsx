@@ -5,7 +5,7 @@ import { SectionTitle, ExperienceItem, EducationItem, SkillCategory, FormattedTe
 
 export const StandardATS = ({ data, themeColor, atsMode, sectionThemingEnabled }) => (
   <main className={`bg-white p-12 max-w-[800px] mx-auto text-black min-h-[1122px] w-full print:p-0 print:max-w-none ${atsMode ? '' : ''}`}>
-    <header className="border-b-2 border-black pb-4 mb-8 transition-colors" style={atsMode ? {} : { borderColor: sectionThemingEnabled ? themeColor : 'black' }}>
+    <header className="border-b-2 border-black pb-4 mb-6 transition-colors" style={atsMode ? {} : { borderColor: sectionThemingEnabled ? themeColor : 'black' }}>
       <h1 className="text-3xl font-bold uppercase mb-2 tracking-wide transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black' }}>{data.fullName}</h1>
       <div className="flex flex-wrap items-center gap-2 text-sm font-medium">
         <span>{data.email}</span>
@@ -38,7 +38,7 @@ export const StandardATS = ({ data, themeColor, atsMode, sectionThemingEnabled }
       </div>
     </header>
 
-    <div className="space-y-8">
+    <div className="space-y-5">
       {data.summary && (
         <section aria-label="Summary">
           <h2 className="text-sm font-bold uppercase border-b border-black mb-3 pb-1 transition-colors" style={atsMode ? {} : { color: sectionThemingEnabled ? themeColor : 'black', borderColor: sectionThemingEnabled ? themeColor : 'black' }}>Professional Summary</h2>

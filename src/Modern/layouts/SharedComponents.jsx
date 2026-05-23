@@ -8,10 +8,24 @@ import { useResume } from '../context/ResumeContext';
  * Avoids dangerouslySetInnerHTML for security and better performance.
  */
 const safeMarkdownParser = (text) => {
-  if (!text || typeof text !== 'string') return text;
+  if (text == null) return null;
+  if (React.isValidElement(text)) return text;
+  
+  let processText = text;
+  if (typeof processText !== 'string') {
+    if (typeof processText === 'object') {
+      try {
+        processText = JSON.stringify(processText);
+      } catch (e) {
+        return '';
+      }
+    } else {
+      processText = String(processText);
+    }
+  }
 
   // Split by bold (**), italics (*), underline (__), and links ([text](url))
-  const parts = text.split(/(\*\*.*?\*\*|\*.*?\*|__.*?__|\[.*?\]\(.*?\))/g);
+  const parts = processText.split(/(\*\*.*?\*\*|\*.*?\*|__.*?__|\[.*?\]\(.*?\))/g);
 
   return parts.map((part, index) => {
     if (part.startsWith('**') && part.endsWith('**')) {
@@ -53,6 +67,26 @@ export const EditableText = ({ text, className = "", style = {} }) => {
 
 export const FormattedText = ({ text, className = "", style = {}, onUpdate, path }) => {
   if (!text && !onUpdate && !path) return null;
+
+  let contentArray = null;
+  if (Array.isArray(text)) {
+    contentArray = text;
+  } else if (text && typeof text === 'object' && !React.isValidElement(text) && Array.isArray(text.bulletPoints)) {
+    contentArray = text.bulletPoints;
+  }
+
+  if (contentArray) {
+    return (
+      <ul className="list-disc ml-5 space-y-1">
+        {contentArray.map((item, idx) => (
+          <li key={idx}>
+            <EditableText text={item} className={className} style={style} />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return <EditableText text={text} onUpdate={onUpdate} path={path} className={className} style={style} isMultiline={true} />;
 };
 

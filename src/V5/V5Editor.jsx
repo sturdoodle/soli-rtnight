@@ -493,15 +493,6 @@ const V5EditorContent = ({ initialTab }) => {
               <h3 className="text-sm font-black tracking-tight">Preview Mode</h3>
             </div>
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => triggerDownload('print')}
-                className="px-6 py-2 rounded-full text-white text-[10px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95 group relative overflow-hidden"
-                style={{ backgroundColor: activeColor, boxShadow: `0 0 20px ${activeColor}40` }}
-              >
-                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
-                <Printer size={14} className="group-hover:rotate-12 transition-transform" />
-                Final Print
-              </button>
               <button onClick={() => setIsEnlarged(false)} className="p-2 bg-white/10 text-white rounded-full"><X size={18} /></button>
             </div>
           </div>

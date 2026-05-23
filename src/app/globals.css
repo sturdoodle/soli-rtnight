@@ -446,8 +446,10 @@ input:focus {
   --color-card-bg: rgba(10, 15, 13, 0.4);
   --color-card-border: rgba(255, 255, 255, 0.05);
   --color-text-primary: #f8fafc;
-  --color-text-secondary: #cbd5e1; /* Lighter for better contrast */
-  --color-text-muted: #64748b; /* Better visibility than 475569 */
+  --color-text-secondary: #cbd5e1;
+  /* Lighter for better contrast */
+  --color-text-muted: #64748b;
+  /* Better visibility than 475569 */
   --color-input-bg: rgba(15, 23, 20, 0.6);
   --color-input-border: rgba(255, 255, 255, 0.2);
 
@@ -460,8 +462,10 @@ input:focus {
   --v5-bg: #050a0f;
   --v5-canvas: #0a1118;
   --v5-card: #0d151c;
-  --v5-border: rgba(255, 255, 255, 0.15); /* Slightly more opaque */
-  --v5-text: #e2e8f0; /* Significantly lighter (slate-200) for mobile readability */
+  --v5-border: rgba(255, 255, 255, 0.15);
+  /* Slightly more opaque */
+  --v5-text: #e2e8f0;
+  /* Significantly lighter (slate-200) for mobile readability */
   --v5-heading: #ffffff;
 
   /* V7 Studio Dark Tokens */
@@ -476,10 +480,14 @@ input:focus {
 * {
   overflow-wrap: break-word;
   word-break: break-word;
-  min-width: 0; /* Fix for flex containers squashing children */
+  min-width: 0;
+  /* Fix for flex containers squashing children */
 }
 
-img, video, canvas, svg {
+img,
+video,
+canvas,
+svg {
   max-width: 100%;
   height: auto;
   display: block;
@@ -587,6 +595,7 @@ img, video, canvas, svg {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -598,7 +607,7 @@ img, video, canvas, svg {
   border-radius: 20px;
   border: 2px solid transparent;
   background-clip: padding-box;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -688,19 +697,22 @@ img, video, canvas, svg {
 
 /* Guidance & Onboarding Modal System */
 .v5-modal-overlay {
-  background: #050a0f; /* Match --v5-bg for Dark Mode solid look */
+  background: #050a0f;
+  /* Match --v5-bg for Dark Mode solid look */
   animation: modal-fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .v5-modal {
-  background: #ffffff; /* Solid White for Light Mode */
+  background: #ffffff;
+  /* Solid White for Light Mode */
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.3);
   animation: modal-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .dark .v5-modal {
-  background: #0d151c; /* Solid Dark Theme Color from --v5-card */
+  background: #0d151c;
+  /* Solid Dark Theme Color from --v5-card */
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 50px 120px -30px rgba(0, 0, 0, 0.7);
 }
@@ -886,7 +898,7 @@ img, video, canvas, svg {
     min-height: 0 !important;
     overflow: visible !important;
     display: block !important;
-    position: relative !important;
+    position: static !important;
   }
 
   /* Catch-all to fix padding and shadow issues for all 22 layouts */
@@ -898,7 +910,7 @@ img, video, canvas, svg {
     min-height: 0 !important;
     box-shadow: none !important;
     overflow: visible !important;
-    position: relative !important;
+    position: static !important;
   }
 
   /* 4. Completely hide interactive UI elements */
@@ -991,11 +1003,20 @@ img, video, canvas, svg {
     color-adjust: exact !important;
   }
 }
+
 /* AI Edge Glow Animation - Google Gemini Style */
 @keyframes ai-glow-shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .ai-glow-wrapper {
@@ -1009,22 +1030,20 @@ img, video, canvas, svg {
   position: absolute;
   inset: -2px;
   padding: 2px;
-  background: linear-gradient(
-    90deg, 
-    #4285F4, 
-    #9b51e0, 
-    #e91e63, 
-    #fbbc05,
-    #34a853,
-    #4285F4
-  );
+  background: linear-gradient(90deg,
+      #4285F4,
+      #9b51e0,
+      #e91e63,
+      #fbbc05,
+      #34a853,
+      #4285F4);
   background-size: 300% 100%;
   border-radius: 100px;
-  -webkit-mask: 
-     linear-gradient(#fff 0 0) content-box, 
-     linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
-          mask-composite: exclude;
+  mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
   animation: ai-glow-shimmer 4s linear infinite;
@@ -1039,15 +1058,13 @@ img, video, canvas, svg {
   content: '';
   position: absolute;
   inset: -1px;
-  background: linear-gradient(
-    90deg, 
-    #4285F4, 
-    #9b51e0, 
-    #e91e63, 
-    #fbbc05,
-    #34a853,
-    #4285F4
-  );
+  background: linear-gradient(90deg,
+      #4285F4,
+      #9b51e0,
+      #e91e63,
+      #fbbc05,
+      #34a853,
+      #4285F4);
   background-size: 300% 100%;
   border-radius: 100px;
   filter: blur(8px);
@@ -1068,10 +1085,12 @@ img, video, canvas, svg {
     box-shadow: 0 0 0 0 rgba(var(--v5-accent-rgb, 14, 165, 233), 0.7);
     border-color: rgba(var(--v5-accent-rgb, 14, 165, 233), 1) !important;
   }
+
   70% {
     box-shadow: 0 0 0 15px rgba(var(--v5-accent-rgb, 14, 165, 233), 0);
     border-color: rgba(var(--v5-accent-rgb, 14, 165, 233), 0.4) !important;
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(var(--v5-accent-rgb, 14, 165, 233), 0);
     border-color: rgba(var(--v5-accent-rgb, 14, 165, 233), 1) !important;
@@ -1098,10 +1117,12 @@ textarea {
     box-shadow: inset 0 0 0 0 rgba(var(--v5-accent-rgb, 14, 165, 233), 0.2);
     border-color: rgba(var(--v5-accent-rgb, 14, 165, 233), 0.5);
   }
+
   50% {
     box-shadow: inset 0 0 20px 0 rgba(var(--v5-accent-rgb, 14, 165, 233), 0.1);
     border-color: rgba(var(--v5-accent-rgb, 14, 165, 233), 1);
   }
+
   100% {
     box-shadow: inset 0 0 0 0 rgba(var(--v5-accent-rgb, 14, 165, 233), 0.2);
     border-color: rgba(var(--v5-accent-rgb, 14, 165, 233), 0.5);
@@ -1122,13 +1143,16 @@ textarea {
     --viewport-height: 100dvh;
   }
 
-  html, body {
+  html,
+  body {
     height: var(--viewport-height);
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow: auto; /* Allow scrolling but control bounce */
-    overscroll-behavior: none; /* Modern way to prevent elastic bounce */
+    overflow: auto;
+    /* Allow scrolling but control bounce */
+    overscroll-behavior: none;
+    /* Modern way to prevent elastic bounce */
     -webkit-text-size-adjust: 100%;
     touch-action: manipulation;
   }
@@ -1142,18 +1166,53 @@ textarea {
   }
 
   /* Font Family Mappings */
-  .font-Inter { font-family: var(--font-inter), sans-serif; }
-  .font-Lora { font-family: var(--font-lora), serif; }
-  .font-DM-Sans { font-family: var(--font-dm-sans), sans-serif; }
-  .font-Roboto { font-family: var(--font-roboto), sans-serif; }
-  .font-Poppins { font-family: var(--font-poppins), sans-serif; }
-  .font-Montserrat { font-family: var(--font-montserrat), sans-serif; }
-  .font-Playfair-Display { font-family: var(--font-playfair), serif; }
-  .font-Plus-Jakarta-Sans { font-family: var(--font-plus-jakarta), sans-serif; }
-  .font-Space-Grotesk { font-family: var(--font-space-grotesk), sans-serif; }
-  .font-Merriweather { font-family: var(--font-merriweather), serif; }
-  .font-Figtree { font-family: var(--font-figtree), sans-serif; }
-  .font-Outfit { font-family: var(--font-outfit), sans-serif; }
+  .font-Inter {
+    font-family: var(--font-inter), sans-serif;
+  }
+
+  .font-Lora {
+    font-family: var(--font-lora), serif;
+  }
+
+  .font-DM-Sans {
+    font-family: var(--font-dm-sans), sans-serif;
+  }
+
+  .font-Roboto {
+    font-family: var(--font-roboto), sans-serif;
+  }
+
+  .font-Poppins {
+    font-family: var(--font-poppins), sans-serif;
+  }
+
+  .font-Montserrat {
+    font-family: var(--font-montserrat), sans-serif;
+  }
+
+  .font-Playfair-Display {
+    font-family: var(--font-playfair), serif;
+  }
+
+  .font-Plus-Jakarta-Sans {
+    font-family: var(--font-plus-jakarta), sans-serif;
+  }
+
+  .font-Space-Grotesk {
+    font-family: var(--font-space-grotesk), sans-serif;
+  }
+
+  .font-Merriweather {
+    font-family: var(--font-merriweather), serif;
+  }
+
+  .font-Figtree {
+    font-family: var(--font-figtree), sans-serif;
+  }
+
+  .font-Outfit {
+    font-family: var(--font-outfit), sans-serif;
+  }
 }
 
 /* Utility for elements that SHOULD scroll */
@@ -1169,6 +1228,7 @@ textarea {
 }
 
 @supports (-webkit-touch-callout: none) {
+
   /* Specific target for iOS Safari */
   .min-h-screen {
     min-height: -webkit-fill-available;
