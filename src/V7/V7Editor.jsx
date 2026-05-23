@@ -13,7 +13,6 @@ import ModernLivePreview from '../Modern/components/preview/ModernLivePreview';
 import { useSplitPane } from '../hooks/useSplitPane';
 import { motion, AnimatePresence } from 'framer-motion';
 import UniversalPrintModal from '../components/shared/UniversalPrintModal';
-import { downloadPdf } from '../Modern/utils/pdfGenerator';
 import { isDevelopmentMode } from '../lib/env';
 
 // ─── Design Tokens ────────────────────────────────────────────────────────────
@@ -184,6 +183,7 @@ const V7EditorContent = () => {
         const printBuffer = document.getElementById('print-buffer');
         if (printBuffer) {
           try {
+            const { downloadPdf } = await import('../Modern/utils/pdfGenerator');
             await downloadPdf(printBuffer, `${fileName}.pdf`);
           } catch (err) {
             console.error("PDF generation failed:", err);

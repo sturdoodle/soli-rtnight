@@ -48,7 +48,7 @@ export const usePWAInstall = () => {
       setIsInstallable(false);
       setDeferredPrompt(null);
       globalDeferredPrompt = null;
-      console.log('PWA was installed');
+      // console.log('PWA was installed');
     };
 
     window.addEventListener('appinstalled', appInstalledHandler);
@@ -85,7 +85,7 @@ export const usePWAInstall = () => {
 
       // Wait for the user to respond to the prompt
       const { outcome } = await promptToUse.userChoice;
-      console.log(`User response to the install prompt: ${outcome}`);
+      // console.log(`User response to the install prompt: ${outcome}`);
 
       if (outcome === 'accepted') {
         setIsInstalled(true);

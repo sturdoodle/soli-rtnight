@@ -20,7 +20,6 @@ import { useRouter } from 'next/navigation';
 import ThemeToggle from './components/ui/ThemeToggle';
 import EditorForm from '../components/editor/EditorForm';
 import logo from '../assets/logo.png';
-import { downloadPdf } from './utils/pdfGenerator';
 
 const ModernEditorContent = () => {
   const { resumeData, setResumeData, updateTemplate, updateThemeColor, toggleAts, setEditorStyle } = useResume();
@@ -55,6 +54,7 @@ const ModernEditorContent = () => {
       const element = previewRef.current;
       if (element) {
         try {
+          const { downloadPdf } = await import('./utils/pdfGenerator');
           await downloadPdf(element, `${fileName}.pdf`);
         } catch (err) {
           console.error("PDF download failed, falling back to print:", err);

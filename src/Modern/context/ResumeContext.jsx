@@ -200,7 +200,7 @@ export function ResumeProvider({ children }) {
       }
     };
 
-    const timeoutId = setTimeout(syncToStorage, 1000); // 1s debounce
+    const timeoutId = setTimeout(syncToStorage, 3000); // 3s debounce
 
     // Theme Sync (Immediate, as it's cheap and affects UI directly)
     if (state.themeMode === 'dark') {

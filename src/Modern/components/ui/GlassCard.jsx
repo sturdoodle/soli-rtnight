@@ -23,7 +23,7 @@ const GlassCard = memo(({
 
   return (
     <div
-      className={`${isLiquid ? 'v5-glass' : 'glass-panel'} mb-4 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform border rounded-[2rem] overflow-hidden ${className} print:bg-white`}
+      className={`${isLiquid ? 'v5-glass' : 'glass-panel'} mb-6 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform border rounded-[2rem] overflow-hidden ${className} print:bg-white`}
       style={isLiquid ? {
         borderColor: isOpen ? `${themeColor}40` : 'rgba(0, 0, 0, 0.1)',
         boxShadow: isOpen
@@ -36,11 +36,11 @@ const GlassCard = memo(({
     >
       {title && (
         <div
-          className={`flex items-center justify-between px-6 py-4 transition-all duration-200 ${isCollapsible ? 'cursor-pointer select-none group/card hover:bg-[var(--v5-canvas)]/50' : ''}`}
+          className={`flex items-center justify-between px-5 py-3 transition-all duration-200 ${isCollapsible ? 'cursor-pointer select-none group/card hover:bg-[var(--v5-canvas)]/50' : ''}`}
           onClick={toggle}
         >
           <div className="flex items-center gap-4">
-            <div className={`p-2.5 rounded-2xl transition-all duration-500 ${isOpen ? '' : 'bg-black/5 dark:bg-white/5 shadow-inner'}`}
+            <div className={`p-2 rounded-xl transition-all duration-500 ${isOpen ? '' : 'bg-black/5 dark:bg-white/5 shadow-inner'}`}
               style={isOpen ? { backgroundColor: themeColor, color: 'white', boxShadow: `0 10px 20px -5px ${themeColor}40` } : {}}>
               {Icon && <Icon size={20} strokeWidth={2.5} />}
             </div>
@@ -50,7 +50,7 @@ const GlassCard = memo(({
           </div>
 
           {isCollapsible ? (
-            <div className={`transition-all duration-500 p-2.5 rounded-2xl ${isOpen ? 'rotate-180 bg-sage-50 dark:bg-sage-900/40 text-sage-600' : 'rotate-0 bg-transparent text-sage-300'} group-hover/card:bg-white dark:group-hover/card:bg-slate-800 shadow-sm border border-transparent group-hover/card:border-sage-100 dark:group-hover/card:border-white/10`}>
+            <div className={`transition-all duration-500 p-2 rounded-xl ${isOpen ? 'rotate-180 bg-sage-50 dark:bg-sage-900/40 text-sage-600' : 'rotate-0 bg-transparent text-sage-300'} group-hover/card:bg-white dark:group-hover/card:bg-slate-800 shadow-sm border border-transparent group-hover/card:border-sage-100 dark:group-hover/card:border-white/10`}>
               <ChevronDown size={20} strokeWidth={3} />
             </div>
           ) : (
